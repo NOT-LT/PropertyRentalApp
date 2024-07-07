@@ -1,0 +1,45 @@
+{
+  "name": "propertyrentalapp",
+  "version": "1.0.0",
+  "description": "A web application that help people reach out to property renters",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NOT-LT/PropertyRentalApp.git"
+  },
+  "keywords": [
+    "Property",
+    "Rental",
+    "RentalApp",
+    "PropertyApp",
+    "PropertyRentalApp",
+    "flat",
+    "appartment",
+    "appratment",
+    "rent",
+    "flat",
+    "rent",
+    "house",
+    "house",
+    "rent",
+    "rent",
+    "app",
+    "rent",
+    "application"
+  ],
+  "author": "Taha Aljamri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NOT-LT/PropertyRentalApp/issues"
+  },
+  "homepage": "https://github.com/NOT-LT/PropertyRentalApp#readme",
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.5"
+  }
+}
