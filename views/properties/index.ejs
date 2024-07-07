@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rental App</title>
+</head>
+<body>
+  <h1>All properties</h1>
+  <div>
+    <a href="/properties/new">Add Property</a>
+  </div>
+  <ul>
+    <% for (let p of properties) {%>
+      <a href="/properties/<%= p._id %>"> <li><%=p.title %></li> </a>
+    <% } %>
+  </ul>
+</body>
+</html>

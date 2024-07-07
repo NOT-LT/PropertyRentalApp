@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Info</title>
+  </head>
+
+  <body>
+    <h1>
+      <%=property.title%>
+    </h1>
+    <ul>
+      <% for (let key in property._doc) { %>
+        <% if (key !=='_id' && key !=='__v' && key !=='title' ) { %>
+          <li>
+            <%= key %>: <%= property[key] %>
+          </li>
+          <% } %>
+            <% } %>
+    </ul>
+
+    <footer>
+      <a href="/properties/<%= property._id %>/edit">Edit property</a>
+      <a href="/properties">All properties</a>
+      <form action="/properties/<%= property._id%>?_method=DELETE" method="POST">
+        <button>Delete</button>
+      </form>
+    </footer>
+
+  </body>
+
+</html>

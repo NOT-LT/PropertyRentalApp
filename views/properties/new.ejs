@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New property</title>
+</head>
+<body>
+  <form action="/properties" method="POST">
+    <div>
+      <label for="title">title</label>
+      <input type="text" name="property[title]" id="title">
+    </div>
+    <div>
+      <label for="price">price</label>
+      <input type="text" name="property[price]" id="price">
+    </div>
+    <div>
+      <label for="location">location</label>
+      <input type="text" name="property[location]" id="location">
+    </div>
+    <button>Submit</button>
+  </form>
+  <a href="/properties">All properties</a>
+</body>
+</html>
