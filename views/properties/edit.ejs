@@ -1,26 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Property Details</title>
-</head>
-<body>
-  <form action="/properties/<%=property._id%>?_method=PUT" method="POST">
-    <div>
-      <label for="title">title</label>
-      <input type="text" name="property[title]" id="title" value="<%= property.title %>">
+<% layout('layout/boilerplate') %>
+<h1 class="text-center text-2xl mb-4">Edit Property Information</h1>
+<form action="/properties/<%= property._id %>?_method=PUT" method="POST" class="max-w-xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <div class="mb-4">
+    <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Title</label>
+    <input type="text" name="property[title]" id="title" value="<%= property.title %>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+  </div>
+  <div class="mb-4">
+    <label for="location" class="block text-gray-700 text-sm font-semibold mb-2">Location</label>
+    <input type="text" name="property[location]" id="location" value="<%= property.location %>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+  </div>
+  <div class="mb-4">
+    <label for="image" class="block text-gray-700 text-sm font-semibold mb-2">Image Url</label>
+    <input type="text" name="property[image]" id="image" value="<%= property.image %>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+  </div>
+  <div class="mb-4">
+    <label for="description" class="block text-gray-700 text-sm font-semibold mb-2">Description</label>
+    <input type="text" name="property[description]" id="description" value="<%= property.description %>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+  </div>
+  <div class="mb-4">
+    <label for="price" class="block text-gray-700 text-sm font-semibold mb-2">Price/month</label>
+    <div class="relative flex flex-nowrap items-stretch shadow">
+      <span
+        class="bg-gray-200 text-sm text-gray-700 font-semibold flex items-center whitespace-nowrap rounded-s border border-e-0 border-solid border-neutral-200 px-3 py-[0.25rem] text-center leading-tight text-surface dark:border-white/10 dark:text-white"
+        id="addon-wrapping"
+        >BHD</span
+      >
+      <input
+        type="text"
+        class="relative m-0 block flex-auto rounded-e border border-solid border-neutral-200 bg-transparent bg-clip-padding py-2 px-3 text-base font-normal leading-tight text-surface outline-none transition duration-200 ease-in-out placeholder:text-neutral-500 focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:placeholder:text-neutral-200 dark:autofill:shadow-autofill dark:focus:border-primary"
+        placeholder="price"
+        aria-label="price"
+        aria-describedby="addon-wrapping"
+        name="property[price]" id="price" value="<%= property.price %>"/>
     </div>
-    <div>
-      <label for="price">price</label>
-      <input type="text" name="property[price]" id="price" value="<%= property.price %>">
-    </div>
-    <div>
-      <label for="location">location</label>
-      <input type="text" name="property[location]" id="location" value="<%= property.location %>">
-    </div>
-    <button>Update</button>
-  </form>
-  <a href="/property/<%= property._id %>">Back to property</a>
-</body>
-</html>
+  </div>
+  
+  
+  
+  <div class="flex items-center justify-between">
+    <button type="submit" class="bg-sky-700  hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+      Update
+    </button>
+    <a href="/properties/<%= property._id %>" class="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
+      Back to property
+    </a>
+  </div>
+</form>

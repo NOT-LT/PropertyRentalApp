@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const Property = require('../models/property');
+const axios = require('axios')
 
 // Database connection
 mongoose.connect('mongodb://localhost:27017/propertyRentalApp');
@@ -49,7 +50,8 @@ const seedDB = async () => {
       title: `${faker.commerce.productAdjective()} ${type}`,
       price: price.toString(),
       description: faker.lorem.paragraph(),
-      location: `${faker.helpers.arrayElement(cities)}, ${faker.helpers.arrayElement(governorates)}`
+      image: `https://picsum.photos/1024?random=${Math.random()*100}`,
+      location: `${faker.helpers.arrayElement(cities)}`
     });
 
     await property.save();

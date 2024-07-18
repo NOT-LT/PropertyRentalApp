@@ -1,19 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rental App</title>
-</head>
-<body>
-  <h1>All properties</h1>
-  <div>
-    <a href="/properties/new">Add Property</a>
+<%- layout('layout/boilerplate') %>
+
+  <div class="">
+    <h1 class="text-2xl">All Properties</h1>
+    <div>
+      <a href="/properties/new" class="underline text-blue-500 hover:underline">Add Property</a>
+    </div>
+
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      <% for (let p of properties) { %>
+        <a href="/properties/<%= p._id %>" class="bg-transparent rounded-lg w-full">
+          <div class="relative overflow-hidden shadow-lg rounded-lg group transition-all duration-500 hover:shadow-2xl">
+            <div class="bg-gray-300 rounded-lg aspect-ratio-container">
+              <img src="<%= p.image %>"
+                class="object-cover object-center rounded-lg transition-transform duration-300 group-hover:scale-[1.05]">
+            </div>
+            <div
+              class="overlay absolute inset-0 opacity-80 group-hover:opacity-30 rounded-lg transition-opacity duration-300">
+            </div>
+            <div
+              class="absolute top-2 left-2 bg-red-900 rounded-3xl opacity-95 text-gray-100 p-2 text-center text-xs z-10">
+              <p>
+                <%= p.title %> - <%= p.price %> BHD/month
+              </p>
+            </div>
+            <div class="absolute bottom-2 left-2 flex items-center space-x-2 text-white">
+              <svg width="20px" height="20px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 10c-1.104 0-2-.896-2-2s.896-2 2-2 2 .896 2 2-.896 2-2 2m0-5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m-7 2.602c0-3.517 3.271-6.602 7-6.602s7 3.085 7 6.602c0 3.455-2.563 7.543-7 14.527-4.489-7.073-7-11.072-7-14.527m7-7.602c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602" />
+              </svg>
+              <p class="text-white m-0 p-0">
+                <%= p.location %>
+              </p>
+            </div>
+          </div>
+        </a>
+        <% } %>
+    </div>
   </div>
-  <ul>
-    <% for (let p of properties) {%>
-      <a href="/properties/<%= p._id %>"> <li><%=p.title %></li> </a>
-    <% } %>
-  </ul>
-</body>
-</html>
