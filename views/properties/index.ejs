@@ -8,29 +8,86 @@
 
     <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
       <% for (let p of properties) { %>
-        <a href="/properties/<%= p._id %>" class="bg-transparent rounded-lg w-full">
-          <div class="relative overflow-hidden shadow-lg rounded-lg group transition-all duration-500 hover:shadow-2xl">
-            <div class="bg-gray-300 rounded-lg aspect-ratio-container">
+        <a href="/properties/<%= p._id %>" class="bg-transparent rounded-lg w-full max-w-full h-full">
+          <div
+            class="relative overflow-hidden shadow-lg rounded-lg group transition-all duration-500 hover:shadow-2xl card">
+            <div class="aspect-ratio-container">
               <img src="<%= p.image %>"
-                class="object-cover object-center rounded-lg transition-transform duration-300 group-hover:scale-[1.05]">
+                class="object-cover object-center transition-transform duration-300 group-hover:scale-[1.05]">
+              <div class="overlay absolute inset-0 opacity-80 group-hover:opacity-30 transition-opacity duration-300">
+              </div>
+              <div
+                class="absolute top-2 left-2 bg-gray-300 bg-opacity-90 rounded-3xl text-black p-[0.37rem] text-center text-xs font-semibold z-10">
+                <p>
+                  <%= p.title %> - <%= p.price %> BHD/month
+                </p>
+              </div>
             </div>
-            <div
-              class="overlay absolute inset-0 opacity-80 group-hover:opacity-30 rounded-lg transition-opacity duration-300">
-            </div>
-            <div
-              class="absolute top-2 left-2 bg-red-900 rounded-3xl opacity-95 text-gray-100 p-2 text-center text-xs z-10">
-              <p>
-                <%= p.title %> - <%= p.price %> BHD/month
+            <div class="bg-white p-4 card-content">
+              <div class="flex justify-between items-center">
+                <p class="text-gray-800 text-lg font-semibold">
+                  <%= p.price %> BHD
+                </p>
+                <span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full">Exclusive</span>
+              </div>
+              <p class="text-gray-600 mt-1 description">
+                <%= p.description %>
               </p>
-            </div>
-            <div class="absolute bottom-2 left-2 flex items-center space-x-2 text-white">
-              <svg width="20px" height="20px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 10c-1.104 0-2-.896-2-2s.896-2 2-2 2 .896 2 2-.896 2-2 2m0-5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m-7 2.602c0-3.517 3.271-6.602 7-6.602s7 3.085 7 6.602c0 3.455-2.563 7.543-7 14.527-4.489-7.073-7-11.072-7-14.527m7-7.602c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602" />
-              </svg>
-              <p class="text-white m-0 p-0">
-                <%= p.location %>
-              </p>
+              <div class="flex items-center mt-4 text-gray-500">
+                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12 10c-1.104 0-2-.896-2-2s.896-2 2-2 2 .896 2 2-.896 2-2 2m0-5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m-7 2.602c0-3.517 3.271-6.602 7-6.602s7 3.085 7 6.602c0 3.455-2.563 7.543-7 14.527-4.489-7.073-7-11.072-7-14.527m7-7.602c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602" />
+                </svg>
+                <p class="ml-2">
+                  <%= p.location %>
+                </p>
+              </div>
+              <div class="flex space-x-3 items-center mt-4 text-gray-500">
+                <div class="flex items-center space-x-1">
+                  <svg fill="currentColor" height="20px" width="20px" version="1.1" id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 511.999 511.999" xml:space="preserve">
+                    <g>
+                      <g>
+                        <path d="M494.565,208.205c-6.121,0-11.251,3.141-14.387,7.894l-24.288-36.256v-50.833c0-29.541-24.435-53.028-53.974-53.028
+			H110.082c-29.539,0-53.974,23.488-53.974,53.027v50.833l-24.338,36.256c-3.136-4.753-8.317-7.894-14.438-7.894
+			C7.65,208.203,0,216.054,0,225.738v155.883c-0.001,9.685,7.648,16.991,17.333,16.991h13.058v19.872
+			c0,9.684,7.851,17.534,17.534,17.534s17.534-7.851,17.534-17.534v-19.872h381.078v19.872c0,9.684,7.851,17.534,17.534,17.534
+			s17.534-7.851,17.534-17.534v-19.872h13.058c9.684,0,17.334-7.306,17.334-16.99V225.739
+			C511.999,216.055,504.249,208.205,494.565,208.205z M91.177,129.008c0-10.203,8.703-17.959,18.905-17.959h291.832
+			c10.203,0,18.905,7.756,18.905,17.959v38.151h-15.37c0.103-0.767,0.174-1.543,0.174-2.338c0-9.684-7.851-17.534-17.534-17.534
+			H123.908c-9.684,0-17.534,7.851-17.534,17.534c0,0.795,0.071,1.571,0.174,2.338H91.177V129.008z M83.855,201.941
+			c0.866,0.132,1.744,0.286,2.647,0.286h341.79l14.329,21.041H69.376L83.855,201.941z M476.93,363.543H35.067V258.337H476.93
+			V363.543z" />
+                      </g>
+                    </g>
+                  </svg>
+                  <p>2</p>
+                </div>
+                <span>&middot;</span>
+                <div class="flex items-center space-x-1">
+                  <svg width="20px" height="20px" fill="currentColor" viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M464,280H80V100A51.258,51.258,0,0,1,95.113,63.515l.4-.4a51.691,51.691,0,0,1,58.6-10.162,79.1,79.1,0,0,0,11.778,96.627l10.951,10.951-20.157,20.158,22.626,22.626,20.157-20.157h0L311.157,71.471h0l20.157-20.157L308.687,28.687,288.529,48.844,277.578,37.893a79.086,79.086,0,0,0-100.929-8.976A83.61,83.61,0,0,0,72.887,40.485l-.4.4A83.054,83.054,0,0,0,48,100V280H16v32H48v30.7a23.95,23.95,0,0,0,1.232,7.589L79,439.589A23.969,23.969,0,0,0,101.766,456h12.9L103,496h33.333L148,456H356.1l12,40H401.5l-12-40h20.73A23.969,23.969,0,0,0,433,439.589l29.766-89.3A23.982,23.982,0,0,0,464,342.7V312h32V280ZM188.52,60.52a47.025,47.025,0,0,1,66.431,0L265.9,71.471,199.471,137.9,188.52,126.951A47.027,47.027,0,0,1,188.52,60.52ZM432,341.4,404.468,424H107.532L80,341.4V312H432Z"
+                      class="ci-primary" />
+                  </svg>
+                  <p>3</p>
+                </div>
+                <span>&middot;</span>
+                <div class="flex items-center space-x-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="20px" height="20px" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="currentColor">
+                    <path d="M867 4588 c-9 -7 -82 -100 -162 -207 -102 -137 -145 -202 -145 -221 0 -19 43 -84 145 -221 80 -107 153 -200 162 -206 27 -21 72 -15 98 12 44 43 35 69 -70 208 l-95 127 1236 0 c988 0 1235 -3 1227 -12 -5 -7 -46 -59 -91 -115 -45 -56 -87 -113 -93 -126 -23 -51 38 -117 95 -103 38 9 346 397 346 436 0 38 -308 427 -345 436 -52 13 -113 -41 -101 -90 3 -13 45 -73 92 -132 48 -60 92 -115 97 -121 8 -10 -239 -13 -1227 -13 l-1236 0 95 127 c105 139 114 165 70 208 -26 27 -71 33 -98 13z"/>
+                    <path d="M655 3486 c-41 -18 -83 -69 -90 -109 -3 -18 -4 -654 -3 -1414 3 -1378 3 -1382 24 -1409 11 -15 33 -37 48 -48 27 -21 29 -21 1416 -21 1387 0 1389 0 1416 21 15 11 37 33 48 48 21 27 21 29 21 1436 0 1407 0 1409 -21 1436 -11 15 -33 37 -48 48 -27 21 -31 21 -1404 23 -1130 2 -1382 0 -1407 -11z m2725 -1496 l0 -1350 -1330 0 -1330 0 0 1350 0 1350 1330 0 1330 0 0 -1350z"/>
+                    <path d="M4012 3280 c-146 -116 -204 -168 -208 -187 -14 -56 48 -113 101 -93 14 5 72 47 128 92 56 45 108 86 115 91 9 8 12 -239 12 -1227 l0 -1236 -127 95 c-139 105 -165 114 -208 70 -27 -26 -33 -71 -12 -98 6 -9 99 -82 206 -162 137 -102 202 -145 221 -145 19 0 84 43 221 145 107 80 200 153 207 162 20 27 14 72 -13 98 -43 44 -69 35 -208 -70 l-127 -95 0 1236 c0 988 3 1235 13 1227 6 -5 58 -46 114 -91 56 -45 114 -87 128 -92 53 -20 115 37 101 94 -10 39 -396 346 -435 346 -21 0 -79 -40 -229 -160z"/>
+                    </g>
+                    </svg>
+                  <p>94 sqm</p>
+                </div>
+              </div>
             </div>
           </div>
         </a>

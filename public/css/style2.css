@@ -30,10 +30,9 @@
   max-width: 85rem;
 }
 
-
 .aspect-ratio-container {
   width: 100%;
-  padding-bottom: 76.67%;
+  padding-bottom: 66.67%; /* 3:2 aspect ratio */
   overflow: hidden;
   position: relative;
 }
@@ -45,4 +44,34 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.card {
+  max-height: 489px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (min-width: 600px) {
+  .card {
+    height: 489px;
+  }
+}
+
+
+.card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: auto; /* Pushes other content to the bottom if description is short */
 }
