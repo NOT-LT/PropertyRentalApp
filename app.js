@@ -20,7 +20,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 
 app.get('/', async (req, res) => {
-  ;
   res.redirect('/properties');
 })
 
@@ -55,7 +54,6 @@ app.post('/properties', async (req, res) => {
 
 app.put('/properties/:id', async (req, res) => {
   const { id } = req.params;
-  console.log({ ...req.body.property })
   const property = await Property.findByIdAndUpdate(id, { ...req.body.property });
   res.redirect(`/properties/${id}`)
 })
@@ -66,6 +64,6 @@ app.delete('/properties/:id', async (req, res) => {
   res.redirect('/properties')
 })
 
-app.listen(3000, () => {
+app.listen(1111, () => {
   console.log("Listening at port 3000");
 })
