@@ -37,5 +37,16 @@ const PropertySchema = new Schema({
 });
 
 
+PropertySchema.pre('save', function(next) {
+  if (this.isModified('listingType') || this.isModified('price')) {
+    if (this.listingType === 'rent') {
+      this.price += ' BHD/month';
+    } else {
+      this.price += ' BHD';
+    }
+  }
+  next();
+});
+
 const Property = mongoose.model('Property', PropertySchema);
 module.exports = Property;

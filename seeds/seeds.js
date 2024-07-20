@@ -110,11 +110,6 @@ const seedDB = async () => {
     const nFloors = generateFloors(type);
     const Rimages = getImages();
     let price = getRandomPrice(type, listingType).toLocaleString();;
-    if (listingType === 'rent') {
-      price += ' BHD/month';
-    } else {
-      price += ' BHD';
-    }
     const contact = generateContactNumber(); // Generate the contact number
     const Nbedrooms = faker.number.int({ min: 1, max: 10 });
     const property = new Property({

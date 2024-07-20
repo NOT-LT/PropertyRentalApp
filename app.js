@@ -16,10 +16,11 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 
-app.get('/', async (req, res) => {;
+app.get('/', async (req, res) => {
+  ;
   res.redirect('/properties');
 })
 
@@ -28,7 +29,7 @@ app.get('/properties', async (req, res) => {
   res.render('properties/index', { properties });
 })
 
-app.get ('/properties/new', (req,res)=> {
+app.get('/properties/new', (req, res) => {
   res.render('properties/new');
 })
 
@@ -38,27 +39,29 @@ app.get('/properties/:id', async (req, res) => {
   res.render('properties/show', { property })
 })
 
-app.get('/properties/:id/edit', async(req,res)=> {
+app.get('/properties/:id/edit', async (req, res) => {
   const { id } = req.params;
   const property = await Property.findById(id);
-  res.render('properties/edit', {property})
+  res.render('properties/edit', { property })
 })
 
-app.post('/properties', async (req,res)=> {
-const property = new Property(req.body.property);
-await property.save();
-res.redirect(`/properties/${property._id}`)
+app.post('/properties', async (req, res) => {
+  const property = new Property({ ...req.body.property });
+  const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0);
+  property.images = images;
+  await property.save();
+  res.redirect(`/properties/${property._id}`)
 })
 
-app.put('/properties/:id', async (req,res)=>{
-  const {id} = req.params;
-  console.log({...req.body.property})
-  const property = await Property.findByIdAndUpdate(id, {...req.body.property});
+app.put('/properties/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log({ ...req.body.property })
+  const property = await Property.findByIdAndUpdate(id, { ...req.body.property });
   res.redirect(`/properties/${id}`)
 })
 
-app.delete('/properties/:id', async (req,res)=> {
-  const {id} = req.params;
+app.delete('/properties/:id', async (req, res) => {
+  const { id } = req.params;
   await Property.findByIdAndDelete(id);
   res.redirect('/properties')
 })

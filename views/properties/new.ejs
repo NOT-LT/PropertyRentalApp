@@ -1,48 +1,161 @@
 <% layout('layout/boilerplate') %>
 
   <form action="/properties" method="POST" class="max-w-xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <!-- Title -->
     <div class="mb-4">
       <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Title</label>
-      <input type="text" name="property[title]" id="title"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      <input type="text" name="property[title]" id="title"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
+
+    <!-- Property Type -->
     <div class="mb-4">
-      <label for="location" class="block text-gray-700 text-sm font-semibold mb-2">Location</label>
-      <input type="text" name="property[location]" id="location" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      <label for="propertyType" class="block text-gray-700 text-sm font-semibold mb-2">Property Type</label>
+      <select name="property[propertyType]" id="propertyType"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required>
+        <option value="" disabled selected>Select a type</option>
+        <option value="flat">Flat</option>
+        <option value="apartment">Apartment</option>
+        <option value="villa">Villa</option>
+        <option value="camp">Camp</option>
+        <option value="studio">Studio</option>
+      </select>
     </div>
-    <div class="mb-4 ">
-      <label for="image" class="block text-gray-700 text-sm font-semibold mb-2">Image Url</label>
-      <input type="text" name="property[image]" id="image"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-    </div>
-    <div class="mb-4">
-      <label for="description" class="block text-gray-700 text-sm font-semibold mb-2">Description</label>
-      <input type="text" name="property[description]" id="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-    </div>
+
+    <!-- Price -->
     <div class="mb-4">
       <label for="price" class="block text-gray-700 text-sm font-semibold mb-2">Price/month</label>
       <div class="relative flex flex-nowrap items-stretch shadow">
         <span
-          class="bg-gray-200 text-sm text-gray-700 font-semibold flex items-center whitespace-nowrap rounded-s border border-e-0 border-solid border-neutral-200 px-3 py-[0.25rem] text-center leading-tight text-surface dark:border-white/10 dark:text-white"
-          id="addon-wrapping"
-          >BHD</span
-        >
-        <input
-          type="text"
-          class="relative m-0 block flex-auto rounded-e border border-solid border-neutral-200 bg-transparent bg-clip-padding py-2 px-3 text-base font-normal leading-tight text-surface outline-none transition duration-200 ease-in-out placeholder:text-neutral-500 focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:placeholder:text-neutral-200 dark:autofill:shadow-autofill dark:focus:border-primary"
-          placeholder="price"
-          aria-label="price"
-          aria-describedby="addon-wrapping"
-          name="property[price]" id="price" />
+          class="bg-gray-200 text-sm text-gray-700 font-semibold flex items-center whitespace-nowrap rounded-s border border-e-0 border-solid border-neutral-200 px-3 py-[0.25rem] text-center leading-tight text-surface"
+          id="addon-wrapping">BHD</span>
+        <input type="text"
+          class="relative m-0 block flex-auto rounded-e border border-solid border-neutral-200 bg-transparent bg-clip-padding py-2 px-3 text-base font-normal leading-tight text-surface outline-none transition duration-200 ease-in-out placeholder:text-neutral-500 focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none"
+          placeholder="price" aria-label="price" aria-describedby="addon-wrapping" name="property[price]" id="price" />
       </div>
     </div>
+
+    <!-- Images -->
+    <div class="mb-4">
+      <label for="images" class="block text-gray-700 text-sm font-semibold mb-2">Images (URLs)</label>
+      <input type="text" name="property[images]" id="images"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        placeholder="Enter image URLs separated by commas">
+    </div>
+
+    <!-- Description -->
+    <div class="mb-4">
+      <label for="description" class="block text-gray-700 text-sm font-semibold mb-2">Description</label>
+      <textarea name="property[description]" id="description"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        rows="4" placeholder="Description"></textarea>
+    </div>
+
+    <!-- Bedrooms -->
+    <div class="mb-4">
+      <label for="bedrooms" class="block text-gray-700 text-sm font-semibold mb-2">Bedrooms</label>
+      <input type="text" name="property[bedrooms]" id="bedrooms"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Bathrooms -->
+    <div class="mb-4">
+      <label for="bathrooms" class="block text-gray-700 text-sm font-semibold mb-2">Bathrooms</label>
+      <input type="text" name="property[bathrooms]" id="bathrooms"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Halls -->
+    <div class="mb-4">
+      <label for="halls" class="block text-gray-700 text-sm font-semibold mb-2">Halls</label>
+      <input type="text" name="property[halls]" id="halls"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Area in Sqft -->
+    <div class="mb-4">
+      <label for="areaInSqft" class="block text-gray-700 text-sm font-semibold mb-2">Area in Sqft</label>
+      <input type="text" name="property[areaInSqft]" id="areaInSqft"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Garages -->
+    <div class="mb-4">
+      <label for="garages" class="block text-gray-700 text-sm font-semibold mb-2">Garages</label>
+      <input type="text" name="property[garages]" id="garages"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Built-up Area -->
+    <div class="mb-4">
+      <label for="builtupArea" class="block text-gray-700 text-sm font-semibold mb-2">Built-up Area</label>
+      <input type="text" name="property[builtupArea]" id="builtupArea"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Number of Floors -->
+    <div class="mb-4">
+      <label for="noOfFloors" class="block text-gray-700 text-sm font-semibold mb-2">Number of Floors</label>
+      <input type="text" name="property[noOfFloors]" id="noOfFloors"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Number of Roads -->
+    <div class="mb-4">
+      <label for="noOfRoads" class="block text-gray-700 text-sm font-semibold mb-2">Number of Roads</label>
+      <input type="text" name="property[noOfRoads]" id="noOfRoads"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Classification -->
+    <div class="mb-4">
+      <label for="classification" class="block text-gray-700 text-sm font-semibold mb-2">Classification</label>
+      <input type="text" name="property[classification]" id="classification"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Listing Type -->
+    <div class="mb-4">
+      <label for="listingType" class="block text-gray-700 text-sm font-semibold mb-2">Listing Type</label>
+      <select name="property[listingType]" id="listingType"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required>
+        <option value="" disabled selected>Select a type</option>
+        <option value="sale">Sale</option>
+        <option value="rent">Rent</option>
+      </select>
+    </div>
+
+    <!-- Contact -->
+    <div class="mb-4">
+      <label for="contact" class="block text-gray-700 text-sm font-semibold mb-2">Contact</label>
+      <input type="text" name="property[contact]" id="contact"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Property Usage -->
+    <div class="mb-4">
+      <label for="propertyUsage" class="block text-gray-700 text-sm font-semibold mb-2">Property Usage</label>
+      <input type="text" name="property[propertyUsage]" id="propertyUsage"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- BFID -->
+    <div class="mb-4">
+      <label for="BFID" class="block text-gray-700 text-sm font-semibold mb-2">BFID</label>
+      <input type="text" name="property[BFID]" id="BFID"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
     <div class="flex flex-row justify-between">
-      <button type="submit" class="bg-sky-700  hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+      <button type="submit"
+        class="bg-sky-700  hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
         Add
       </button>
-      <a href="/properties/" class="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
+      <a href="/properties/"
+        class="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
         Go back
-      </a>  
+      </a>
     </div>
-    
+
   </form>
-
-
