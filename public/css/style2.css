@@ -32,7 +32,8 @@
 
 .aspect-ratio-container {
   width: 100%;
-  padding-bottom: 66.67%; /* 3:2 aspect ratio */
+  padding-bottom: 66.67%;
+  /* 3:2 aspect ratio */
   overflow: hidden;
   position: relative;
 }
@@ -47,15 +48,10 @@
 }
 
 .card {
-  max-height: 489px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-@media (min-width: 600px) {
-  .card {
-    height: 489px;
-  }
+  height: 100%;
 }
 
 
@@ -64,14 +60,39 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
 }
 
 .description {
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-line-clamp: 2;
+  /* number of lines to show */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: auto; /* Pushes other content to the bottom if description is short */
+  margin-bottom: auto;
+  /* Pushes other content to the bottom if description is short */
+}
+
+.vertical-hr {
+  width: 0.65px;
+  /* Adjust the width to your desired thickness */
+  height: 50px;
+  /* Adjust the height as needed */
+  /* Change color if needed */
+  color: green;
+  background-color: rgb(189, 189, 189);
+  /* Adjust spacing around the line */
+}
+
+.swiper-wrapper {
+  width: 100%;
+  height: max-content !important;
+  padding-bottom: 64px !important;
+  -webkit-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
+  position: relative;
+}
+
+.swiper-pagination-bullet {
+  background: #4f46e5;
 }

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const Property = require('../models/property');
-const axios = require('axios')
 
 // Database connection
 mongoose.connect('mongodb://localhost:27017/propertyRentalApp');
@@ -16,42 +15,128 @@ const cities = [
   'Manama', 'Riffa', 'Muharraq', 'Hamad Town', 'A\'ali', 'Isa Town', 'Sitra', 'Budaiya', 'Jidhafs', 'Zallaq'
 ];
 
-const governorates = [
-  'Capital Governorate', 'Northern Governorate', 'Southern Governorate', 'Muharraq Governorate'
-];
-
 const types = [
-  'flat', 'apartment', 'villa', 'studio', 'townhouse', 'duplex', 'farmhouse'
+  'flat', 'apartment', 'villa', 'camp', 'studio'
 ];
 
-const getRandomPrice = (type) => {
+const listingTypes = [
+  'sale', 'rent'
+];
+
+const propertyUsages = [
+  'Industrial', 'Commerce', 'Apartments', 'Retail', 'Office', 'Agriculture', 'Residential'
+];
+
+const classificationMapping = {
+  'Residential': ['RA', 'RB', 'RHA', 'RHB', 'RG'],
+  'Industrial': ['S'],
+  'Commerce': ['BA', 'BB', 'BC'],
+  'Apartments': ['BA', 'BB', 'BC'],
+  'Retail': ['BA', 'BB', 'BC'],
+  'Office': ['BA', 'BB', 'BC'],
+  'Agriculture': ['AG']
+};
+
+
+const getRandomPrice = (type, listingType) => {
+  if (listingType === 'sale') {
+    switch (type) {
+      case 'flat':
+      case 'studio':
+      case 'apartment':
+        return Math.round(faker.number.int({ min: 45000, max: 110000 }) / 100) * 100; // to get a number with 0 in ones and tens
+      case 'villa':
+      case 'camp':
+        return Math.round(faker.number.int({ min: 100000, max: 780000 }) / 100) * 100;
+      default:
+        return Math.round(faker.number.int({ min: 45000, max: 780000 }) / 100) * 100;
+    }
+  } else {
+    switch (type) {
+      case 'flat':
+      case 'studio':
+      case 'apartment':
+        return faker.number.int({ min: 120, max: 600 });
+      case 'villa':
+      case 'camp':
+        return faker.number.int({ min: 600, max: 1200 });
+      default:
+        return faker.number.int({ min: 120, max: 1200 });
+    }
+  }
+};
+
+// Function to generate a random contact number
+const generateContactNumber = () => {
+  const prefix = '+973';
+  const startDigit = faker.helpers.arrayElement(['3', '6']);
+  const number = `${startDigit}${faker.number.int({ min: 1000000, max: 9999999 })}`;
+  return `${prefix}${number}`;
+};
+
+const generateFloors = (type) => {
   switch (type) {
     case 'flat':
     case 'studio':
     case 'apartment':
-      return faker.number.int({ min: 120, max: 600 });
+      return faker.number.int({ min: 1, max: 2 });
     case 'villa':
-    case 'penthouse':
-    case 'townhouse':
-      return faker.number.int({ min: 600, max: 1200 });
+      return faker.number.int({ min: 1, max: 4 });
+    case 'camp':
+      return 1
     default:
-      return faker.number.int({ min: 120, max: 1200 });
+      return faker.number.int({ min: 1, max: 3 });
   }
-};
+}
+
+const getImages = () => {
+  arr = []
+  const n = faker.number.int({ min: 3, max: 6 });
+  for (let i = 0; i < n; i++) {
+    arr[i] = `https://picsum.photos/seed/${faker.number.int({ min: 1, max: 9999 })}/1280/720`
+  }
+  return arr;
+}
 
 const seedDB = async () => {
   await Property.deleteMany({}); // Clear existing data
 
   for (let i = 0; i < 50; i++) {
+    const listingType = faker.helpers.arrayElement(listingTypes);
     const type = faker.helpers.arrayElement(types);
-    const price = getRandomPrice(type);
-
+    const usage = faker.helpers.arrayElement(propertyUsages);
+    const classificationOptions = classificationMapping[usage];
+    const classification = faker.helpers.arrayElement(classificationOptions);
+    const nFloors = generateFloors(type);
+    const Rimages = getImages();
+    let price = getRandomPrice(type, listingType).toLocaleString();;
+    if (listingType === 'rent') {
+      price += ' BHD/month';
+    } else {
+      price += ' BHD';
+    }
+    const contact = generateContactNumber(); // Generate the contact number
+    const Nbedrooms = faker.number.int({ min: 1, max: 10 });
     const property = new Property({
       title: `${faker.commerce.productAdjective()} ${type}`,
+      propertyType: type,
       price: price.toString(),
+      images: Rimages,
       description: faker.lorem.paragraph(),
-      image: `https://picsum.photos/1024?random=${Math.random()*100}`,
-      location: `${faker.helpers.arrayElement(cities)}`
+      bedrooms: Nbedrooms.toString(),
+      bathrooms: (Nbedrooms + faker.number.int({ min: -1, max: 2 })).toString(),
+      halls: faker.number.int({ min: 1, max: 4 }).toString(),
+      areaInSqft: (Math.round(faker.number.float({ min: 100.0, max: 1300.0 }) * 10.0) / 10.0).toString(),
+      garages: faker.number.int({ min: 0, max: 3 }).toString(),
+      builtupArea: (Math.round(faker.number.float({ min: 100.0, max: 1300.0 }) * 10.0) / 10.0).toString(),
+      noOfFloors: nFloors,
+      noOfRoads: faker.number.int({ min: 1, max: 4 }).toString(),
+      location: `${faker.helpers.arrayElement(cities)}`,
+      classification: classification,
+      listingType: listingType,
+      contact: '+97338820989', // Add contact field
+      propertyUsage: usage,
+      BFID: faker.string.uuid(),
     });
 
     await property.save();
@@ -59,5 +144,6 @@ const seedDB = async () => {
 };
 
 seedDB().then(() => {
+  console.log("Seed data generated successfully!");
   mongoose.connection.close();
 });

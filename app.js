@@ -52,6 +52,7 @@ res.redirect(`/properties/${property._id}`)
 
 app.put('/properties/:id', async (req,res)=>{
   const {id} = req.params;
+  console.log({...req.body.property})
   const property = await Property.findByIdAndUpdate(id, {...req.body.property});
   res.redirect(`/properties/${id}`)
 })
