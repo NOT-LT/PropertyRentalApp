@@ -25,7 +25,7 @@ app.get('/', async (req, res) => {
 
 app.get('/properties', async (req, res) => {
   const properties = await Property.find({});
-  res.render('properties/index', { properties });
+  res.render('properties/index', {properties})
 })
 
 app.get('/properties/new', (req, res) => {
@@ -55,6 +55,9 @@ app.post('/properties', async (req, res) => {
 app.put('/properties/:id', async (req, res) => {
   const { id } = req.params;
   const property = await Property.findByIdAndUpdate(id, { ...req.body.property });
+  const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0)
+  property.images = images;
+  await property.save();
   res.redirect(`/properties/${id}`)
 })
 

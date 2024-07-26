@@ -1,52 +1,235 @@
 <% layout('layout/boilerplate') %>
   <h1 class="text-center text-2xl mb-4">Edit Property Information</h1>
   <form action="/properties/<%= property._id %>?_method=PUT" method="POST"
-    class="max-w-xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <div class="mb-4">
-      <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Title</label>
-      <input type="text" name="property[title]" id="title" value="<%= property.title %>"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-    </div>
-    <div class="mb-4">
-      <label for="location" class="block text-gray-700 text-sm font-semibold mb-2">Location</label>
-      <input type="text" name="property[location]" id="location" value="<%= property.location %>"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-    </div>
-    <% property.images.forEach((image, index) => { %>
+    class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Title -->
+      <div class="mb-4" required>
+        <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Title</label>
+        <input type="text" name="property[title]" id="title" minlength="5"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="Villa in Banijamra" value="<%= property.title %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid title</span>
+      </div>
+
+      <!-- Property Type -->
       <div class="mb-4">
-        <label for="image<%= index + 1 %>" class="block text-gray-700 text-sm font-semibold mb-2">Image URL <%= index + 1 %></label>
-        <input type="text" name="property[images][<%= index + 1 %>]" id="image<%= index + 1 %>" value="<%= image %>"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        <label for="propertyType" class="block text-gray-700 text-sm font-semibold mb-2">Property Type</label>
+        <select name="property[propertyType]" id="propertyType" placeholder="Villa in Banijamra"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required>
+          <option value="" disabled >Select a type</option>
+          <option value="flat" <%= property.propertyType === 'flat' ? 'selected' : ''%>>Flat</option>
+          <option value="apartment" <%= property.propertyType === 'apartment' ? 'selected' : ''%>>Apartment</option>
+          <option value="villa" <%= property.propertyType === 'villa' ? 'selected' : ''%>>Villa</option>
+          <option value="camp" <%= property.propertyType === 'camp' ? 'selected' : ''%>>Camp</option>
+          <option value="studio" <%= property.propertyType === 'studio' ? 'selected' : ''%>>Studio</option>
+        </select>
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          select a property type</span>
       </div>
-    <% }) %>
-    <div class="mb-4">
-      <label for="description" class="block text-gray-700 text-sm font-semibold mb-2">Description</label>
-      <input type="text" name="property[description]" id="description" value="<%= property.description %>"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-    </div>
-    <div class="mb-4">
-      <label for="price" class="block text-gray-700 text-sm font-semibold mb-2">Price/month</label>
-      <div class="relative flex flex-nowrap items-stretch shadow">
-        <span
-          class="bg-gray-200 text-sm text-gray-700 font-semibold flex items-center whitespace-nowrap rounded-s border border-e-0 border-solid border-neutral-200 px-3 py-[0.25rem] text-center leading-tight text-surface dark:border-white/10 dark:text-white"
-          id="addon-wrapping">BHD</span>
-        <input type="text"
-          class="relative m-0 block flex-auto rounded-e border border-solid border-neutral-200 bg-transparent bg-clip-padding py-2 px-3 text-base font-normal leading-tight text-surface outline-none transition duration-200 ease-in-out placeholder:text-neutral-500 focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:placeholder:text-neutral-200 dark:autofill:shadow-autofill dark:focus:border-primary"
-          placeholder="price" aria-label="price" aria-describedby="addon-wrapping" name="property[price]" id="price"
-          value="<%= property.price %>" />
+
+      <!-- Price -->
+      <div class="mb-4">
+        <label for="price" class="block text-gray-700 text-sm font-semibold mb-2">Price</label>
+        <input type="text" name="property[price]" id="price" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="1000000" pattern="^[0-9,.]*$"
+          value="<%= property.price.replace(' BHD', '') %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid price</span>
+      </div>
+
+      <!-- Images -->
+      <div class="mb-4">
+        <label for="images" class="block text-gray-700 text-sm font-semibold mb-2">Images (URLs)</label>
+        <input type="text" name="property[images]" id="images" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="http://example.com/image1.jpg, http://example.com/image2.jpg"
+          value="<%= property.images.join(',') %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter valid image URLs</span>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-4 col-span-1 md:col-span-2">
+        <label for="description" class="block text-gray-700 text-sm font-semibold mb-2">Description</label>
+        <textarea name="property[description]" id="description" rows="3" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="Describe the property..."><%= property.description %></textarea>
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid description</span>
+      </div>
+
+      <!-- Bedrooms -->
+      <div class="mb-4">
+        <label for="bedrooms" class="block text-gray-700 text-sm font-semibold mb-2">Bedrooms</label>
+        <input type="text" name="property[bedrooms]" id="bedrooms" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="3" pattern="^[0-9]*$"
+          value="<%= property.bedrooms %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid number of bedrooms</span>
+      </div>
+
+      <!-- Bathrooms -->
+      <div class="mb-4">
+        <label for="bathrooms" class="block text-gray-700 text-sm font-semibold mb-2">Bathrooms</label>
+        <input type="text" name="property[bathrooms]" id="bathrooms" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="8" pattern="^[0-9]*$"
+          value="<%= property.bathrooms %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid number of bathrooms</span>
+      </div>
+
+      <!-- Halls -->
+      <div class="mb-4">
+        <label for="halls" class="block text-gray-700 text-sm font-semibold mb-2">Halls</label>
+        <input type="text" name="property[halls]" id="halls" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="1" pattern="^[0-9]*$"
+         value="<%= property.halls %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid number of halls</span>
+      </div>
+
+      <!-- Area in Sqft -->
+      <div class="mb-4">
+        <label for="areaInSqft" class="block text-gray-700 text-sm font-semibold mb-2">Area (Sqft)</label>
+        <input type="text" name="property[areaInSqft]" id="areaInSqft" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="2000" pattern="^\d+(\.\d+)?$"
+          value="<%= property.areaInSqft %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid area in sqft</span>
+      </div>
+
+      <!-- Garages -->
+      <div class="mb-4">
+        <label for="garages" class="block text-gray-700 text-sm font-semibold mb-2">Garages</label>
+        <input type="text" name="property[garages]" id="garages" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="2" pattern="^[0-9]*$"
+          value="<%= property.garages %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid number of garages</span>
+      </div>
+      <!-- Built-up Area -->
+      <div class="mb-4">
+        <label for="builtupArea" class="block text-gray-700 text-sm font-semibold mb-2">Built-up Area</label>
+        <input type="text" name="property[builtupArea]" id="builtupArea" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="220" pattern="^\d+(\.\d+)?$"
+          value="<%= property.builtupArea %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid number</span>
+      </div>
+
+      <!-- Number of Floors -->
+      <div class="mb-4">
+        <label for="noOfFloors" class="block text-gray-700 text-sm font-semibold mb-2">Number of Floors</label>
+        <input type="text" name="property[noOfFloors]" id="noOfFloors" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required pattern="^[0-9]*$" placeholder="3"
+          value="<%= property.noOfFloors %>">
+        <span class="mt-2 hidden text-sm text-red-700
+          peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+          Please enter a valid number of roads
+        </span>
+      </div>
+
+      <!-- Number of Roads -->
+      <div class="mb-4">
+        <label for="noOfRoads" class="block text-gray-700 text-sm font-semibold mb-2">Number of Roads</label>
+        <input type="text" name="property[noOfRoads]" id="noOfRoads" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="1"
+          value="<%= property.noOfRoads %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid number of roads</span>
+      </div>
+
+      <!-- Location -->
+      <div class="mb-4">
+        <label for="location" class="block text-gray-700 text-sm font-semibold mb-2">Location</label>
+        <input type="text" name="property[location]" id="location" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="Banijamra"
+          value="<%= property.location %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid location</span>
+      </div>
+
+      <!-- Classification -->
+      <div class="mb-4">
+        <label for="classification" class="block text-gray-700 text-sm font-semibold mb-2">Classification</label>
+        <input type="text" name="property[classification]" id="classification" minlength="1"
+          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="RB"
+          value="<%= property.classification %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid classification</span>
+      </div>
+
+      <!-- Listing Type -->
+      <div class="mb-4">
+        <label for="listingType" class="block text-gray-700 text-sm font-semibold mb-2">Listing Type</label>
+        <select name="property[listingType]" id="listingType"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required>
+          <option value="" disabled selected>Select listing type</option>
+          <option value="sale" <%= property.listingType === 'sale' ? 'selected' : ''%>>Sale</option>
+          <option value="rent" <%= property.listingType === 'rent' ? 'selected' : ''%>>Rent</option>
+        </select>
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          Select a valid listing types</span>
+      </div>
+
+      <!-- Contact -->
+      <div class="mb-4">
+        <label for="contact" class="block text-gray-700 text-sm font-semibold mb-2">Contact</label>
+        <div class="relative flex flex-nowrap items-stretch shadow">
+          <span
+            class="bg-gray-200 text-sm text-gray-700 font-semibold flex items-center whitespace-nowrap rounded-s border border-e-0 border-solid border-neutral-200 px-3 py-[0.25rem] text-center leading-tight"
+            id="addon-wrapping">+973</span>
+          <input type="text" name="property[contact]" id="contact" minlength="8"
+            class="peer relative block flex-auto rounded-e appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-0 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+            placeholder="38820989" aria-label="contact" aria-describedby="addon-wrapping" required
+            pattern="^[0-9]{8}$" 
+            value="<%= property.contact.replace('+973','') %>"/>
+        </div>
+
+        <!-- Validation message -->
+        <span class="mt-2 hidden text-sm text-red-700 peer-invalid:block peer-invalid:visible">Please enter a valid
+          contact number</span>
+      </div>
+
+      <!-- Property Usage -->
+      <div class="mb-4">
+        <label for="propertyUsage" class="block text-gray-700 text-sm font-semibold mb-2">Property Usage</label>
+        <input type="text" name="property[propertyUsage]" id="propertyUsage" minlength="1"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          required placeholder="Resedential" value="<%= property.propertyUsage %>">
+        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
+          enter a valid property usage (e.g. Resedential)</span>
       </div>
     </div>
 
-
-
-    <div class="flex items-center justify-between">
-      <button type="submit"
-        class="bg-sky-700  hover:bg-sky-800 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Update
+    <!-- Submit Button -->
+    <div class="mt-4">
+      <button type="submit" id="createPropertyButton"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline peer-invalid:pointer-events-none peer-invalid:opacity-50">
+        Submit
       </button>
+    </div>
+
+    <div class="mt-4">
       <a href="/properties/<%= property._id %>"
         class="inline-block align-baseline font-semibold text-sm text-blue-500 hover:text-blue-800">
         Back to property
       </a>
     </div>
+
   </form>
