@@ -33,12 +33,17 @@ const PropertySchema = new Schema({
   contact: String,
   propertyUsage: String,
   BFID: String,
-
 });
 
+function addCommasToNumberInString(str) {
+  return str.replace(/\d+/g, function (match) {
+    return Number(match).toLocaleString();
+  });
+}
 
-PropertySchema.pre('save', function(next) {
-  if (this.isModified('listingType') || this.isModified('price')) {
+PropertySchema.pre('save', function (next) {
+  this.price = addCommasToNumberInString(this.price.replace(',', ''))
+  if (!this.price.includes('BHD')) {
     if (this.listingType === 'rent') {
       this.price += ' BHD/month';
     } else {

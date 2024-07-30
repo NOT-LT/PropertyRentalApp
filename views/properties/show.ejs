@@ -928,3 +928,46 @@
     </section>
 
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const images = document.querySelectorAll('[id^="image"]'); // CSS Atrribute selector
+      const indicators = document.querySelectorAll('[id^="indicator"]');
+      let currentIndex = 0;
+
+      const showImage = (index) => {
+        images.forEach((img, i) => {
+          if (i === index) {
+            img.classList.remove('hidden');
+            img.classList.add('opacity-100');
+            indicators[i].classList.add('bg-white');
+            indicators[i].classList.remove('bg-gray-400');
+          } else {
+            img.classList.add('hidden');
+            img.classList.remove('opacity-100');
+            indicators[i].classList.remove('bg-white');
+            indicators[i].classList.add('bg-gray-400');
+          }
+        });
+      };
+
+      const nextImage = () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+      };
+
+      const prevImage = () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+      };
+
+      document.getElementById('next').addEventListener('click', nextImage);
+      document.getElementById('prev').addEventListener('click', prevImage);
+
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => showImage(index));
+      });
+
+      showImage(currentIndex);
+    });
+  </script>

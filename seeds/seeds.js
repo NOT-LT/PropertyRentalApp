@@ -109,7 +109,7 @@ const seedDB = async () => {
     const classification = faker.helpers.arrayElement(classificationOptions);
     const nFloors = generateFloors(type);
     const Rimages = getImages();
-    let price = getRandomPrice(type, listingType).toLocaleString();;
+    let price = getRandomPrice(type, listingType).toLocaleString();
     const contact = generateContactNumber(); // Generate the contact number
     const Nbedrooms = faker.number.int({ min: 1, max: 10 });
     const property = new Property({
