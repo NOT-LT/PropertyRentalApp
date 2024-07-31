@@ -3,10 +3,11 @@ const path = require('path');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const Property = require('./models/property');
+const Inquiry = require('./models/inquiry');
 const mongoose = require("mongoose");
 const ExpressError = require('./utils/ExpressError')
 const asyncHandler = require('./utils/asyncHandler')
-const {propertyValidationSchema} = require('./validationSchemas')
+const { propertyValidationSchema, inquiryValidationSchema } = require('./validationSchemas')
 mongoose.connect('mongodb://localhost:27017/propertyRentalApp');
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -23,13 +24,22 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride('_method'));
 
-const validateProperty = (req,res,next) => {
-  
+const validateProperty = (req, res, next) => {
   const { error } = propertyValidationSchema.validate(req.body);
   if (error) {
     const msg = error.details.map(el => el.message).join(',')
     throw new ExpressError(400, msg)
   }
+  next()
+}
+
+const validateInquiry = (req, res, next) => {
+  const { error } = inquiryValidationSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(',')
+    throw new ExpressError(400, msg)
+  }
+  next()
 }
 
 app.get('/', asyncHandler(async (req, res) => {
@@ -57,7 +67,7 @@ app.get('/properties/:id/edit', asyncHandler(async (req, res) => {
   res.render('properties/edit', { property })
 }))
 
-app.post('/properties', validateProperty ,asyncHandler(async (req, res) => {
+app.post('/properties', validateProperty, asyncHandler(async (req, res) => {
   const property = new Property({ ...req.body.property });
   const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0);
   property.images = images;
@@ -65,6 +75,14 @@ app.post('/properties', validateProperty ,asyncHandler(async (req, res) => {
   res.redirect(`/properties/${property._id}`)
 }))
 
+app.post('/properties/:id/inquiry', validateInquiry, asyncHandler(async (req, res) => {
+  const property = await Property.findById(req.params.id);
+  const inquiry = new Inquiry(req.body.inquiry)
+  property.Inquiries.push(inquiry);
+  await inquiry.save();
+  await property.save();
+  res.status(200).send({ status: 'OK' });
+}))
 
 
 app.put('/properties/:id', asyncHandler(async (req, res, next) => {

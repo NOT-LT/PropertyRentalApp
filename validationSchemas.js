@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const Inquiry = require('./models/inquiry');
 
 
 module.exports.propertyValidationSchema = Joi.object({
@@ -25,3 +26,10 @@ module.exports.propertyValidationSchema = Joi.object({
     BFID: Joi.string().optional(),
   }).required()
 });
+
+module.exports.inquiryValidationSchema = Joi.object({
+  inquiry: Joi.object({
+    body: Joi.string().min(1).required(),
+    rating: Joi.number().optional()
+  })
+}).required()

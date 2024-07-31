@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Inquiry = require('./inquiry');
 const { Schema } = mongoose; // Destructuring assignment to get Schema directly
 
 const PropertySchema = new Schema({
@@ -32,6 +33,12 @@ const PropertySchema = new Schema({
   },
   contact: String,
   propertyUsage: String,
+  Inquiries: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Inquiry'
+    }
+  ],
   BFID: String,
 });
 
