@@ -78,7 +78,7 @@ app.post('/properties', validateProperty, asyncHandler(async (req, res) => {
 app.post('/properties/:id/inquiry', validateInquiry, asyncHandler(async (req, res) => {
   const property = await Property.findById(req.params.id);
   const inquiry = new Inquiry(req.body.inquiry)
-  property.Inquiries.push(inquiry);
+  property.inquiries.push(inquiry);
   await inquiry.save();
   await property.save();
   res.status(200).send({ status: 'OK' });

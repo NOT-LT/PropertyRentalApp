@@ -33,7 +33,7 @@ const PropertySchema = new Schema({
   },
   contact: String,
   propertyUsage: String,
-  Inquiries: [
+  inquiries: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Inquiry'
@@ -60,5 +60,14 @@ PropertySchema.pre('save', function (next) {
   next();
 });
 
+PropertySchema.post('findOneAndDelete', async function(doc) { // this will be hit even for findByIdAndDelete
+  if (doc){
+    await Inquiry.deleteMany({
+      _id: {
+        $in: doc.inquiries
+      }
+    })
+  }
+})
 const Property = mongoose.model('Property', PropertySchema);
 module.exports = Property;
