@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router({mergeParams: true});
+const router = express.Router({mergeParams: true}); // enabling req.params because the endpoint is not in this file
 const ExpressError = require('../utils/ExpressError')
 const asyncHandler = require('../utils/asyncHandler')
 const Property = require('../models/property');

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ExpressError = require('../utils/ExpressError')
 const asyncHandler = require('../utils/asyncHandler')
+const {propertyValidationSchema} = require('../validationSchemas');
 const Property = require('../models/property');
 const Inquiry = require('../models/inquiry');
 
@@ -41,24 +42,21 @@ router.post('/', validateProperty, asyncHandler(async (req, res) => {
   const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0);
   property.images = images;
   await property.save();
-  res.redirect(`/${property._id}`)
+  req.flash('success', 'Successfully created a new proeprty!')
+  res.redirect(`properties/${property._id}`)
 }))
 
 
 
 
-router.put('/:id', asyncHandler(async (req, res, next) => {
+router.put('/:id', asyncHandler(async (req, res) => {
   const { id } = req.params;
-  if (req.body.property) {
     const property = await Property.findByIdAndUpdate(id, { ...req.body.property }, { new: true });
     const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0);
     property.images = images;
     await property.save();
-    res.redirect(`/${id}`)
-  } else {
-    throw new ExpressError(400, "Unexpected body")
-  }
-
+    req.flash('success', 'Successfully updated property info!')
+    res.redirect(`/properties/${id}`)
 }))
 
 

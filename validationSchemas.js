@@ -7,7 +7,7 @@ module.exports.propertyValidationSchema = Joi.object({
     title: Joi.string().required(),
     propertyType: Joi.string().valid('flat', 'apartment', 'villa', 'camp', 'studio').required(),
     price: Joi.string().required(),
-    images: Joi.array().items(Joi.string()).optional(),
+    images: Joi.string().optional(),
     description: Joi.string().optional(),
     bedrooms: Joi.string().optional(),
     bathrooms: Joi.string().optional(),

@@ -11,8 +11,9 @@
 
   <body class="bg-gray-100 flex flex-col min-h-screen min-w-full">
     <%- include('../partials/navbar') -%>
+    <%- include('../partials/flashAlert') -%>
 
-      <div class="flex-1 py-6 flex items-center justify-center">
+      <div class="flex-1 py-3 flex items-center justify-center">
         <div class="mx-auto w-full max-size lg:px-10">
           <%- body %>
         </div>
@@ -20,24 +21,10 @@
 
       <%- include('../partials/footer') -%>
 
-        <script>
-          const burgerBtn = document.getElementById('burger-btn');
-          const mobileMenu = document.getElementById('mobile-menu');
-
-          burgerBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-
-            setTimeout(() => {
-              mobileMenu.classList.toggle('show');
-            }, 10);
-          });
-
-        </script>
-
-
   </body>
 
 
+    <script src="/js/navbar.js"></script>
 
 
 
