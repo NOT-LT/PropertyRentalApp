@@ -6,7 +6,11 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const ExpressError = require('./utils/ExpressError')
 const asyncHandler = require('./utils/asyncHandler')
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const passport = require('passport'); 
+const LocalStrategy = require('passport-local');
+const passportLocalMongoose = require('passport-local-mongoose')
+const User = require('./models/user');
 
 const propertiesRoute = require('./routes/properties')
 const inquiriesRoute = require('./routes/inquiry')
@@ -36,6 +40,20 @@ const sessionConfig = {
   }
 }
 app.use(expressSession(sessionConfig))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.get('/make', async (req,res)=> {
+  const user = new User({email: 'test@gmail.com', username:'tester1'});
+  const newUser = await User.register(user, 'mypassword');
+  res.send(newUser);
+})
+
 app.use(flash())
 app.use((req,res,next)=> {
   res.locals.success = req.flash('success');
@@ -62,6 +80,6 @@ app.use((err, req, res, next) => {
 
 
 
-app.listen(1111, () => {
+app.listen(3000, () => {
   console.log("Listening at port 3000");
 })
