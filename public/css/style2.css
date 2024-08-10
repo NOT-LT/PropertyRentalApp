@@ -87,3 +87,10 @@
   pointer-events: none;
   opacity: 0.4;
 }
+
+.customNav {
+  border-bottom: 1px solid #ccc; /* Light border for separation */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow for depth */
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.85);
+}

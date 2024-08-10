@@ -9,11 +9,13 @@
     <title>Document</title>
   </head>
 
-  <body class="bg-gray-100 flex flex-col min-h-screen min-w-full">
-    <%- include('../partials/navbar') -%>
+  <body class=" flex flex-col min-h-screen min-w-full">
+    <% if (page.title !== 'login' && page.title !== 'register') { %>
+      <%- include('../partials/navbar') -%>
+    <% } %>
     <%- include('../partials/flashAlert') -%>
 
-      <div class="flex-1 py-3 flex items-center justify-center">
+      <div class="flex-1 py-3 flex items-center justify-center bg-white">
         <div class="mx-auto w-full max-size lg:px-10">
           <%- body %>
         </div>

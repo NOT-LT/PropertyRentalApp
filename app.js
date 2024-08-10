@@ -6,10 +6,15 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const ExpressError = require('./utils/ExpressError')
 const asyncHandler = require('./utils/asyncHandler')
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const passport = require('passport'); 
+const LocalStrategy = require('passport-local');
+const passportLocalMongoose = require('passport-local-mongoose')
+const User = require('./models/user');
 
 const propertiesRoute = require('./routes/properties')
 const inquiriesRoute = require('./routes/inquiry')
+const usersRoute = require('./routes/users')
 mongoose.connect('mongodb://localhost:27017/propertyRentalApp');
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -36,19 +41,38 @@ const sessionConfig = {
   }
 }
 app.use(expressSession(sessionConfig))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.get('/make', async (req,res)=> {
+  const user = new User({email: 'test@gmail.com', username:'tester1'});
+  const newUser = await User.register(user, 'mypassword');
+  res.send(newUser);
+})
+
 app.use(flash())
 app.use((req,res,next)=> {
+  res.locals.page = { page: {title: ''}}
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
+  res.locals.currentUser = req.user; // passport stores user info in session and we have access to it in all templates
   next();
 })
 
+app.get('/', asyncHandler(async (req, res) => {
+  return res.redirect('/properties');
+}))
+
+app.use('/', usersRoute);
 app.use('/properties/:id/inquiry', inquiriesRoute)
 app.use('/properties', propertiesRoute)
 
-app.get('/', asyncHandler(async (req, res) => {
-  res.redirect('/properties');
-}))
+
 
 app.all('*', (req, res, next) => {
   throw new ExpressError(404, 'Not Found')
