@@ -5,7 +5,7 @@ const asyncHandler = require('../utils/asyncHandler')
 const {propertyValidationSchema} = require('../validationSchemas');
 const Property = require('../models/property');
 const Inquiry = require('../models/inquiry');
-
+const {isLoggedIn} = require('../middleware');
 
 const validateProperty = (req, res, next) => {
   const { error } = propertyValidationSchema.validate(req.body);
@@ -21,7 +21,7 @@ router.get('/', asyncHandler(async (req, res) => {
   res.render('properties/index', { properties })
 }))
 
-router.get('/new', (req, res) => {
+router.get('/new',isLoggedIn, (req, res) => {
   res.render('properties/new');
 })
 
@@ -31,13 +31,13 @@ router.get('/:id', asyncHandler(async (req, res) => {
   res.render('properties/show', { property })
 }))
 
-router.get('/:id/edit', asyncHandler(async (req, res) => {
+router.get('/:id/edit', isLoggedIn,  asyncHandler(async (req, res) => {
   const { id } = req.params;
   const property = await Property.findById(id);
   res.render('properties/edit', { property })
 }))
 
-router.post('/', validateProperty, asyncHandler(async (req, res) => {
+router.post('/', isLoggedIn,  validateProperty, asyncHandler(async (req, res) => {
   const property = new Property({ ...req.body.property });
   const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0);
   property.images = images;
@@ -49,7 +49,7 @@ router.post('/', validateProperty, asyncHandler(async (req, res) => {
 
 
 
-router.put('/:id', asyncHandler(async (req, res) => {
+router.put('/:id',isLoggedIn,validateProperty, asyncHandler(async (req, res) => {
   const { id } = req.params;
     const property = await Property.findByIdAndUpdate(id, { ...req.body.property }, { new: true });
     const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0);
@@ -60,10 +60,10 @@ router.put('/:id', asyncHandler(async (req, res) => {
 }))
 
 
-router.delete('/:id', asyncHandler(async (req, res) => {
+router.delete('/:id',isLoggedIn,  asyncHandler(async (req, res) => {
   const { id } = req.params;
   await Property.findByIdAndDelete(id);
-  res.redirect('/properties')
+  res.redirect('/properties');
 }))
 
 module.exports = router;
