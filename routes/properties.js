@@ -2,19 +2,10 @@ const express = require('express');
 const router = express.Router();
 const ExpressError = require('../utils/ExpressError')
 const asyncHandler = require('../utils/asyncHandler')
-const {propertyValidationSchema} = require('../validationSchemas');
 const Property = require('../models/property');
 const Inquiry = require('../models/inquiry');
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn, isAuthor, validateProperty} = require('../middleware');
 
-const validateProperty = (req, res, next) => {
-  const { error } = propertyValidationSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(el => el.message).join(',')
-    throw new ExpressError(400, msg)
-  }
-  next()
-}
 
 router.get('/', asyncHandler(async (req, res) => {
   const properties = await Property.find({});
@@ -28,12 +19,18 @@ router.get('/new',isLoggedIn, (req, res) => {
 router.get('/:id', asyncHandler(async (req, res) => {
   const { id } = req.params;
   const property = await Property.findById(id).populate('author');
-  res.render('properties/show', { property })
+  if (!property){
+    throw new ExpressError('404', 'There is no property with this id')
+  }
+  res.render('properties/show', { property,  page: {title: 'showPage'}})
 }))
 
-router.get('/:id/edit', isLoggedIn,  asyncHandler(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, isAuthor,  asyncHandler(async (req, res) => {
   const { id } = req.params;
   const property = await Property.findById(id);
+  if (!property){
+    throw new ExpressError('404', 'There is no property with this id')
+  }
   res.render('properties/edit', { property })
 }))
 
@@ -41,6 +38,7 @@ router.post('/', isLoggedIn,  validateProperty, asyncHandler(async (req, res) =>
   const property = new Property({ ...req.body.property });
   const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0);
   property.images = images;
+  property.author = req.user._id;
   await property.save();
   req.flash('success', 'Successfully created a new proeprty!')
   res.redirect(`properties/${property._id}`)
@@ -49,7 +47,7 @@ router.post('/', isLoggedIn,  validateProperty, asyncHandler(async (req, res) =>
 
 
 
-router.put('/:id',isLoggedIn,validateProperty, asyncHandler(async (req, res) => {
+router.put('/:id',isLoggedIn, isAuthor,validateProperty, asyncHandler(async (req, res) => {
   const { id } = req.params;
     const property = await Property.findByIdAndUpdate(id, { ...req.body.property }, { new: true });
     const images = req.body.property.images.split(',').map(url => url.trim()).filter(url => url.length > 0);
@@ -60,7 +58,7 @@ router.put('/:id',isLoggedIn,validateProperty, asyncHandler(async (req, res) => 
 }))
 
 
-router.delete('/:id',isLoggedIn,  asyncHandler(async (req, res) => {
+router.delete('/:id',isLoggedIn, isAuthor, asyncHandler(async (req, res) => {
   const { id } = req.params;
   await Property.findByIdAndDelete(id);
   res.redirect('/properties');

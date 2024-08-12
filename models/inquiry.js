@@ -9,6 +9,10 @@ const inquirySchema = new Schema({
   rating: {
     type: Number,
     required: false
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 

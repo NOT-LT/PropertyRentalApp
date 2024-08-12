@@ -68,7 +68,7 @@
             <!-- Dropdown menu -->
 
             <div id="profile-dropdown-menu"
-              class="opacity-0 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-opacity duration-300"
+              class="hidden opacity-0 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-opacity duration-300"
               role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
               <a href="#"
                 class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600"
@@ -83,9 +83,9 @@
           </div>
         </div>
         <% } else { %>
-          <div class="inset-y-0 right-0 flex space-x-3">
-            <a href="/login">login</a>
-            <a href="/register">register</a>
+          <div class="inset-y-0 right-0 flex space-x-1">
+            <a class="hover:bg-gray-200 px-2 py-1 transition-all duration-100 rounded-md" href="/login">Login</a>
+            <a class="hover:bg-gray-200 px-2 py-1 transition-all duration-100 rounded-md" href="/register">Register</a>
           </div>
           <% } %>
 
@@ -93,7 +93,7 @@
   </div>
 
   <!-- Mobile menu -->
-  <div class="sm:hidden hidden" id="mobile-menu">
+  <div class="sm:hidden hidden opacity-0" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
       <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
         aria-current="page">Home</a>
