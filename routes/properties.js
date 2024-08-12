@@ -27,7 +27,7 @@ router.get('/new',isLoggedIn, (req, res) => {
 
 router.get('/:id', asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const property = await Property.findById(id);
+  const property = await Property.findById(id).populate('author');
   res.render('properties/show', { property })
 }))
 

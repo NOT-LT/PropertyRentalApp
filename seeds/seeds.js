@@ -19,6 +19,8 @@ const types = [
   'flat', 'apartment', 'villa', 'camp', 'studio'
 ];
 
+const authors = ['66b9cded190906e2df86f637', '66b9cd81190906e2df86f630']
+
 const listingTypes = [
   'sale', 'rent'
 ];
@@ -101,9 +103,10 @@ const getImages = () => {
 const seedDB = async () => {
   await Property.deleteMany({}); // Clear existing data
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 54; i++) {
     const listingType = faker.helpers.arrayElement(listingTypes);
     const type = faker.helpers.arrayElement(types);
+    const author = faker.helpers.arrayElement(authors);
     const usage = faker.helpers.arrayElement(propertyUsages);
     const classificationOptions = classificationMapping[usage];
     const classification = faker.helpers.arrayElement(classificationOptions);
@@ -115,6 +118,7 @@ const seedDB = async () => {
     const property = new Property({
       title: `${faker.commerce.productAdjective()} ${type}`,
       propertyType: type,
+      author : author,
       price: price.toString(),
       images: Rimages,
       description: faker.lorem.paragraph(),
