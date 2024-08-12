@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.sticky {
+  position: sticky;
+  top: 0;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="sticky">
+  This is a sticky div.
+</div>
+
+<!-- Rest of your HTML content -->
+
+</body>
+</html>
