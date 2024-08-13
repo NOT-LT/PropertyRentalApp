@@ -41,12 +41,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   const inquiryForm = document.getElementById('inquiryForm');
   const inquiryMsgInput = document.getElementById('inquiryMsg');
+  const inquiryMsgTitle = document.getElementById('inquiryTitle');
+
+  let inquiryMsgFullname = '', inquiryMsgPhoneNumber = '', inquiryMsgEmail = '';
+  if (document.getElementById('inquiryFullName') != null) {
+    try {
+      inquiryMsgFullname = document.getElementById('inquiryFullName');
+      inquiryMsgPhoneNumber = document.getElementById('inquiryPhoneNumber');
+      inquiryMsgEmail = document.getElementById('inquiryEmail');
+    } catch (error) {
+    }
+  }
+ 
+
 
   const inquiryOverlay = document.getElementById('inquiryOverlay');
   const inquiryStatusDisplay = document.getElementById('inquiryStatusDisplay');
   inquiryForm.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
     const propertyId = inquiryForm.getAttribute("data-property-id");
+    console.log("inquiryMsgFullname: ", inquiryMsgFullname.value);
     fetch(`/properties/${propertyId}/inquiry`, {
       method: 'POST',
       headers: {
@@ -55,12 +69,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
       },
       body: JSON.stringify({
         inquiry: {
-          body: inquiryMsgInput.value
+          title: inquiryMsgTitle.value,
+          body: inquiryMsgInput.value,
+          fullName: inquiryMsgFullname.value,
+          email: inquiryMsgEmail.value,
+          phoneNumber: inquiryMsgPhoneNumber.value
         }
       })
     })
       .then(response => {
         if (!response.ok) {
+          console.log("Network or other error");
           // Network or other error
           inquiryStatusDisplay.innerHTML = `
   <div class="p-6">

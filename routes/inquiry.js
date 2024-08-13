@@ -8,10 +8,16 @@ const {validateInquiry, isLoggedIn, isAuthor} = require('../middleware');
 
 
 
-router.post('/', isLoggedIn, validateInquiry, asyncHandler(async (req, res) => {
+router.post('/', validateInquiry, asyncHandler(async (req, res) => {
   const property = await Property.findById(req.params.id);
   const inquiry = new Inquiry(req.body.inquiry)
-  inquiry.author = req.user._id;
+  console.log(req.body.inquiry);
+  if(req.isAuthenticated()){
+    inquiry.author = req.user._id;
+    inquiry.fullName = req.user.fullName;
+    inquiry.email = req.user.email;
+    inquiry.phoneNumber = req.user.phoneNumber;
+  }
   property.inquiries.push(inquiry);
   await inquiry.save();
   await property.save();
