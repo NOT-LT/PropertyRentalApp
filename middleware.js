@@ -1,3 +1,26 @@
+const Property = require('./models/property')
+const {propertyValidationSchema, inquiryValidationSchema} = require('./validationSchemas')
+const ExpressError = require('./utils/ExpressError');
+const asyncHandler = require('./utils/asyncHandler');
+
+module.exports.validateProperty = (req, res, next) => {
+  const { error } = propertyValidationSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(',')
+    throw new ExpressError(400, msg)
+  }
+  next()
+}
+
+module.exports.validateInquiry = (req, res, next) => {
+  const { error } = inquiryValidationSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(',')
+    throw new ExpressError(400, msg)
+  }
+  next()
+}
+
 module.exports.isLoggedIn = (req,res,next) => {
   if (!req.isAuthenticated()){
     req.session.redirectToUrl = req.originalUrl; // add this line
@@ -8,8 +31,20 @@ module.exports.isLoggedIn = (req,res,next) => {
 };
 
 module.exports.storeRedirectTo = (req,res,next)=> {
-  if (req.session.redirectToUrl){
-    res.locals.redirectToUrl = req.session.redirectToUrl;
-  }
+    if (req.session.redirectToUrl){
+      res.locals.redirectToUrl = req.session.redirectToUrl;
+    } else {
+      // res.locals.redirectToUrl = req.get('Referer');
+    }
   next();
 }
+
+module.exports.isAuthor = asyncHandler(async (req,res,next) => {
+  const {id} = req.params;
+  const property = await Property.findById(id).populate('author');
+  if (!property.author.equals(req.user._id)){
+    req.flash('error', `You don't have access`)
+    return res.redirect(`/properties/${id}`);
+  }
+  next();
+})

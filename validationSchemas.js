@@ -29,7 +29,10 @@ module.exports.propertyValidationSchema = Joi.object({
 
 module.exports.inquiryValidationSchema = Joi.object({
   inquiry: Joi.object({
+    title: Joi.string().optional(),
     body: Joi.string().min(1).required(),
-    rating: Joi.number().optional()
-  })
-}).required()
+    fullName: Joi.string().optional(),
+    email: Joi.string().email().optional(),
+    phoneNumber: Joi.string().optional(),
+  }).required()
+});

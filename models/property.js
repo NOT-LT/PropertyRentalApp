@@ -9,6 +9,10 @@ const PropertySchema = new Schema({
     enum: ['flat', 'apartment', 'villa', 'camp', 'studio'],
     required: true
   },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   price: String,
   images: [String],
   description: String,

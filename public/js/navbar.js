@@ -13,6 +13,19 @@ burgerBtn.addEventListener('click', () => {
 const profileDropdownMenu = document.getElementById('profile-dropdown-menu');
 const userMenuButton = document.getElementById('user-menu-button');
 
-userMenuButton.addEventListener('click', (event)=> {
-  profileDropdownMenu.classList.toggle('opacity-0');
+userMenuButton.addEventListener('click', async (event) => {
+  if (profileDropdownMenu.classList.contains('hidden')) {
+    profileDropdownMenu.classList.toggle('hidden');
+    setTimeout(() => {
+      profileDropdownMenu.classList.toggle('opacity-0');
+    }, 10);
+  } else {
+    profileDropdownMenu.classList.toggle('opacity-0');
+    
+    // Wait for the transition to complete
+    setTimeout(() => {
+      profileDropdownMenu.classList.toggle('hidden');
+    }, 200);
+  }
+
 })

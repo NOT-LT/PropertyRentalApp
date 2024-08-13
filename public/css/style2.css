@@ -1,3 +1,7 @@
+html, body {
+  max-width: 100%;
+}
+
 #mobile-menu {
   opacity: 0;
   max-height: 0;
@@ -91,6 +95,6 @@
 .customNav {
   border-bottom: 1px solid #ccc; /* Light border for separation */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow for depth */
-  z-index: 9999;
+  z-index: 30;
   background-color: rgba(255, 255, 255, 0.85);
 }

@@ -49,18 +49,14 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.get('/make', async (req,res)=> {
-  const user = new User({email: 'test@gmail.com', username:'tester1'});
-  const newUser = await User.register(user, 'mypassword');
-  res.send(newUser);
-})
-
 app.use(flash())
 app.use((req,res,next)=> {
-  res.locals.page = { page: {title: ''}}
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   res.locals.currentUser = req.user; // passport stores user info in session and we have access to it in all templates
+  if (!(res.locals.page)){
+    res.locals.page = { page: {title: ''}}
+  }
   next();
 })
 
@@ -74,7 +70,8 @@ app.use('/properties', propertiesRoute)
 
 
 
-app.all('*', (req, res, next) => {
+app.use('*', (req, res, next) => {
+  console.log("app.js here")
   throw new ExpressError(404, 'Not Found')
 })
 app.use((err, req, res, next) => {

@@ -15,7 +15,7 @@
     <% } %>
     <%- include('../partials/flashAlert') -%>
 
-      <div class="flex-1 py-3 flex items-center justify-center bg-white">
+      <div class="flex-1 flex items-center justify-center bg-white <%= page.title === 'showPage' ? 'py-0 lg:py-4' : 'py-4' %>"">
         <div class="mx-auto w-full max-size lg:px-10">
           <%- body %>
         </div>
