@@ -8,22 +8,19 @@ const {isLoggedIn, isAuthor, validateProperty} = require('../middleware');
 const { renderIndex, renderEdit, renderShow, updateProperty, createProperty,deleteProperty } = require('../controllers/Ctrlproperties');
 
 
-router.get('/', asyncHandler(renderIndex))
+router.route('/')
+  .get(asyncHandler(renderIndex))
+  .post(isLoggedIn, validateProperty, asyncHandler(createProperty))
 
 router.get('/new',isLoggedIn, (req, res) => {
-  res.render('properties/new');
+    res.render('properties/new');
 })
 
-router.get('/:id', asyncHandler(renderShow))
+router.route('/:id')
+  .get(asyncHandler(renderShow))
+  .put(isLoggedIn, isAuthor, validateProperty, asyncHandler(updateProperty))
+  .delete(isLoggedIn, isAuthor, asyncHandler(deleteProperty))
 
 router.get('/:id/edit', isLoggedIn, isAuthor,  asyncHandler(renderEdit))
-
-router.post('/', isLoggedIn,  validateProperty, asyncHandler(createProperty))
-
-
-router.put('/:id',isLoggedIn, isAuthor,validateProperty, asyncHandler(updateProperty))
-
-
-router.delete('/:id',isLoggedIn, isAuthor, asyncHandler(deleteProperty))
 
 module.exports = router;
