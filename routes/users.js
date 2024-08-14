@@ -7,14 +7,14 @@ const passport = require('passport')
 const User = require('../models/user');
 const {registerUser, loginUser, logoutUser, renderRegisterForm, renderLoginForm, renderProfile} = require('../controllers/Ctrlusers');
 
-router.get('/register', renderRegisterForm)
+router.route('/register')
+  .get(renderRegisterForm)
+  .post(asyncHandler(registerUser))
 
-router.post('/register', asyncHandler(registerUser))
-
-router.get('/login',renderLoginForm)
-
-router.post('/login',storeRedirectTo, passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), asyncHandler(loginUser))
-
+router.route('/login')
+  .get(renderLoginForm)
+  .post(storeRedirectTo, passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), asyncHandler(loginUser))    
+  
 router.get('/logout', logoutUser)
 
 module.exports = router;

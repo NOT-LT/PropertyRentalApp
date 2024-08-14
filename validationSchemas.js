@@ -32,7 +32,7 @@ module.exports.inquiryValidationSchema = Joi.object({
     title: Joi.string().optional(),
     body: Joi.string().min(1).required(),
     fullName: Joi.string().optional(),
-    email: Joi.string().email().optional(),
+    email: Joi.string().optional(),
     phoneNumber: Joi.string().optional(),
   }).required()
 });

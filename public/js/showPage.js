@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   inquiryForm.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
     const propertyId = inquiryForm.getAttribute("data-property-id");
-    console.log("inquiryMsgFullname: ", inquiryMsgFullname.value);
+    console.log("inquiryMsgFullname: ", inquiryMsgFullname?.value);
     fetch(`/properties/${propertyId}/inquiry`, {
       method: 'POST',
       headers: {
@@ -69,11 +69,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
       },
       body: JSON.stringify({
         inquiry: {
-          title: inquiryMsgTitle.value,
-          body: inquiryMsgInput.value,
-          fullName: inquiryMsgFullname.value,
-          email: inquiryMsgEmail.value,
-          phoneNumber: inquiryMsgPhoneNumber.value
+          title: inquiryMsgTitle?.value,
+          body: inquiryMsgInput?.value,
+          fullName: inquiryMsgFullname?.value,
+          email: inquiryMsgEmail?.value,
+          phoneNumber: inquiryMsgPhoneNumber?.value
         }
       })
     })

@@ -15,6 +15,7 @@ module.exports.validateProperty = (req, res, next) => {
 module.exports.validateInquiry = (req, res, next) => {
   const { error } = inquiryValidationSchema.validate(req.body);
   if (error) {
+    console.log("validation s error")
     const msg = error.details.map(el => el.message).join(',')
     throw new ExpressError(400, msg)
   }
