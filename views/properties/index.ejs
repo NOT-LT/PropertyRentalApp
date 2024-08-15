@@ -13,12 +13,12 @@
             class="relative overflow-hidden shadow-lg rounded-lg group transition-all duration-500 hover:shadow-2xl card">
             <div onclick="window.location.href='/properties/<%= p._id %>'" class="cursor-pointer flex flex-col h-full">
               <div class="aspect-ratio-container">
-                <img src="<%= p?.images[0]?.url %>"
+                <img src="<%= p?.images[0]?.thumbnail2 %>"
                   class="object-cover object-center transition-transform duration-300 group-hover:scale-[1.05]">
                 <div class="overlay absolute inset-0 opacity-80 group-hover:opacity-30 transition-opacity duration-300">
                 </div>
                 <div
-                  class="absolute top-2 left-2 bg-[#2fc66c] bg-opacity-90 rounded-full flex items-center justify-center p-[0.15rem] z-50">
+                  class="absolute top-2 left-2 bg-[#2fc66c] bg-opacity-90 rounded-full flex items-center justify-center p-[0.15rem] z-20">
                   <a href="https://wa.me/<%= p?.contact %>">
                     <svg fill="#fff" height="30px" width="30px" version="1.1" id="Layer_1"
                       xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

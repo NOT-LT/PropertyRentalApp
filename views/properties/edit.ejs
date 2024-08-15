@@ -91,7 +91,7 @@
         <div class="flex flex-row overflow-x-auto relative mt-2 space-x-1">
           <% property?.images.forEach((image, index)=> { %>
             <div class="relative w-28 h-28 flex-shrink-0">
-              <img src="<%= image.url %>" data-img-name="<%= image.filename %>" alt="Property Image" class="w-full h-full object-cover rounded-md">
+              <img src="<%= image.thumbnail1 %>" data-img-name="<%= image.filename %>" alt="Property Image" class="w-full h-full object-cover rounded-md">
               <button type="button" class="absolute top-1 bg-opacity-85 right-1 bg-red-500 text-white rounded-full p-1"
           onclick="removeImage(this)">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -143,17 +143,7 @@
           }
         }
             </script>
-      
-
-      <script>
-        function whenUploaded(input) {
-          const NofileElements = document.querySelectorAll(".Nofile");
-          const FileUploadedElements = document.querySelectorAll(".FileUploaded");
-          const FileNum = document.getElementById("fileNum");
-          FileUploadedElements.forEach(element => element.classList.remove("hidden"));
-          FileNum.textContent = input.files.length + " files selected";
-        }
-      </script>
+    
       <!-- Bedrooms -->
       <div class="mb-4">
         <label for="bedrooms" class="block text-gray-700 text-sm font-semibold mb-2">Bedrooms</label>

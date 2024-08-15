@@ -2,6 +2,22 @@ const mongoose = require('mongoose');
 const Inquiry = require('./inquiry');
 const { Schema } = mongoose; // Destructuring assignment to get Schema directly
 
+
+const imgSchema = new Schema({
+  url: String,
+  filename: String
+});
+
+imgSchema.virtual('thumbnail1')
+  .get(function(){
+    return this.url.replace('/upload', '/upload/w_250');
+  })
+
+imgSchema.virtual('thumbnail2')
+  .get(function(){
+    return this.url.replace('/upload', '/upload/w_720');
+  })
+
 const PropertySchema = new Schema({
   title: String,
   propertyType: {
@@ -15,10 +31,7 @@ const PropertySchema = new Schema({
   },
   price: String,
   images: [
-    {
-      url: String,
-      filename: String
-    }
+    imgSchema
   ],
   description: String,
   bedrooms: String,
