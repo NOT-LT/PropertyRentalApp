@@ -5,7 +5,7 @@
 
     <input id="deletedImgs" type="text" name="deletedImgs" value="" class="hidden">
 
-    <div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 md:space-x-4">
       <!-- Title -->
       <div class="mb-4 w-full" required>
         <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Title</label>
@@ -217,7 +217,7 @@
             class="bg-gray-200 text-sm text-gray-700 font-semibold flex items-center whitespace-nowrap rounded-s border border-e-0 border-solid border-neutral-200 px-3 py-[0.25rem] text-center leading-tight"
             id="addon-wrapping">+973</span>
           <input type="text" name="property[contact]" id="contact" minlength="8"
-            class="peer relative block flex-auto rounded-e appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-0 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+            class="appearance-none py-2 px-3 w-full leading-tight peer relative focus:outline-none focus:ring-0 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
             placeholder="38820989" aria-label="contact" aria-describedby="addon-wrapping" required pattern="^[0-9]{8}$"
             value="<%= property.contact.replace('+973','') %>" />
         </div>

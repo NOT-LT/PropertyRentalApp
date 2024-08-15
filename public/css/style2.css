@@ -6,7 +6,7 @@ html, body {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: all 200ms ease-in-out;
+  transition: all 200ms ease;
 }
 
 #mobile-menu.show {
