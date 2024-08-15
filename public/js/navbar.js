@@ -8,7 +8,14 @@ burgerBtn.addEventListener('click', () => {
   }, 10);
 });
 
-
+window.addEventListener('scroll', function () {
+  const navbar = document.getElementById('navbarMain');
+  if (window.scrollY > 60) {
+    navbar.classList.add('navbar-scrolled');
+  } else {
+    navbar.classList.remove('navbar-scrolled');
+  }
+});
 
 const profileDropdownMenu = document.getElementById('profile-dropdown-menu');
 const userMenuButton = document.getElementById('user-menu-button');
@@ -21,7 +28,7 @@ userMenuButton.addEventListener('click', async (event) => {
     }, 10);
   } else {
     profileDropdownMenu.classList.toggle('opacity-0');
-    
+
     // Wait for the transition to complete
     setTimeout(() => {
       profileDropdownMenu.classList.toggle('hidden');
