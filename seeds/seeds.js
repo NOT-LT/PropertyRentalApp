@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const Property = require('../models/property');
-
+const multer  = require('multer')
+const {storage, uploadFileToCloudinary} = require('../cloudinary') // node automaitcally looks for index.js
 // Database connection
+
+
 mongoose.connect('mongodb://localhost:27017/propertyRentalApp');
 
 const db = mongoose.connection;
@@ -91,22 +94,28 @@ const generateFloors = (type) => {
   }
 }
 
-const getImages = () => {
+const getImages = async () => {
   const arr = [];
   const n = faker.number.int({ min: 3, max: 6 });
+  
   for (let i = 0; i < n; i++) {
+    const result = await uploadFileToCloudinary(`https://picsum.photos/seed/${faker.number.int({ min: 1, max: 9999 })}/1280/720`);
     arr.push({
-      url: `https://picsum.photos/seed/${faker.number.int({ min: 1, max: 9999 })}/1280/720`,
-      filename: `seed-${i}`
+      url: result.secure_url,
+      filename: result.public_id
     });
+    console.log(result.secure_url);
   }
+  
+  console.log("Array: ", arr);
   return arr;
-}
+};
 
 const seedDB = async () => {
   await Property.deleteMany({}); // Clear existing data
 
-  for (let i = 0; i < 54; i++) {
+  for (let i = 0; i < 10; i++) {
+    // Generate random data for the property
     const listingType = faker.helpers.arrayElement(listingTypes);
     const type = faker.helpers.arrayElement(types);
     const author = faker.helpers.arrayElement(authors);
@@ -114,10 +123,17 @@ const seedDB = async () => {
     const classificationOptions = classificationMapping[usage];
     const classification = faker.helpers.arrayElement(classificationOptions);
     const nFloors = generateFloors(type);
-    const Rimages = getImages();
+    
+    // Generate images
+    const Rimages = await getImages();
+    console.log("Images: ", Rimages); 
+    
+    // Generate other property details
     let price = getRandomPrice(type, listingType).toLocaleString();
     const contact = generateContactNumber(); // Generate the contact number
     const Nbedrooms = faker.number.int({ min: 1, max: 10 });
+    
+    // Create new property
     const property = new Property({
       title: `${faker.commerce.productAdjective()} ${type}`,
       propertyType: type,
@@ -141,6 +157,7 @@ const seedDB = async () => {
       BFID: faker.string.uuid(),
     });
 
+    // Save the property to the database
     await property.save();
   }
 };
