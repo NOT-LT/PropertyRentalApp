@@ -50,16 +50,15 @@ module.exports.updateProperty = async (req, res) => {
   let {deletedImgs} = req.body;
   deletedImgs = deletedImgs.split(',').filter(img => img.length > 0);
   const property = await Property.findByIdAndUpdate(id, { ...req.body.property }, { new: true });
-  property.images.push(...req.files.map(f=> ({url: f.path, filename: f.filename})));
-  console.log(deletedImgs)
-  if (deletedImgs !== 'underfined' && deletedImgs !== '') {
-    await property.updateOne({ $pull: { images: { filename: { $in: deletedImgs } } } });
+  console.log("delted all: " + deletedImgs)
+  if (deletedImgs !== 'undefined' && deletedImgs !== '') {
+    console.log("deletedImgs:" + deletedImgs)
+    // await property.updateOne({ $pull: { images: { filename: { $in: deletedImgs } } } });
     // Another approach to delete from mongoose
-      // let deletedImages = deletedImgs.split(',');
-      // let newImages = req.files?.map(f=> ({url : f.path, filename: f.filename}));
-      // let Images = [...property?.images, ...newImages];
-      // Images = Images.filter(img => !(deletedImages.includes(img?.filename)));
-      // property.images = Images;
+      let newImages = req.files?.map(f=> ({url : f.path, filename: f.filename}));
+      let Images = [...property?.images, ...newImages];
+      Images = Images.filter(img => !(deletedImgs.includes(img?.filename)));
+      property.images = Images;
 
     for (let filename of deletedImgs) {
       console.log("filename:" + filename)

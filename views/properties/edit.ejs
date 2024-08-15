@@ -74,8 +74,9 @@
         <div class="flex justify-between relative">
           <label for="images" class="block text-gray-700 text-sm font-semibold">Upload Images</label>
           <button type="button" class=" bg-opacity-85  h-8 w-8 text-white rounded-full">
-            <input multiple id="uploadInput" type="file" name="property[images]" accept="image/jpeg, image/png, image/gif"
-            multiple class="absolute inset-0 w-auto h-full opacity-0 cursor-pointer">
+            <input multiple id="uploadInput" type="file" name="property[images]"
+              accept="image/jpeg, image/png, image/gif" multiple
+              class="absolute inset-0 w-auto h-full opacity-0 cursor-pointer">
             <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#086d14">
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -91,19 +92,20 @@
         <div class="flex flex-row overflow-x-auto relative mt-2 space-x-1">
           <% property?.images.forEach((image, index)=> { %>
             <div class="relative w-28 h-28 flex-shrink-0">
-              <img src="<%= image.thumbnail1 %>" data-img-name="<%= image.filename %>" alt="Property Image" class="w-full h-full object-cover rounded-md">
+              <img src="<%= image.thumbnail1 %>" data-img-name="<%= image.filename %>" alt="Property Image"
+                class="w-full h-full object-cover rounded-md">
               <button type="button" class="absolute top-1 bg-opacity-85 right-1 bg-red-500 text-white rounded-full p-1"
-          onclick="removeImage(this)">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+                onclick="removeImage(this)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
             <% }) %>
         </div>
-            </div>
-            <script>
+      </div>
+      <script>
         const deletedImages = document.getElementById('deletedImgs');
 
         document.getElementById('uploadInput').addEventListener('change', function (e) {
@@ -113,24 +115,42 @@
               const reader = new FileReader();
               reader.readAsDataURL(files[i]);
               reader.onload = function (e) {
-          addImage(e.target.result);
+                addImage(e.target.result);
               };
             }
           }
         });
 
         function removeImage(button) {
-          deletedImages.value +=(button.previousElementSibling.getAttribute('data-img-name')) + ','; // Add the image to the deleted images
+          // Add the image to the deleted images
+          deletedImages.value += (button.previousElementSibling.getAttribute('data-img-name')) + ',';
+
+          // Remove the image element from the DOM
           button.parentElement.remove();
+
+          // Remove the corresponding file from the upload input
+          const uploadInput = document.getElementById('uploadInput');
+          const dataTransfer = new DataTransfer();
+
+          // Iterate over the files and add them to the DataTransfer object, except the one to be removed
+          for (let i = 0; i < uploadInput.files.length; i++) {
+            const file = uploadInput.files[i];
+            if (file.name !== button.previousElementSibling.getAttribute('data-img-name')) {
+              dataTransfer.items.add(file);
+            }
+          }
+          // Update the input's files with the new DataTransfer object
+          uploadInput.files = dataTransfer.files;
         }
 
         function addImage(src) {
+          const uploadInput=document.getElementById('uploadInput')
           const imageContainer = document.querySelector('.flex.flex-row.overflow-x-auto.relative.mt-2');
           if (imageContainer) {
             const newImage = document.createElement('div');
             newImage.classList.add('relative', 'w-28', 'h-28', 'mr-2', 'flex-shrink-0');
             newImage.innerHTML = `
-              <img src="${src}" alt="Property Image" class="w-full h-full object-cover rounded-md">
+              <img src="${src}" alt="Property Image" data-img-name="${uploadInput.files[uploadInput.files.length - 1].name}" class="w-full h-full object-cover rounded-md">
           <button type="button" class="absolute top-1 bg-opacity-85 right-1 bg-red-500 text-white rounded-full p-1"
             onclick="removeImage(this)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -142,8 +162,8 @@
             imageContainer.appendChild(newImage);
           }
         }
-            </script>
-    
+      </script>
+
       <!-- Bedrooms -->
       <div class="mb-4">
         <label for="bedrooms" class="block text-gray-700 text-sm font-semibold mb-2">Bedrooms</label>
