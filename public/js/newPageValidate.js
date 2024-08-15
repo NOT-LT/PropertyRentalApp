@@ -4,6 +4,16 @@ console.dir(createPropertyForm)
 createPropertyButton.disabled = true
 createPropertyButton.classList.add('disableMe');
 let allOK = false;
+
+function whenUploaded(input) {
+  const NofileElements = document.querySelectorAll(".Nofile");
+  const FileUploadedElements = document.querySelectorAll(".FileUploaded");
+  const FileNum = document.getElementById("fileNum");
+  NofileElements.forEach(element => element.classList.add("hidden"));
+  FileUploadedElements.forEach(element => element.classList.remove("hidden"));
+  FileNum.textContent = input.files.length + " files selected";
+}
+
 Array.from(createPropertyForm.elements).forEach(x => {
   x.addEventListener('input', (event) => {
     if (x.tagName.toLowerCase() === 'input') {

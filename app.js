@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production'){
+  require('dotenv').config();
+}
 const express = require('express');
 const path = require('path');
 const expressSession = require('express-session');
@@ -9,7 +12,6 @@ const asyncHandler = require('./utils/asyncHandler')
 const mongoose = require('mongoose');
 const passport = require('passport'); 
 const LocalStrategy = require('passport-local');
-const passportLocalMongoose = require('passport-local-mongoose')
 const User = require('./models/user');
 
 const propertiesRoute = require('./routes/properties')

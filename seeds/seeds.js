@@ -92,10 +92,13 @@ const generateFloors = (type) => {
 }
 
 const getImages = () => {
-  arr = []
+  const arr = [];
   const n = faker.number.int({ min: 3, max: 6 });
   for (let i = 0; i < n; i++) {
-    arr[i] = `https://picsum.photos/seed/${faker.number.int({ min: 1, max: 9999 })}/1280/720`
+    arr.push({
+      url: `https://picsum.photos/seed/${faker.number.int({ min: 1, max: 9999 })}/1280/720`,
+      filename: `seed-${i}`
+    });
   }
   return arr;
 }
@@ -118,7 +121,7 @@ const seedDB = async () => {
     const property = new Property({
       title: `${faker.commerce.productAdjective()} ${type}`,
       propertyType: type,
-      author : author,
+      author: author,
       price: price.toString(),
       images: Rimages,
       description: faker.lorem.paragraph(),

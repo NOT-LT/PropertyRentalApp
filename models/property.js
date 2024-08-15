@@ -14,7 +14,12 @@ const PropertySchema = new Schema({
     ref: 'User'
   },
   price: String,
-  images: [String],
+  images: [
+    {
+      url: String,
+      filename: String
+    }
+  ],
   description: String,
   bedrooms: String,
   bathrooms: String,
@@ -43,7 +48,7 @@ const PropertySchema = new Schema({
       ref: 'Inquiry'
     }
   ],
-  BFID: String,
+  BFID: String
 });
 
 function addCommasToNumberInString(str) {

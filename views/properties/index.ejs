@@ -13,13 +13,13 @@
             class="relative overflow-hidden shadow-lg rounded-lg group transition-all duration-500 hover:shadow-2xl card">
             <div onclick="window.location.href='/properties/<%= p._id %>'" class="cursor-pointer flex flex-col h-full">
               <div class="aspect-ratio-container">
-                <img src="<%= p.images[0] %>"
+                <img src="<%= p?.images[0]?.url %>"
                   class="object-cover object-center transition-transform duration-300 group-hover:scale-[1.05]">
                 <div class="overlay absolute inset-0 opacity-80 group-hover:opacity-30 transition-opacity duration-300">
                 </div>
                 <div
                   class="absolute top-2 left-2 bg-[#2fc66c] bg-opacity-90 rounded-full flex items-center justify-center p-[0.15rem] z-50">
-                  <a href="https://wa.me/<%= p.contact %>">
+                  <a href="https://wa.me/<%= p?.contact %>">
                     <svg fill="#fff" height="30px" width="30px" version="1.1" id="Layer_1"
                       xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 308 308" xml:space="preserve">
@@ -49,14 +49,14 @@
               <div class="bg-white p-4 card-content flex-grow">
                 <div class="flex justify-between items-center">
                   <span class="text-gray-800 text-lg font-semibold">
-                    <%= p.price %>
+                    <%= p?.price %>
                   </span>
                   <span class="bg-gray-200 text-gray-700 text-xs px-4 py-1 rounded-full">
-                    <%= p.listingType %>
+                    <%= p?.listingType %>
                   </span>
                 </div>
                 <span class="text-gray-700 mb-1">
-                  <%= p.title %>
+                  <%= p?.title %>
                 </span>
                 <p class="text-gray-600 mt-1 description">
                   <%if ( p.description) { %>
@@ -73,7 +73,7 @@
                       d="M12 10c-1.104 0-2-.896-2-2s.896-2 2-2 2 .896 2 2-.896 2-2 2m0-5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m-7 2.602c0-3.517 3.271-6.602 7-6.602s7 3.085 7 6.602c0 3.455-2.563 7.543-7 14.527-4.489-7.073-7-11.072-7-14.527m7-7.602c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602" />
                   </svg>
                   <p>
-                    <%= p.location %>
+                    <%= p?.location %>
                   </p>
                 </div>
                 <div class="flex space-x-3 items-center mt-4 text-gray-500">
@@ -97,7 +97,7 @@
                       </g>
                     </svg>
                     <p>
-                      <%=p.bedrooms%>
+                      <%=p?.bedrooms%>
                     </p>
                   </div>
                   <span>&middot;</span>
@@ -108,7 +108,7 @@
                         class="ci-primary" />
                     </svg>
                     <p>
-                      <%=p.bathrooms%>
+                      <%=p?.bathrooms%>
                     </p>
                   </div>
                   <span>&middot;</span>
@@ -127,7 +127,7 @@
                       </g>
                     </svg>
                     <p>
-                      <%= p.areaInSqft %> sqft
+                      <%= p?.areaInSqft %> sqft
                     </p>
                   </div>
 

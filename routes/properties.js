@@ -1,24 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const ExpressError = require('../utils/ExpressError')
 const asyncHandler = require('../utils/asyncHandler')
-const Property = require('../models/property');
-const Inquiry = require('../models/inquiry');
 const {isLoggedIn, isAuthor, validateProperty} = require('../middleware');
 const { renderIndex, renderEdit, renderShow, updateProperty, createProperty,deleteProperty } = require('../controllers/Ctrlproperties');
+const multer  = require('multer')
+const {storage} = require('../cloudinary') // node automaitcally looks for index.js
+const upload = multer({ storage })
 
 
 router.route('/')
   .get(asyncHandler(renderIndex))
-  .post(isLoggedIn, validateProperty, asyncHandler(createProperty))
-
+  .post(isLoggedIn,upload.array('property[images]'), validateProperty, asyncHandler(createProperty))
 router.get('/new',isLoggedIn, (req, res) => {
     res.render('properties/new');
 })
 
 router.route('/:id')
   .get(asyncHandler(renderShow))
-  .put(isLoggedIn, isAuthor, validateProperty, asyncHandler(updateProperty))
+  .put(isLoggedIn, isAuthor,upload.array('property[images]'), asyncHandler(updateProperty)) // add validateProperty
   .delete(isLoggedIn, isAuthor, asyncHandler(deleteProperty))
 
 router.get('/:id/edit', isLoggedIn, isAuthor,  asyncHandler(renderEdit))

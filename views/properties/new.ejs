@@ -1,6 +1,6 @@
 <% layout('layout/boilerplate') %>
 
-  <form id="createPropertyForm" action="/properties" method="POST"
+  <form id="createPropertyForm" action="/properties" method="POST" enctype="multipart/form-data"
     class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Title -->
@@ -40,24 +40,58 @@
           enter a valid price</span>
       </div>
 
-      <!-- Images -->
+
+      <!-- Listing Type -->
       <div class="mb-4">
-        <label for="images" class="block text-gray-700 text-sm font-semibold mb-2">Images (URLs)</label>
-        <input type="text" name="property[images]" id="images" minlength="1"
-          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
-          required placeholder="http://example.com/image1.jpg, http://example.com/image2.jpg">
+        <label for="listingType" class="block text-gray-700 text-sm font-semibold mb-2">Listing Type</label>
+        <select name="property[listingType]" id="listingType"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required>
+          <option value="" disabled selected>Select listing type</option>
+          <option value="sale">Sale</option>
+          <option value="rent">Rent</option>
+        </select>
         <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
-          enter valid image URLs</span>
+          Select a valid listing types</span>
       </div>
 
       <!-- Description -->
-      <div class="mb-4 col-span-1 md:col-span-2">
+      <div class="mb-4 md:col-span-1">
         <label for="description" class="block text-gray-700 text-sm font-semibold mb-2">Description</label>
-        <textarea name="property[description]" id="description" rows="3" minlength="1"
+        <textarea name="property[description]" id="description" rows="7" minlength="1"
           class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
           required placeholder="Describe the property..."></textarea>
         <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
           enter a valid description</span>
+      </div>
+
+
+
+      <!-- Images -->
+      <div class="mb-4 relative">
+        <label for="images" class="block text-gray-700 text-sm font-semibold mb-2">Upload Images</label>
+        <div class="relative border-2 border-dashed border-gray-300 rounded-md p-3">
+            <input type="file" name="property[images]" id="images" accept="image/jpeg, image/png, image/gif"
+            multiple class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="whenUploaded(this)">
+          <div class="flex flex-col items-center justify-center md:h-[8.25rem]">
+            <svg class="w-12 h-12 text-gray-400 mb-2 Nofile " fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+            <p class="text-gray-600 Nofile text-sm text-center">Drag or drop files here or click to upload</p>
+            <div  class="overflow-hidden overflow-ellipsis FileUploaded hidden">
+              <svg viewBox="0 0 24 24" fill="none" class="mx-auto" xmlns="http://www.w3.org/2000/svg" stroke="#99a3af" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)" width="47px" height="47px">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.144"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path d="M14.2647 15.9377L12.5473 14.2346C11.758 13.4519 11.3633 13.0605 10.9089 12.9137C10.5092 12.7845 10.079 12.7845 9.67922 12.9137C9.22485 13.0605 8.83017 13.4519 8.04082 14.2346L4.04193 18.2622M14.2647 15.9377L14.606 15.5991C15.412 14.7999 15.8149 14.4003 16.2773 14.2545C16.6839 14.1262 17.1208 14.1312 17.5244 14.2688C17.9832 14.4253 18.3769 14.834 19.1642 15.6515L20 16.5001M14.2647 15.9377L18.22 19.9628M11 4H7.2C6.07989 4 5.51984 4 5.09202 4.21799C4.7157 4.40973 4.40973 4.71569 4.21799 5.09202C4 5.51984 4 6.0799 4 7.2V16.8C4 17.4466 4 17.9066 4.04193 18.2622M4.04193 18.2622C4.07264 18.5226 4.12583 18.7271 4.21799 18.908C4.40973 19.2843 4.7157 19.5903 5.09202 19.782C5.51984 20 6.07989 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V13M15 5.28571L16.8 7L21 3" stroke="#03821a" stroke-width="0.504" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg>
+              <p id="fileNum" class="mt-2 text-sm text-center text-gray-700 overflow-hidden overflow-ellipsis"></p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Bedrooms -->
@@ -161,19 +195,7 @@
           enter a valid classification</span>
       </div>
 
-      <!-- Listing Type -->
-      <div class="mb-4">
-        <label for="listingType" class="block text-gray-700 text-sm font-semibold mb-2">Listing Type</label>
-        <select name="property[listingType]" id="listingType"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required>
-          <option value="" disabled selected>Select listing type</option>
-          <option value="sale">Sale</option>
-          <option value="rent">Rent</option>
-        </select>
-        <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
-          Select a valid listing types</span>
-      </div>
+
 
       <!-- Contact -->
       <div class="mb-4">
