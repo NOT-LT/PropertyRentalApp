@@ -5,19 +5,19 @@
 
     <input id="deletedImgs" type="text" name="deletedImgs" value="" class="hidden">
 
-    <div class="grid grid-cols-1 md:grid-cols-2 md:space-x-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-x-3">
       <!-- Title -->
-      <div class="mb-4 w-full" required>
+      <div class="mb-4" required>
         <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Title</label>
         <input type="text" name="property[title]" id="title" minlength="5"
-          class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
+          class="peer shadow appearance-none border w-full rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline valid:border-green-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
           required placeholder="Villa in Banijamra" value="<%= property.title %>">
         <span class="mt-2 hidden text-sm text-red-700 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Please
           enter a valid title</span>
       </div>
 
       <!-- Property Type -->
-      <div class="mb-4 w-full">
+      <div class="mb-4">
         <label for="propertyType" class="block text-gray-700 text-sm font-semibold mb-2">Property Type</label>
         <select name="property[propertyType]" id="propertyType" placeholder="Villa in Banijamra"
           class="peer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-700"
