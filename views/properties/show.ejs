@@ -2,10 +2,11 @@
   <div class="flex flex-col max-w-screen-lg items-center mx-auto justify-center md:px-4 relative">
     <div class="flex flex-col md:rounded-lg justify-center items-start min-w-full">
 
+      
       <div class="flex flex-col md:flex-row w-full md:space-x-2">
         <div class="w-full <%= property.images.length >= 3 ? 'md:w-2/3' : 'md:w-full' %> relative">
           <div class="aspect-w-[1.5] aspect-h-1 overflow-hidden md:rounded-lg">
-            <% property.images.forEach((image, index)=> {  %>
+            <% property.images.forEach((image, index)=> { %>
               <img id="image<%= index %>" src="<%= image?.url %>" alt="<%= property.title %>"
                 class="<%= index === 0 ? '' : 'hidden' %> transition-all duration-500 object-cover object-center w-full h-full" />
               <% }) %>
@@ -19,7 +20,8 @@
               class="flex items-center justify-center absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-300 bg-opacity-80 rounded-full w-9 h-9 p-2 cursor-pointer text-lg font-bold">→</span>
 
             <!-- Indicators -->
-            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-black bg-opacity-30 opacity-85 py-[5px] px-2 rounded-full">
+            <div
+              class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-black bg-opacity-30 opacity-85 py-[5px] px-2 rounded-full">
               <% property.images.forEach((image, index)=> { %>
                 <span id="indicator<%= index %>"
                   class="block w-3 h-3 <%= index === 0 ? 'bg-white' : 'bg-gray-400' %> rounded-full cursor-pointer"></span>
@@ -97,53 +99,64 @@
         <!-- Mid-size devices -->
         <%- include('../partials/lgDevicesShowPage') %>
 
-        <!-- Small-size devices -->
-        <%- include('../partials/smDevicesShowPage') %>
-        <hr class="w-full bg-gray-200 h-px border-0 mt-5">
+          <!-- Small-size devices -->
+          <%- include('../partials/smDevicesShowPage') %>
+            <hr class="w-full bg-gray-200 h-px border-0 mt-5">
 
-        <section class="flex flex-col md:flex-row w-full my-3 items-start justify-between space-y-8 md:space-y-0 space-x-1 ">
-          <% if (property.description) { %>
-            <p class="text-sm text-gray-600 w-full md:w-8/12">
-              <%= property.description %>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aut, ipsa illum, blanditiis ea deleniti temporibus delectus animi nostrum sed voluptates harum, doloremque rem asperiores totam qui porro aperiam non ullam numquam exercitationem. Quasi ducimus maiores nemo est dolore eligendi ex tenetur veritatis fuga, nulla ipsa minus nihil reprehenderit pariatur at magnam in minima, quas unde doloremque consequatur dolorum cum quaerat! Quaerat, expedita libero laborum adipisci, eos, pariatur est commodi illum culpa vitae ipsum accusamus doloribus alias tenetur architecto molestiae eius. Sapiente, possimus? Quasi assumenda blanditiis exercitationem, velit aspernatur consequuntur mollitia ipsum rerum nulla eum est pariatur necessitatibus illum corrupti. Optio voluptatem quo pariatur maiores delectus neque impedit consequatur, suscipit aliquid fuga, error necessitatibus, facere saepe doloribus ex quod. Distinctio dolores cumque debitis beatae labore, harum nesciunt? Aspernatur soluta nesciunt, illo consequuntur cum labore quasi debitis impedit est dolore neque. In optio quas delectus doloremque nulla animi quibusdam soluta. Velit assumenda nam voluptates sapiente veniam vel pariatur, veritatis magnam fuga voluptatum porro doloremque omnis quasi reiciendis aspernatur id, ducimus sint incidunt laboriosam amet, facere ipsa corporis eum! Quaerat aliquid voluptas quod corrupti amet repellendus dolor animi fugiat ratione, fuga, eaque aperiam sequi beatae magni doloribus veniam quia, eligendi qui? At, maiores aperiam quae voluptas molestiae similique earum dolorem accusamus quaerat quisquam asperiores quidem, labore iste quas facere enim? Necessitatibus impedit vero nemo possimus harum ipsam! Accusantium eius iusto dolorem voluptatem inventore animi recusandae officiis adipisci, nulla, quod provident nam eos voluptatum. Officia possimus dolore harum ratione porro natus neque, et blanditiis, ipsam enim quod corrupti eaque sequi tenetur deleniti, omnis exercitationem. Rerum reprehenderit eius eaque quaerat neque, cumque vel! Cum hic et, totam, voluptatem recusandae sequi, aliquid modi dolorem quidem soluta neque ipsam molestias. Sint architecto quos libero sequi culpa! Accusantium laborum suscipit fuga neque sunt aliquid, doloribus inventore quo impedit non praesentium ab nostrum iste quisquam adipisci ducimus provident. Nam, ullam veritatis accusamus nostrum voluptates iure assumenda explicabo fugit sit excepturi voluptatem optio deleniti facilis, at voluptate molestiae officia illum molestias. Autem dolor cum fugiat ab minima esse voluptates earum? Dolores, impedit delectus, id eos debitis unde omnis dolorem hic repudiandae doloribus expedita quod exercitationem commodi atque ducimus culpa nulla necessitatibus ipsa nemo quo eum libero labore quaerat! Accusantium id quasi laboriosam? Nostrum, doloribus blanditiis? Error, dolor ab, debitis voluptas consectetur voluptatibus cupiditate aperiam reprehenderit impedit, repellendus atque est quibusdam. Porro sint eos facilis nostrum, sed cupiditate suscipit excepturi veritatis libero animi, error corrupti cumque hic sapiente qui rerum molestias maxime quisquam recusandae ratione tempora nulla. Sed fugit quibusdam aut repellendus earum corporis impedit. Accusamus beatae incidunt soluta ipsa iste cupiditate minus voluptates distinctio, facilis, unde velit amet totam nulla qui fuga cumque omnis itaque ducimus? Itaque deserunt eveniet fuga? Fuga blanditiis necessitatibus repudiandae ut corporis, deserunt dignissimos maiores facere accusamus aliquam, sint sit eligendi consectetur quos illo id quas aliquid cumque ducimus voluptate quia error. Officiis molestias vel ex enim, provident, adipisci quas libero praesentium, qui laudantium itaque odit? Labore deleniti quisquam facere doloribus incidunt repudiandae obcaecati soluta! Provident dolore veniam architecto vel expedita blanditiis? Accusamus perferendis rerum, non officiis delectus repudiandae? Doloremque officiis consequatur omnis, deleniti, voluptas, non beatae magnam quae optio a nam! Tenetur neque similique quia alias vero consectetur repellat est deleniti itaque culpa, dolorum repellendus dignissimos inventore, aliquid, praesentium fugiat. Ratione aperiam quam quis consequatur laborum? Nisi eligendi quas, ad blanditiis exercitationem est quibusdam beatae reprehenderit facere quam sed animi molestias voluptatum officiis excepturi ipsam sapiente culpa vel delectus impedit aut, laboriosam maxime. Eius dignissimos pariatur itaque tenetur deserunt placeat natus architecto temporibus mollitia quasi excepturi, accusamus, debitis minus est tempora nihil reprehenderit. Reiciendis a commodi adipisci quidem, harum et vel accusantium consectetur. Dolore ratione dolorum perferendis fugit maiores rerum, vero voluptatibus! Voluptatibus nostrum velit ipsam corrupti quas pariatur quos nisi nemo! Illo ullam id numquam mollitia dolores dolor iure laboriosam distinctio non doloribus perferendis incidunt quasi, alias dolorem voluptas accusantium vel iste. Dolorum, architecto? Consequuntur delectus ducimus unde reiciendis odio nihil placeat, sint voluptate. Perferendis, quod. Necessitatibus autem voluptatibus optio soluta quibusdam ullam tempora sequi accusantium nobis! Voluptatum cumque nihil beatae hic atque molestias ab tenetur! Ex rerum, facere ipsum eaque beatae iste dolorem maiores, delectus neque fugit quo similique illo, inventore enim excepturi error. Quis doloremque consectetur laboriosam veritatis, enim sit deserunt consequuntur ducimus iste possimus qui, totam repellat nesciunt. Officia commodi eveniet sunt possimus itaque inventore provident autem eum nostrum aspernatur facilis, eligendi quia aliquam, aliquid fugiat recusandae similique! A reiciendis fugit cum animi vel impedit consequuntur magni omnis cumque, voluptate harum hic obcaecati tempore minima autem nisi repellendus maiores non quas voluptatum quis placeat quae? Maxime velit atque incidunt vel! Repellat explicabo odit nostrum, sapiente quibusdam facilis? Sunt alias voluptates voluptatibus quis nesciunt ipsum ducimus sequi libero magnam modi molestias odit, necessitatibus distinctio, natus deserunt. Minima ea dolore at qui ipsam velit rerum, praesentium, accusantium quisquam nisi perferendis sapiente. Rerum esse distinctio, vero quidem officiis nulla, quae labore delectus porro quod cum optio suscipit maxime excepturi ab repudiandae illo, neque explicabo facere eius? Molestiae dolores dolor nulla sint aperiam labore officia dolorem cum, omnis excepturi. Aspernatur veritatis blanditiis neque perferendis praesentium est, ullam hic doloremque at, laudantium, nihil molestias fugit debitis possimus minima adipisci porro quo nobis! Repellendus reiciendis, tenetur ea tempore unde possimus et quibusdam hic, esse dolore velit accusantium debitis, expedita sit architecto nam doloribus temporibus explicabo doloremque quod itaque? Quidem sed reprehenderit libero nulla. Quos quae quis ut atque optio nisi dignissimos consequatur saepe, nihil veritatis animi expedita consectetur nesciunt, repudiandae autem non itaque repellat eveniet rerum quod mollitia! Laborum quis maxime nobis corporis quam iusto corrupti culpa enim sed iste placeat ipsa voluptate ad repudiandae eaque id temporibus tenetur velit ipsum, voluptas eius esse beatae omnis. Dolor neque obcaecati provident deleniti labore nemo numquam esse iusto laudantium delectus ad, explicabo repellat sit accusantium beatae. Ipsum laboriosam cupiditate quam? Velit recusandae expedita ipsam voluptatum, rerum minus et deleniti facilis dolores quam itaque, corrupti iure doloribus pariatur eaque eum. Dignissimos eaque labore officia explicabo quaerat, maiores blanditiis libero!
-            </p>
-            <% } else { %>
-              <p class="text-sm text-gray-600 mb-4 mt-2">
-                No description available.
-              </p>
-              <% } %>
+            <section
+              class="flex relative flex-col md:flex-row w-full my-3 items-center md:items-start justify-between space-y-8 md:space-y-0 space-x-1 ">
+              <% if (property.description) { %>
+                <p class="text-sm text-gray-600 w-full md:w-8/12">
+                  <%= property.description %>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae quas, illo adipisci ut ab cupiditate itaque placeat obcaecati quod iusto? Sapiente ad libero perferendis voluptates numquam nemo aut cupiditate soluta! Fuga harum velit, unde blanditiis ex illum nostrum iusto facilis ut doloribus, reiciendis nemo? In dolores eos nemo corporis quod, velit sapiente incidunt enim atque, quae commodi possimus quos nam magnam aut doloremque placeat! Blanditiis voluptatum excepturi libero dignissimos. Nihil aspernatur perferendis labore cupiditate. Cumque error accusantium amet ipsa omnis laborum qui, dignissimos quibusdam. Quo error harum, tempore hic vel asperiores fuga molestiae repudiandae qui aliquid nisi ipsam amet ipsa eaque sint, cumque rem officia cupiditate expedita quos impedit deserunt quia magnam. Magni repellat magnam facilis ipsam vero, quasi veritatis molestiae unde ad dolorum dicta iusto. Cupiditate ea impedit quos, consequatur cum modi, illum nostrum harum quaerat sequi deserunt magni libero. Eaque magni cupiditate itaque sed aspernatur perspiciatis reprehenderit iste nulla deleniti aliquid veritatis, incidunt, natus dolorem ea sequi placeat autem possimus voluptatum? Iusto veniam sint, enim tempore quia nulla in mollitia rem ex. Ducimus, veritatis eos iste voluptates, non nesciunt enim saepe doloremque molestias sunt harum modi dolor? Dignissimos sint sit aliquam quas, excepturi nostrum illo. Aut saepe harum reprehenderit animi nemo veritatis error quia, totam laborum eligendi omnis autem molestiae in eius inventore quidem qui exercitationem. Rem dolor commodi officia quas enim laudantium quia doloribus mollitia tempora! Debitis doloribus similique dignissimos quibusdam facere neque quis excepturi ut architecto quod adipisci tempora corrupti, nam, asperiores eligendi cum ex. Dolorem placeat velit sed quidem eaque repellendus sunt eum magnam. Sit repellendus distinctio ipsa labore neque totam rem sequi eligendi? Necessitatibus blanditiis quisquam quis totam ea? Voluptatem quisquam odio distinctio suscipit dolorum, ducimus, reprehenderit, nobis at nisi necessitatibus fugit magni sunt in facilis. Praesentium laborum velit minima distinctio nobis vel iste.
+                </p>
+                <% } else { %>
+                  <p class="text-sm text-gray-600 mb-4 mt-2">
+                    No description available.
+                  </p>
+                  <% } %>
 
-                <div
-                  class="place-self-center md:place-self-start shadow-md bg-slate-50 flex flex-row md:flex-col space-x-6 md:space-x-0 items-center justify-center md:justify-start sticky bottom-3 md:top-20 space-y-2 border-black border rounded-md px-5 py-7 w-full md:w-auto">
-                  <img class="w-[6rem] h-[6rem] rounded-full" src="https://picsum.photos/seed/author/1280/720"
-                    alt="Author's Image">
-                    <div class="flex flex-col md:justify-center items-center">
-                      <span class="text-gray-700 text-lg font-semibold md:text-center mb-3">
-                        <%= property.author.fullName %>
-                      </span>
-                      <a href="https://wa.me/<%= property.author.phoneNumber %>" target="_blank"
-                        class="text-blue-500 hover:underline md:text-center">
-                        Contact via WhatsApp
-                      </a>
-                      <a href="mailto:<%= property.author.email %>" class="text-blue-500 hover:underline md:text-center">
-                        Contact via Email
-                      </a>
+                  <div>
+                    <div>
+                      <iframe width="300" height="300" class="rounded-full my-3"
+                        src="https://api.maptiler.com/maps/basic-v2/?key=bz3D5d4NTiyJpnL73eIG#16.0/<%= lon %>/<%= lan %>">
+                      </iframe>
                     </div>
-                  
-                </div>
-        </section>
+                    <div
+                      class=" shadow-md bg-slate-50 flex flex-row md:flex-col space-x-6 md:space-x-0 items-center justify-center md:justify-start sticky top-0 space-y-2 border-black border rounded-md px-5 py-7 w-full md:w-auto">
+                      <img class="w-[6rem] h-[6rem] rounded-full" src="https://picsum.photos/seed/author/1280/720"
+                        alt="Author's Image">
+                      <div class="flex flex-col md:justify-center items-center">
+                        <span class="text-gray-700 text-lg font-semibold md:text-center mb-3">
+                          <%= property.author.fullName %>
+                        </span>
+                        <a href="https://wa.me/<%= property.author.phoneNumber %>" target="_blank"
+                          class="text-blue-500 hover:underline md:text-center">
+                          Contact via WhatsApp
+                        </a>
+                        <a href="mailto:<%= property.author.email %>"
+                          class="text-blue-500 hover:underline md:text-center">
+                          Contact via Email
+                        </a>
+                      </div>
+
+                    </div>
+                  </div>
+                    
+            </section>
 
 
-        <!-- Inquiry Form -->
-        <section class="w-full mt-8 p-4 bg-white rounded-lg shadow-md border">
-          <label for="inquiryForm" class="block text-lg font-semibold text-gray-700 mb-4">Have an inquiry? Contact the
-            seller</label>
-            <% if (!currentUser) { %>
-              <%- include('../partials/guestInquiryForm') %>
-            <% } else { %>
-              <%- include('../partials/authedInquiryForm') %>
-            <% } %>
-        </section>
+            <!-- Inquiry Form -->
+            <section class="w-full mt-8 p-4 bg-white rounded-lg shadow-md border">
+              <label for="inquiryForm" class="block text-lg font-semibold text-gray-700 mb-4">Have an inquiry? Contact
+                the
+                seller</label>
+              <% if (!currentUser) { %>
+                <%- include('../partials/guestInquiryForm') %>
+                  <% } else { %>
+                    <%- include('../partials/authedInquiryForm') %>
+                      <% } %>
+            </section>
 
 
       </section>
