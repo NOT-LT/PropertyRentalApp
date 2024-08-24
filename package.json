@@ -38,6 +38,7 @@
   "homepage": "https://github.com/NOT-LT/PropertyRentalApp#readme",
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@maptiler/sdk": "^2.2.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "axios": "^1.7.2",
     "cloudinary": "^1.41.3",

@@ -3,6 +3,7 @@ const Inquiry = require('./models/inquiry');
 
 
 module.exports.propertyValidationSchema = Joi.object({
+  deletedImgs: Joi.string().optional(),
   property: Joi.object({
     title: Joi.string().required(),
     propertyType: Joi.string().valid('flat', 'apartment', 'villa', 'camp', 'studio').required(),

@@ -56,7 +56,7 @@ module.exports.updateProperty = async (req, res) => {
     // await property.updateOne({ $pull: { images: { filename: { $in: deletedImgs } } } });
     // Another approach to delete from mongoose
 
-      Images = Images.filter(img => !(deletedImgs.includes(img?.filename)));
+    Images = Images.filter(img => !(deletedImgs.includes(img?.filename)));
 
     for (let filename of deletedImgs) {
       cloudinary.uploader.destroy(filename, (error,result) => {
