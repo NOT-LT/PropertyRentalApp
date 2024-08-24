@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 const express = require('express');
@@ -10,10 +10,12 @@ const methodOverride = require('method-override');
 const ExpressError = require('./utils/ExpressError')
 const asyncHandler = require('./utils/asyncHandler')
 const mongoose = require('mongoose');
-const passport = require('passport'); 
+const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const maptilerClient = require('@maptiler/client');
 
+maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 const propertiesRoute = require('./routes/properties')
 const inquiriesRoute = require('./routes/inquiry')
 const usersRoute = require('./routes/users')
@@ -52,15 +54,17 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(flash())
-app.use((req,res,next)=> {
+
+app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   res.locals.currentUser = req.user; // passport stores user info in session and we have access to it in all templates
-  if (!(res.locals.page)){
-    res.locals.page = { page: {title: ''}}
+  if (!(res.locals.page)) {
+    res.locals.page = { page: { title: '' } }
   }
   next();
 })
+
 
 app.get('/', asyncHandler(async (req, res) => {
   return res.redirect('/properties');

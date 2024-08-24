@@ -1,9 +1,10 @@
 const Property = require('./models/property')
-const {propertyValidationSchema, inquiryValidationSchema} = require('./validationSchemas')
+const { propertyValidationSchema, inquiryValidationSchema } = require('./validationSchemas')
 const ExpressError = require('./utils/ExpressError');
 const asyncHandler = require('./utils/asyncHandler');
 
 module.exports.validateProperty = (req, res, next) => {
+  console.log(req.body);
   const { error } = propertyValidationSchema.validate(req.body);
   if (error) {
     const msg = error.details.map(el => el.message).join(',')
@@ -22,8 +23,8 @@ module.exports.validateInquiry = (req, res, next) => {
   next()
 }
 
-module.exports.isLoggedIn = (req,res,next) => {
-  if (!req.isAuthenticated()){
+module.exports.isLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
     req.session.redirectToUrl = req.originalUrl; // add this line
     req.flash('error', 'Please sign in first');
     return res.redirect('/login')
@@ -31,19 +32,19 @@ module.exports.isLoggedIn = (req,res,next) => {
   next();
 };
 
-module.exports.storeRedirectTo = (req,res,next)=> {
-    if (req.session.redirectToUrl){
-      res.locals.redirectToUrl = req.session.redirectToUrl;
-    } else {
-      // res.locals.redirectToUrl = req.get('Referer');
-    }
+module.exports.storeRedirectTo = (req, res, next) => {
+  if (req.session.redirectToUrl) {
+    res.locals.redirectToUrl = req.session.redirectToUrl;
+  } else {
+    // res.locals.redirectToUrl = req.get('Referer');
+  }
   next();
 }
 
-module.exports.isAuthor = asyncHandler(async (req,res,next) => {
-  const {id} = req.params;
+module.exports.isAuthor = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
   const property = await Property.findById(id).populate('author');
-  if (!property.author.equals(req.user._id)){
+  if (!property.author.equals(req.user._id)) {
     req.flash('error', `You don't have access`)
     return res.redirect(`/properties/${id}`);
   }
