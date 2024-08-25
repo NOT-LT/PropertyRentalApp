@@ -2,6 +2,10 @@ const express = require('express');
 const ExpressError = require('../utils/ExpressError')
 const Property = require('../models/property');
 const {cloudinary} = require('../cloudinary');
+const maptilerClient = require('@maptiler/client');
+
+maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
+console.log("ctrlprop:" + process.env.MAPTILER_API_KEY);
 
 module.exports.renderIndex = async (req, res) => {
   const properties = await Property.find({});
@@ -11,10 +15,18 @@ module.exports.renderIndex = async (req, res) => {
 module.exports.renderShow = async (req, res) => {
   const { id } = req.params;
   const property = await Property.findById(id).populate('author');
+  const location = maptilerClient.geocoding.forward(property.location).then((response) => {
+    console.log(response.features[0].geometry.coordinates[0]);
+    let lan= response.features[0].geometry.coordinates[0];
+    let lon= response.features[0].geometry.coordinates[1];
+    res.render('properties/show', { property,lan,lon,  page: {title: 'showPage'}})
+
+  }).catch((error) => {
+    res.render('properties/show', { property,lan: 0,lon: 0,  page: {title: 'showPage'}})
+  });
   if (!property){
     throw new ExpressError('404', 'There is no property with this id')
   }
-  res.render('properties/show', { property,  page: {title: 'showPage'}})
 }
 
 module.exports.renderEdit = async (req, res) => {
@@ -56,7 +68,7 @@ module.exports.updateProperty = async (req, res) => {
     // await property.updateOne({ $pull: { images: { filename: { $in: deletedImgs } } } });
     // Another approach to delete from mongoose
 
-      Images = Images.filter(img => !(deletedImgs.includes(img?.filename)));
+    Images = Images.filter(img => !(deletedImgs.includes(img?.filename)));
 
     for (let filename of deletedImgs) {
       cloudinary.uploader.destroy(filename, (error,result) => {

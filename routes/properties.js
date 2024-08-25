@@ -17,7 +17,7 @@ router.get('/new',isLoggedIn, (req, res) => {
 
 router.route('/:id')
   .get(asyncHandler(renderShow))
-  .put(isLoggedIn, isAuthor,upload.array('property[images]'), asyncHandler(updateProperty)) // add validateProperty
+  .put(isLoggedIn, isAuthor,upload.array('property[images]'),validateProperty, asyncHandler(updateProperty)) // add validateProperty
   .delete(isLoggedIn, isAuthor, asyncHandler(deleteProperty))
 
 router.get('/:id/edit', isLoggedIn, isAuthor,  asyncHandler(renderEdit))
