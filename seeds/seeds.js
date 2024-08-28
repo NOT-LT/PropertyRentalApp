@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const Property = require('../models/property');
-const multer  = require('multer')
-const {storage, uploadFileToCloudinary} = require('../cloudinary') // node automaitcally looks for index.js
+const multer = require('multer')
+const { storage, uploadFileToCloudinary } = require('../cloudinary') // node automaitcally looks for index.js
 // Database connection
 
 
@@ -97,7 +97,7 @@ const generateFloors = (type) => {
 const getImages = async () => {
   const arr = [];
   const n = faker.number.int({ min: 3, max: 6 });
-  
+
   for (let i = 0; i < n; i++) {
     const result = await uploadFileToCloudinary(`https://picsum.photos/seed/${faker.number.int({ min: 1, max: 9999 })}/1280/720`);
     arr.push({
@@ -106,7 +106,7 @@ const getImages = async () => {
     });
     console.log(result.secure_url);
   }
-  
+
   console.log("Array: ", arr);
   return arr;
 };
@@ -123,17 +123,25 @@ const seedDB = async () => {
     const classificationOptions = classificationMapping[usage];
     const classification = faker.helpers.arrayElement(classificationOptions);
     const nFloors = generateFloors(type);
-    
+
     // Generate images
     const Rimages = await getImages();
-    console.log("Images: ", Rimages); 
-    
+    console.log("Images: ", Rimages);
+
     // Generate other property details
     let price = getRandomPrice(type, listingType).toLocaleString();
     const contact = generateContactNumber(); // Generate the contact number
     const Nbedrooms = faker.number.int({ min: 1, max: 10 });
-    
+
     // Create new property
+    const LF = new LocationFeature({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [faker.address.longitude(), faker.address.latitude()]
+      }
+    });
+
     const property = new Property({
       title: `${faker.commerce.productAdjective()} ${type}`,
       propertyType: type,
@@ -154,6 +162,7 @@ const seedDB = async () => {
       listingType: listingType,
       contact: '+97338820989', // Add contact field
       propertyUsage: usage,
+      geoJSON: LF,
       BFID: faker.string.uuid(),
     });
 

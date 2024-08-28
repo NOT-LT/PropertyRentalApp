@@ -9,12 +9,12 @@ const imgSchema = new Schema({
 });
 
 imgSchema.virtual('thumbnail1')
-  .get(function(){
+  .get(function () {
     return this.url.replace('/upload', '/upload/w_250');
   })
 
 imgSchema.virtual('thumbnail2')
-  .get(function(){
+  .get(function () {
     return this.url.replace('/upload', '/upload/w_720');
   })
 
@@ -61,6 +61,10 @@ const PropertySchema = new Schema({
       ref: 'Inquiry'
     }
   ],
+  geoJSON: {
+    type: Schema.Types.ObjectId,
+    ref: 'LocationFeature'
+  },
   BFID: String
 });
 
@@ -82,8 +86,8 @@ PropertySchema.pre('save', function (next) {
   next();
 });
 
-PropertySchema.post('findOneAndDelete', async function(doc) { // this will be hit even for findByIdAndDelete
-  if (doc){
+PropertySchema.post('findOneAndDelete', async function (doc) { // this will be hit even for findByIdAndDelete
+  if (doc) {
     await Inquiry.deleteMany({
       _id: {
         $in: doc.inquiries

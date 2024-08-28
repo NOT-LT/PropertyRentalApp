@@ -4,13 +4,14 @@ const asyncHandler = require('../utils/asyncHandler')
 const {isLoggedIn, isAuthor, validateProperty} = require('../middleware');
 const { renderIndex, renderEdit, renderShow, updateProperty, createProperty,deleteProperty } = require('../controllers/Ctrlproperties');
 const multer  = require('multer')
-const {storage} = require('../cloudinary') // node automaitcally looks for index.js
+const {storage} = require('../cloudinary')
 const upload = multer({ storage })
 
 
 router.route('/')
   .get(asyncHandler(renderIndex))
   .post(isLoggedIn,upload.array('property[images]'), validateProperty, asyncHandler(createProperty))
+
 router.get('/new',isLoggedIn, (req, res) => {
     res.render('properties/new');
 })
