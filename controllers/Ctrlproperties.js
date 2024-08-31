@@ -14,20 +14,23 @@ module.exports.renderIndex = async (req, res) => {
 
 module.exports.renderShow = async (req, res) => {
   const { id } = req.params;
-  const property = await Property.findById(id).populate('author');
-  const geoLoc = maptilerClient.geocoding.forward(property?.location).then((response) => {
+  const property = await Property.findById(id);
+  await property.populate('author');
+  await property.populate('geoJSON');
+  await property.save();
+  // const geoLoc = maptilerClient.geocoding.forward(property?.location).then((response) => {
     // console.log(response.features[0].geometry.coordinates[0]);
-    const LF = new LocationFeature({
-      type: 'Feature',
-      geometry: response?.features[0]?.geometry
-    });
-    property.geoJSON = LF;
+    // const LF = new LocationFeature({
+    //   type: 'Feature',
+    //   geometry: response?.features[0]?.geometry
+    // });
+    // property.geoJSON = LF;
 
     res.render('properties/show', { property, page: { title: 'showPage' } })
 
-  }).catch((error) => {
-    res.render('properties/show', { property, lan: 0, lon: 0, page: { title: 'showPage' } })
-  });
+  // }).catch((error) => {
+  //   res.render('properties/show', { property, lan: 0, lon: 0, page: { title: 'showPage' } })
+  // });
   await property.save();
   if (!property) {
     throw new ExpressError('404', 'There is no property with this id')

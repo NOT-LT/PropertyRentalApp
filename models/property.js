@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Inquiry = require('./inquiry');
+const LocationFeature = require('./locationFeature');
 const { Schema } = mongoose; // Destructuring assignment to get Schema directly
 
 
@@ -92,6 +93,9 @@ PropertySchema.post('findOneAndDelete', async function (doc) { // this will be h
       _id: {
         $in: doc.inquiries
       }
+    });
+    await LocationFeature.deleteOne({
+      _id: doc.geoJSON
     })
   }
 })

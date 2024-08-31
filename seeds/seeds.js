@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const Property = require('../models/property');
 const multer = require('multer')
-const { storage, uploadFileToCloudinary } = require('../cloudinary') // node automaitcally looks for index.js
+const LocationFeature = require('../models/locationFeature');
+const { storage, uploadFileToCloudinary } = require('../cloudinary'); // node automaitcally looks for index.js
+const Inquiry = require('../models/inquiry');
 // Database connection
 
 
@@ -113,6 +115,8 @@ const getImages = async () => {
 
 const seedDB = async () => {
   await Property.deleteMany({}); // Clear existing data
+  await Inquiry.deleteMany({}); // Clear existing data
+  await LocationFeature.deleteMany({}); // Clear existing data
 
   for (let i = 0; i < 10; i++) {
     // Generate random data for the property
@@ -134,13 +138,15 @@ const seedDB = async () => {
     const Nbedrooms = faker.number.int({ min: 1, max: 10 });
 
     // Create new property
+    LocationFeature
     const LF = new LocationFeature({
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: [faker.address.longitude(), faker.address.latitude()]
+        coordinates: [faker.number.float({ min: 50.4984, max: 50.611556 }), faker.number.float({ min: 25.9886, max: 26.237 })],
       }
     });
+
 
     const property = new Property({
       title: `${faker.commerce.productAdjective()} ${type}`,
@@ -168,6 +174,8 @@ const seedDB = async () => {
 
     // Save the property to the database
     await property.save();
+    LF.property = property;
+    await LF.save();
   }
 };
 

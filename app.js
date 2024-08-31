@@ -74,10 +74,16 @@ app.get('/', asyncHandler(async (req, res) => {
   return res.redirect('/properties');
 }))
 app.get('/properties.geojson', async (req, res) => {
-  res.json({
-    type: "FeatureCollection",
-    features: LocationFeature.find({})
-  });
+  try {
+    const features = await LocationFeature.find({});
+    console.log(features);
+    res.json({
+      type: "FeatureCollection",
+      features: features
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 app.use('/', usersRoute);
 app.use('/properties/:id/inquiry', inquiriesRoute)
