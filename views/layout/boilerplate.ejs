@@ -6,27 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style2.css" rel="stylesheet">
+    <link href="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.css" rel="stylesheet" />
+    <script src="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.umd.js"></script>
     <title>Document</title>
+    <style>
+      #map {
+        display: block;
+        top: 0;
+        bottom: 0;
+        height: 400px;
+      }
+    </style>
   </head>
 
   <body class=" flex flex-col min-h-screen min-w-full">
-    <% if (page.title !== 'login' && page.title !== 'register') { %>
+    <% if (page.title !=='login' && page.title !=='register' ) { %>
       <%- include('../partials/navbar') -%>
-    <% } %>
-    <%- include('../partials/flashAlert') -%>
+        <% } %>
+          <%- include('../partials/flashAlert') -%>
 
-      <div class="flex-1 flex items-center justify-center bg-white <%= page.title === 'showPage' ? 'py-0 lg:py-4' : 'py-4' %>"">
-        <div class="mx-auto w-full max-size lg:px-10">
-          <%- body %>
-        </div>
-      </div>
+            <div
+              class="flex-1 flex items-center justify-center bg-white <%= page.title === 'showPage' ? 'py-0 lg:py-4' : 'py-4' %>"">
+        <div class=" mx-auto w-full max-size lg:px-10">
+              <%- body %>
+            </div>
+            </div>
 
-      <%- include('../partials/footer') -%>
+            <%- include('../partials/footer') -%>
 
   </body>
 
 
-    <script src="/js/navbar.js"></script>
+  <script src="/js/navbar.js"></script>
 
 
 

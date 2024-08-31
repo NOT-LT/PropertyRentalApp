@@ -2,7 +2,7 @@
   <div class="flex flex-col max-w-screen-lg items-center mx-auto justify-center md:px-4 relative">
     <div class="flex flex-col md:rounded-lg justify-center items-start min-w-full">
 
-      
+
       <div class="flex flex-col md:flex-row w-full md:space-x-2">
         <div class="w-full <%= property.images.length >= 3 ? 'md:w-2/3' : 'md:w-full' %> relative">
           <div class="aspect-w-[1.5] aspect-h-1 overflow-hidden md:rounded-lg">
@@ -108,7 +108,29 @@
               <% if (property.description) { %>
                 <p class="text-sm text-gray-600 w-full md:w-8/12">
                   <%= property.description %>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae quas, illo adipisci ut ab cupiditate itaque placeat obcaecati quod iusto? Sapiente ad libero perferendis voluptates numquam nemo aut cupiditate soluta! Fuga harum velit, unde blanditiis ex illum nostrum iusto facilis ut doloribus, reiciendis nemo? In dolores eos nemo corporis quod, velit sapiente incidunt enim atque, quae commodi possimus quos nam magnam aut doloremque placeat! Blanditiis voluptatum excepturi libero dignissimos. Nihil aspernatur perferendis labore cupiditate. Cumque error accusantium amet ipsa omnis laborum qui, dignissimos quibusdam. Quo error harum, tempore hic vel asperiores fuga molestiae repudiandae qui aliquid nisi ipsam amet ipsa eaque sint, cumque rem officia cupiditate expedita quos impedit deserunt quia magnam. Magni repellat magnam facilis ipsam vero, quasi veritatis molestiae unde ad dolorum dicta iusto. Cupiditate ea impedit quos, consequatur cum modi, illum nostrum harum quaerat sequi deserunt magni libero. Eaque magni cupiditate itaque sed aspernatur perspiciatis reprehenderit iste nulla deleniti aliquid veritatis, incidunt, natus dolorem ea sequi placeat autem possimus voluptatum? Iusto veniam sint, enim tempore quia nulla in mollitia rem ex. Ducimus, veritatis eos iste voluptates, non nesciunt enim saepe doloremque molestias sunt harum modi dolor? Dignissimos sint sit aliquam quas, excepturi nostrum illo. Aut saepe harum reprehenderit animi nemo veritatis error quia, totam laborum eligendi omnis autem molestiae in eius inventore quidem qui exercitationem. Rem dolor commodi officia quas enim laudantium quia doloribus mollitia tempora! Debitis doloribus similique dignissimos quibusdam facere neque quis excepturi ut architecto quod adipisci tempora corrupti, nam, asperiores eligendi cum ex. Dolorem placeat velit sed quidem eaque repellendus sunt eum magnam. Sit repellendus distinctio ipsa labore neque totam rem sequi eligendi? Necessitatibus blanditiis quisquam quis totam ea? Voluptatem quisquam odio distinctio suscipit dolorum, ducimus, reprehenderit, nobis at nisi necessitatibus fugit magni sunt in facilis. Praesentium laborum velit minima distinctio nobis vel iste.
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae quas, illo adipisci ut ab
+                    cupiditate itaque placeat obcaecati quod iusto? Sapiente ad libero perferendis voluptates numquam
+                    nemo aut cupiditate soluta! Fuga harum velit, unde blanditiis ex illum nostrum iusto facilis ut
+                    doloribus, reiciendis nemo? In dolores eos nemo corporis quod, velit sapiente incidunt enim atque,
+                    quae commodi possimus quos nam magnam aut doloremque placeat! Blanditiis voluptatum excepturi libero
+                    dignissimos. Nihil aspernatur perferendis labore cupiditate. Cumque error accusantium amet ipsa
+                    omnis laborum qui, dignissimos quibusdam. Quo error harum, tempore hic vel asperiores fuga molestiae
+                    repudiandae qui aliquid nisi ipsam amet ipsa eaque sint, cumque rem officia cupiditate expedita quos
+                    impedit deserunt quia magnam. Magni repellat magnam facilis ipsam vero, quasi veritatis molestiae
+                    unde ad dolorum dicta iusto. Cupiditate ea impedit quos, consequatur cum modi, illum nostrum harum
+                    quaerat sequi deserunt magni libero. Eaque magni cupiditate itaque sed aspernatur perspiciatis
+                    reprehenderit iste nulla deleniti aliquid veritatis, incidunt, natus dolorem ea sequi placeat autem
+                    possimus voluptatum? Iusto veniam sint, enim tempore quia nulla in mollitia rem ex. Ducimus,
+                    veritatis eos iste voluptates, non nesciunt enim saepe doloremque molestias sunt harum modi dolor?
+                    Dignissimos sint sit aliquam quas, excepturi nostrum illo. Aut saepe harum reprehenderit animi nemo
+                    veritatis error quia, totam laborum eligendi omnis autem molestiae in eius inventore quidem qui
+                    exercitationem. Rem dolor commodi officia quas enim laudantium quia doloribus mollitia tempora!
+                    Debitis doloribus similique dignissimos quibusdam facere neque quis excepturi ut architecto quod
+                    adipisci tempora corrupti, nam, asperiores eligendi cum ex. Dolorem placeat velit sed quidem eaque
+                    repellendus sunt eum magnam. Sit repellendus distinctio ipsa labore neque totam rem sequi eligendi?
+                    Necessitatibus blanditiis quisquam quis totam ea? Voluptatem quisquam odio distinctio suscipit
+                    dolorum, ducimus, reprehenderit, nobis at nisi necessitatibus fugit magni sunt in facilis.
+                    Praesentium laborum velit minima distinctio nobis vel iste.
                 </p>
                 <% } else { %>
                   <p class="text-sm text-gray-600 mb-4 mt-2">
@@ -116,33 +138,31 @@
                   </p>
                   <% } %>
 
-                  <div>
                     <div>
-                      <iframe width="300" height="300" class="rounded-full my-3"
-                        src="https://api.maptiler.com/maps/basic-v2/?key=bz3D5d4NTiyJpnL73eIG#16.0/<%= lon %>/<%= lan %>">
-                      </iframe>
-                    </div>
-                    <div
-                      class=" shadow-md bg-slate-50 flex flex-row md:flex-col space-x-6 md:space-x-0 items-center justify-center md:justify-start sticky top-0 space-y-2 border-black border rounded-md px-5 py-7 w-full md:w-auto">
-                      <img class="w-[6rem] h-[6rem] rounded-full" src="https://picsum.photos/seed/author/1280/720"
-                        alt="Author's Image">
-                      <div class="flex flex-col md:justify-center items-center">
-                        <span class="text-gray-700 text-lg font-semibold md:text-center mb-3">
-                          <%= property.author.fullName %>
-                        </span>
-                        <a href="https://wa.me/<%= property.author.phoneNumber %>" target="_blank"
-                          class="text-blue-500 hover:underline md:text-center">
-                          Contact via WhatsApp
-                        </a>
-                        <a href="mailto:<%= property.author.email %>"
-                          class="text-blue-500 hover:underline md:text-center">
-                          Contact via Email
-                        </a>
-                      </div>
+                      <div id="map" style="width:250px; height:250px;" class="rounded-full"
+                        lon="<%= property.geoJSON.geometry.coordinates[0]%>"
+                        lan="<%= property.geoJSON.geometry.coordinates[1]%>"></div>
+                      <div
+                        class=" shadow-md bg-slate-50 flex flex-row md:flex-col space-x-6 md:space-x-0 items-center justify-center md:justify-start sticky top-0 space-y-2 border-black border rounded-md px-5 py-7 w-full md:w-auto">
+                        <img class="w-[6rem] h-[6rem] rounded-full" src="https://picsum.photos/seed/author/1280/720"
+                          alt="Author's Image">
+                        <div class="flex flex-col md:justify-center items-center">
+                          <span class="text-gray-700 text-lg font-semibold md:text-center mb-3">
+                            <%= property.author.fullName %>
+                          </span>
+                          <a href="https://wa.me/<%= property.author.phoneNumber %>" target="_blank"
+                            class="text-blue-500 hover:underline md:text-center">
+                            Contact via WhatsApp
+                          </a>
+                          <a href="mailto:<%= property.author.email %>"
+                            class="text-blue-500 hover:underline md:text-center">
+                            Contact via Email
+                          </a>
+                        </div>
 
+                      </div>
                     </div>
-                  </div>
-                    
+
             </section>
 
 
@@ -181,4 +201,25 @@
 
   </div>
 
+  <script>
+    maptilersdk.config.apiKey = 'bz3D5d4NTiyJpnL73eIG';
+    let lon = parseFloat(document.getElementById('map').getAttribute('lon'));
+    let lan = parseFloat(document.getElementById('map').getAttribute('lan'))
+    console.log(lon);
+    console.log(lan);
+    const map = new maptilersdk.Map({
+      container: 'map', // container's id or the HTML element to render the map
+      style: maptilersdk.MapStyle.streets,
+      center: [lon, lan], // starting position [lng, lat]
+      zoom: 11, // starting zoom
+    });
+    maptilersdk.setRTLTextPlugin(
+      'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
+      null,
+      true // Lazy load the plugin
+    );
+    const marker = new maptilersdk.Marker({ color: 'green' })
+      .setLngLat([lon, lan])
+      .addTo(map);
+  </script>
   <script src="../js/showPage.js"></script>

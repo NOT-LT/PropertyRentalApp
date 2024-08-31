@@ -25,6 +25,10 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
   console.log("Database connected");
 })
+// let dbClient = client.db(dbName);
+// const dbName = 'propertyRentalApp';
+const LocationFeature = require('./models/locationFeature');
+
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -69,7 +73,18 @@ app.use((req, res, next) => {
 app.get('/', asyncHandler(async (req, res) => {
   return res.redirect('/properties');
 }))
-
+app.get('/properties.geojson', async (req, res) => {
+  try {
+    const features = await LocationFeature.find({});
+    console.log(features);
+    res.json({
+      type: "FeatureCollection",
+      features: features
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 app.use('/', usersRoute);
 app.use('/properties/:id/inquiry', inquiriesRoute)
 app.use('/properties', propertiesRoute)

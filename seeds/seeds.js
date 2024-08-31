@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const Property = require('../models/property');
-const multer  = require('multer')
-const {storage, uploadFileToCloudinary} = require('../cloudinary') // node automaitcally looks for index.js
+const multer = require('multer')
+const LocationFeature = require('../models/locationFeature');
+const { storage, uploadFileToCloudinary } = require('../cloudinary'); // node automaitcally looks for index.js
+const Inquiry = require('../models/inquiry');
 // Database connection
 
 
@@ -97,7 +99,7 @@ const generateFloors = (type) => {
 const getImages = async () => {
   const arr = [];
   const n = faker.number.int({ min: 3, max: 6 });
-  
+
   for (let i = 0; i < n; i++) {
     const result = await uploadFileToCloudinary(`https://picsum.photos/seed/${faker.number.int({ min: 1, max: 9999 })}/1280/720`);
     arr.push({
@@ -106,13 +108,15 @@ const getImages = async () => {
     });
     console.log(result.secure_url);
   }
-  
+
   console.log("Array: ", arr);
   return arr;
 };
 
 const seedDB = async () => {
   await Property.deleteMany({}); // Clear existing data
+  await Inquiry.deleteMany({}); // Clear existing data
+  await LocationFeature.deleteMany({}); // Clear existing data
 
   for (let i = 0; i < 10; i++) {
     // Generate random data for the property
@@ -123,17 +127,27 @@ const seedDB = async () => {
     const classificationOptions = classificationMapping[usage];
     const classification = faker.helpers.arrayElement(classificationOptions);
     const nFloors = generateFloors(type);
-    
+
     // Generate images
     const Rimages = await getImages();
-    console.log("Images: ", Rimages); 
-    
+    console.log("Images: ", Rimages);
+
     // Generate other property details
     let price = getRandomPrice(type, listingType).toLocaleString();
     const contact = generateContactNumber(); // Generate the contact number
     const Nbedrooms = faker.number.int({ min: 1, max: 10 });
-    
+
     // Create new property
+    LocationFeature
+    const LF = new LocationFeature({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [faker.number.float({ min: 50.4984, max: 50.611556 }), faker.number.float({ min: 25.9886, max: 26.237 })],
+      }
+    });
+
+
     const property = new Property({
       title: `${faker.commerce.productAdjective()} ${type}`,
       propertyType: type,
@@ -154,11 +168,14 @@ const seedDB = async () => {
       listingType: listingType,
       contact: '+97338820989', // Add contact field
       propertyUsage: usage,
+      geoJSON: LF,
       BFID: faker.string.uuid(),
     });
 
     // Save the property to the database
     await property.save();
+    LF.property = property;
+    await LF.save();
   }
 };
 

@@ -20,7 +20,7 @@ window.addEventListener('scroll', function () {
 const profileDropdownMenu = document.getElementById('profile-dropdown-menu');
 const userMenuButton = document.getElementById('user-menu-button');
 
-userMenuButton.addEventListener('click', async (event) => {
+userMenuButton?.addEventListener('click', async (event) => {
   if (profileDropdownMenu.classList.contains('hidden')) {
     profileDropdownMenu.classList.toggle('hidden');
     setTimeout(() => {
