@@ -1,11 +1,6 @@
 <%- layout('layout/boilerplate') %>
-  <div id="map" class="overflow-hidden w-full"></div>
   <div class="px-4 md:px-6 lg:px-2">
-    <h1 class="text-2xl">all properties</h1>
-    <div>
-      <a href="/properties/new" class="underline text-blue-500 hover:underline">add property</a>
-    </div>
-
+    <div id="map" class="overflow-hidden w-full rounded-lg"></div>
     <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
       <% for (let p of properties) { %>
         <section class="rounded-lg w-full max-w-full bg-white">
