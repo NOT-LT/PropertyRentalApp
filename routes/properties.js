@@ -39,7 +39,7 @@ router.get('/coordinates/:lon/:lat', asyncHandler(async (req, res) => {
 }));
 
 router.get('/new', isLoggedIn, (req, res) => {
-  res.render('properties/new');
+  res.render('properties/new', {page: { title: 'newPropertyPage' }});
 })
 
 router.route('/:id')
