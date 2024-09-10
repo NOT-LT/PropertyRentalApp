@@ -14,6 +14,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const maptilerClient = require('@maptiler/client');
+const Property = require('./models/property');
 
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 const propertiesRoute = require('./routes/properties')
@@ -71,7 +72,8 @@ app.use((req, res, next) => {
 
 
 app.get('/', asyncHandler(async (req, res) => {
-  return res.redirect('/properties');
+  const properties = await Property.find({});
+  res.render('landing', {properties,page: {title: 'landing'}})
 }))
 app.get('/properties.geojson', async (req, res) => {
   try {

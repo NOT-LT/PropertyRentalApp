@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nestify</title>
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style2.css" rel="stylesheet">
+  </head>
+
+  <body class="bg-gray-50 text-gray-800">
+
+
+    <div class="bg-gradient-to-b from-[#e0f2ff] to-[#f8fafc]">
+      <%- include('./partials/landingNavbar') -%>
+    </div>
+
+    <!-- Hero Section -->
+    <section
+      class="relative bg-gradient-to-b from-[#f8fafc] via-[#e0f2ff] to-[white] text-black pt-16 pb-8 2xl:px-[19rem] xl:px-[7rem] lg:px-[4.5rem] ">
+
+      <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center ">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-bold leading-tight">Find Real Estate and Get Your Dream Space</h1>
+          <p class="mt-4 text-lg">Discover stunning properties that fit your lifestyle and budget. Whether you’re
+            buying, renting, or investing, we’re here to help you every step of the way.
+
+          </p>
+
+
+
+          <button class="mt-6 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">Search</button>
+        </div>
+
+        <!-- Image Section with Floating Effect -->
+        <div class="animate-float">
+          <div
+            class="relative overflow-hidden rounded-3xl shadow-[0_15px_30px_rgba(13,23,39,0.5)] hover:scale-[1.02] hover:rotate-[-0.5deg] transition-transform duration-500">
+            <img
+              src="https://static.designboom.com/wp-content/uploads/2021/02/tropical-space-tam-dao-villa-vietnam-designboom-large-1.jpg"
+              alt="House" class="w-full h-auto object-cover">
+            <div class="absolute top-4 left-4 bg-gray-800/70 text-white p-4 rounded-lg backdrop-blur-sm">
+              <span class="block text-lg font-bold">Black Modern House</span>
+              <span class="block text-sm">New York Street 1260</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 mb-8 bg-white text-gray-800 rounded-full p-4 shadow-lg flex items-center space-x-3">
+        <div class="flex-1">
+          <input type="text" class="w-full border-gray-300 rounded-full p-2" placeholder="Search...">
+        </div>
+        <div class="">
+          <select class="w-full border-gray-300 rounded-full">
+            <option>Location</option>
+            <option>Bali, Indonesia</option>
+            <option>New York, USA</option>
+            <option>London, UK</option>
+          </select>
+        </div>
+        <div class="">
+          <select class="w-full border-gray-300 rounded-full">
+            <option>Property Type</option>
+            <option>Modern House</option>
+            <option>Apartment</option>
+            <option>Villa</option>
+          </select>
+        </div>
+        <div class="">
+          <select class="w-full border-gray-300 rounded-full">
+            <option>Average Price</option>
+            <option>$7500 - $10000</option>
+            <option>$5000 - $7500</option>
+            <option>$2500 - $5000</option>
+          </select>
+        </div>
+        <div>
+          <button class="bg-blue-500 text-white rounded-full px-6 py-2">Search</button>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- Services Section -->
+    <section class="py-16 bg-white 2xl:px-[19rem] xl:px-[7rem] lg:px-[5rem]">
+      <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6">The Benefits From Our Service</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <!-- Service 1 -->
+          <div class="bg-gray-100 p-8 rounded-lg shadow-lg">
+            <div class="text-blue-500 mb-4">
+              <svg class="w-12 h-12 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Free Listings</h3>
+            <p>List your properties for free with detailed descriptions, images, and location information.</p>
+          </div>
+
+          <!-- Service 2 -->
+          <div class="bg-gray-100 p-8 rounded-lg shadow-lg">
+            <div class="text-blue-500 mb-4">
+              <svg class="w-12 h-12 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm2 0v10h12V5H4zm3 2h2v2H7V7zm0 4h2v2H7v-2zm4-4h2v2h-2V7zm0 4h2v2h-2v-2z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Detailed Listings</h3>
+            <p>Provide comprehensive details about your property, including images, title, description, and location.
+            </p>
+          </div>
+
+          <!-- Service 3 -->
+          <div class="bg-gray-100 p-8 rounded-lg shadow-lg">
+            <div class="text-blue-500 mb-4">
+              <svg class="w-12 h-12 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M2 8a2 2 0 012-2h12a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8zm2 0v6h12V8H4zm3 2h2v2H7v-2zm4 0h2v2h-2v-2z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Direct Contact</h3>
+            <p>Buyers can contact sellers directly via the provided contact number for more information and
+              negotiations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Latest Listings -->
+    <section class="bg-gradient-to-b from-[white] to-[#f8fafc] pt-16 pb-8 2xl:px-[19rem] xl:px-[7rem] lg:px-[5rem]">
+      <h2 class="font-semibold text-xl mb-2">Latest Listed Properties</h2>
+      <div class="relative">
+        <!-- Left Arrow -->
+        <button id="left-arrow"
+          class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full shadow-md z-10">
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <!-- Right Arrow -->
+        <button id="right-arrow"
+          class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full shadow-md z-10">
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+        <div class="flex flex-row gap-x-4 overflow-x-auto scrollbar-hide scroll-smooth py-2 " id="property-list">
+
+          <% for (let p of properties) { %>
+            <section class="rounded-lg w-80 flex-shrink-0 bg-white">
+
+
+              <div
+                class="relative overflow-hidden shadow-lg rounded-lg group transition-all duration-300 hover:shadow-2xl card">
+
+                <div onclick="window.location.href='/properties/<%= p._id %>'"
+                  class="cursor-pointer flex flex-col h-full">
+                  <div class="aspect-ratio-container">
+                    <img src="<%= p?.images[0]?.thumbnail2 %>"
+                      class="object-cover object-center transition-transform duration-300 group-hover:scale-[1.05]">
+                    <div
+                      class="overlay absolute inset-0 opacity-80 group-hover:opacity-30 transition-opacity duration-300">
+                    </div>
+                    <div
+                      class="absolute top-2 left-2 bg-[#2fc66c] bg-opacity-90 rounded-full flex items-center justify-center p-[0.15rem] z-20">
+                      <a href="https://wa.me/<%= p?.contact %>">
+                        <svg fill="#fff" height="30px" width="30px" version="1.1" id="Layer_1"
+                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                          viewBox="0 0 308 308" xml:space="preserve">
+                          <g>
+                            <path id="XMLID_469_" d="M227.904,176.981c-0.6-0.288-23.054-11.345-27.044-12.781c-1.629-0.585-3.374-1.156-5.23-1.156
+                     c-3.032,0-5.579,1.511-7.563,4.479c-2.243,3.334-9.033,11.271-11.131,13.642c-0.274,0.313-0.648,0.687-0.872,0.687
+                     c-0.201,0-3.676-1.431-4.728-1.888c-24.087-10.463-42.37-35.624-44.877-39.867c-0.358-0.61-0.373-0.887-0.376-0.887
+                     c0.088-0.323,0.898-1.135,1.316-1.554c1.223-1.21,2.548-2.805,3.83-4.348c0.607-0.731,1.215-1.463,1.812-2.153
+                     c1.86-2.164,2.688-3.844,3.648-5.79l0.503-1.011c2.344-4.657,0.342-8.587-0.305-9.856c-0.531-1.062-10.012-23.944-11.02-26.348
+                     c-2.424-5.801-5.627-8.502-10.078-8.502c-0.413,0,0,0-1.732,0.073c-2.109,0.089-13.594,1.601-18.672,4.802
+                     c-5.385,3.395-14.495,14.217-14.495,33.249c0,17.129,10.87,33.302,15.537,39.453c0.116,0.155,0.329,0.47,0.638,0.922
+                     c17.873,26.102,40.154,45.446,62.741,54.469c21.745,8.686,32.042,9.69,37.896,9.69c0.001,0,0.001,0,0.001,0
+                     c2.46,0,4.429-0.193,6.166-0.364l1.102-0.105c7.512-0.666,24.02-9.22,27.775-19.655c2.958-8.219,3.738-17.199,1.77-20.458
+                     C233.168,179.508,230.845,178.393,227.904,176.981z" />
+                            <path id="XMLID_470_" d="M156.734,0C73.318,0,5.454,67.354,5.454,150.143c0,26.777,7.166,52.988,20.741,75.928L0.212,302.716
+                     c-0.484,1.429-0.124,3.009,0.933,4.085C1.908,307.58,2.943,308,4,308c0.405,0,0.813-0.061,1.211-0.188l79.92-25.396
+                     c21.87,11.685,46.588,17.853,71.604,17.853C240.143,300.27,308,232.923,308,150.143C308,67.354,240.143,0,156.734,0z
+                     M156.734,268.994c-23.539,0-46.338-6.797-65.936-19.657c-0.659-0.433-1.424-0.655-2.194-0.655c-0.407,0-0.815,0.062-1.212,0.188
+                     l-40.035,12.726l12.924-38.129c0.418-1.234,0.209-2.595-0.561-3.647c-14.924-20.392-22.813-44.485-22.813-69.677
+                     c0-65.543,53.754-118.867,119.826-118.867c66.064,0,119.812,53.324,119.812,118.867
+                     C276.546,215.678,222.799,268.994,156.734,268.994z" />
+                          </g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="bg-white p-4 card-content flex-grow">
+                    <div class="flex justify-between items-center">
+                      <span class="text-gray-800 text-lg font-semibold">
+                        <%= p?.price %>
+                      </span>
+                      <span class="bg-gray-200 text-gray-700 text-xs px-4 py-1 rounded-full">
+                        <%= p?.listingType %>
+                      </span>
+                    </div>
+                    <span class="text-gray-700 mb-1">
+                      <%= p?.title %>
+                    </span>
+                    <p class="text-gray-600 mt-1 description">
+                      <%if ( p.description) { %>
+                        <%= p.description %>
+                          <% } else {%>
+                            No description available.
+                            <% }%>
+                    </p>
+
+                    <div class="flex items-center space-x-1 mt-4 text-gray-500">
+                      <svg width="20px" height="20px" viewbox="0 0 24 24" fill="currentcolor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 10c-1.104 0-2-.896-2-2s.896-2 2-2 2 .896 2 2-.896 2-2 2m0-5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m-7 2.602c0-3.517 3.271-6.602 7-6.602s7 3.085 7 6.602c0 3.455-2.563 7.543-7 14.527-4.489-7.073-7-11.072-7-14.527m7-7.602c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602" />
+                      </svg>
+                      <p>
+                        <%= p?.location %>
+                      </p>
+                    </div>
+                    <div class="flex space-x-3 items-center mt-4 text-gray-500">
+                      <div class="flex items-center space-x-1">
+                        <svg fill="currentcolor" height="20px" width="20px" version="1.1" id="Layer_1"
+                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                          viewbox="0 0 511.999 511.999" xml:space="preserve">
+                          <g>
+                            <g>
+                              <path d="M494.565,208.205c-6.121,0-11.251,3.141-14.387,7.894l-24.288-36.256v-50.833c0-29.541-24.435-53.028-53.974-53.028
+                       h110.082c-29.539,0-53.974,23.488-53.974,53.027v50.833l-24.338,36.256c-3.136-4.753-8.317-7.894-14.438-7.894
+                       C7.65,208.203,0,216.054,0,225.738v155.883c-0.001,9.685,7.648,16.991,17.333,16.991h13.058v19.872
+                       c0,9.684,7.851,17.534,17.534,17.534s17.534-7.851,17.534-17.534v-19.872h381.078v19.872c0,9.684,7.851,17.534,17.534,17.534
+                       s17.534-7.851,17.534-17.534v-19.872h13.058c9.684,0,17.334-7.306,17.334-16.99V225.739
+                       C511.999,216.055,504.249,208.205,494.565,208.205z M91.177,129.008c0-10.203,8.703-17.959,18.905-17.959h291.832
+                       c10.203,0,18.905,7.756,18.905,17.959v38.151h-15.37c0.103-0.767,0.174-1.543,0.174-2.338c0-9.684-7.851-17.534-17.534-17.534
+                       h123.908c-9.684,0-17.534,7.851-17.534,17.534c0,0.795,0.071,1.571,0.174,2.338H91.177V129.008z M83.855,201.941
+                       c0.866,0.132,1.744,0.286,2.647,0.286h341.79l14.329,21.041h69.376L83.855,201.941z M476.93,363.543h35.067V258.337h476.93
+                       V363.543z" />
+                            </g>
+                          </g>
+                        </svg>
+                        <p>
+                          <%=p?.bedrooms%>
+                        </p>
+                      </div>
+                      <span>&middot;</span>
+                      <div class="flex items-center space-x-1">
+                        <svg width="20px" height="20px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                          <path fill="currentColor"
+                            d="M464,280H80V100A51.258,51.258,0,0,1,95.113,63.515l.4-.4a51.691,51.691,0,0,1,58.6-10.162,79.1,79.1,0,0,0,11.778,96.627l10.951,10.951-20.157,20.158,22.626,22.626,20.157-20.157h0L311.157,71.471h0l20.157-20.157L308.687,28.687,288.529,48.844,277.578,37.893a79.086,79.086,0,0,0-100.929-8.976A83.61,83.61,0,0,0,72.887,40.485l-.4.4A83.054,83.054,0,0,0,48,100V280H16v32H48v30.7a23.95,23.95,0,0,0,1.232,7.589L79,439.589A23.969,23.969,0,0,0,101.766,456h12.9L103,496h33.333L148,456H356.1l12,40H401.5l-12-40h20.73A23.969,23.969,0,0,0,433,439.589l29.766-89.3A23.982,23.982,0,0,0,464,342.7V312h32V280ZM188.52,60.52a47.025,47.025,0,0,1,66.431,0L265.9,71.471,199.471,137.9,188.52,126.951A47.027,47.027,0,0,1,188.52,60.52ZM432,341.4,404.468,424H107.532L80,341.4V312H432Z"
+                            class="ci-primary" />
+                        </svg>
+                        <p>
+                          <%=p?.bathrooms%>
+                        </p>
+                      </div>
+                      <span>&middot;</span>
+                      <div class="flex items-center space-x-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="20px" height="20px"
+                          viewbox="0 0 512 512" preserveaspectratio="xMidYMid meet">
+
+                          <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="currentcolor"
+                            stroke="currentcolor">
+                            <path
+                              d="M867 4588 c-9 -7 -82 -100 -162 -207 -102 -137 -145 -202 -145 -221 0 -19 43 -84 145 -221 80 -107 153 -200 162 -206 27 -21 72 -15 98 12 44 43 35 69 -70 208 l-95 127 1236 0 c988 0 1235 -3 1227 -12 -5 -7 -46 -59 -91 -115 -45 -56 -87 -113 -93 -126 -23 -51 38 -117 95 -103 38 9 346 397 346 436 0 38 -308 427 -345 436 -52 13 -113 -41 -101 -90 3 -13 45 -73 92 -132 48 -60 92 -115 97 -121 8 -10 -239 -13 -1227 -13 l-1236 0 95 127 c105 139 114 165 70 208 -26 27 -71 33 -98 13z" />
+                            <path
+                              d="M655 3486 c-41 -18 -83 -69 -90 -109 -3 -18 -4 -654 -3 -1414 3 -1378 3 -1382 24 -1409 11 -15 33 -37 48 -48 27 -21 29 -21 1416 -21 1387 0 1389 0 1416 21 15 11 37 33 48 48 21 27 21 29 21 1436 0 1407 0 1409 -21 1436 -11 15 -33 37 -48 48 -27 21 -31 21 -1404 23 -1130 2 -1382 0 -1407 -11z m2725 -1496 l0 -1350 -1330 0 -1330 0 0 1350 0 1350 1330 0 1330 0 0 -1350z" />
+                            <path
+                              d="M4012 3280 c-146 -116 -204 -168 -208 -187 -14 -56 48 -113 101 -93 14 5 72 47 128 92 56 45 108 86 115 91 9 8 12 -239 12 -1227 l0 -1236 -127 95 c-139 105 -165 114 -208 70 -27 -26 -33 -71 -12 -98 6 -9 99 -82 206 -162 137 -102 202 -145 221 -145 19 0 84 43 221 145 107 80 200 153 207 162 20 27 14 72 -13 98 -43 44 -69 35 -208 -70 l-127 -95 0 1236 c0 988 3 1235 13 1227 6 -5 58 -46 114 -91 56 -45 114 -87 128 -92 53 -20 115 37 101 94 -10 39 -396 346 -435 346 -21 0 -79 -40 -229 -160z" />
+                          </g>
+                        </svg>
+                        <p>
+                          <%= p?.areaInSqft %> sqft
+                        </p>
+                      </div>
+
+
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </section>
+            <% } %>
+        </div>
+      </div>
+    </section>
+
+
+    <script src="/js/navbar.js"></script>
+    <script>
+      document.getElementById('left-arrow').addEventListener('click', function () {
+        document.getElementById('property-list').scrollBy({
+          left: -250,
+          behavior: 'smooth'
+        });
+      });
+
+      document.getElementById('right-arrow').addEventListener('click', function () {
+        document.getElementById('property-list').scrollBy({
+          left: 250,
+          behavior: 'smooth'
+        });
+      });
+    </script>
+  </body>
+
+</html>

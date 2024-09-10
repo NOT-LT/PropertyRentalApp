@@ -25,18 +25,18 @@
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
         <div class="hidden sm:mx-3 sm:block">
           <div class="flex space-x-4">
-            <% console.log("ptitle:", page.title) %>
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" -->
-              <a href="#"
-                class="rounded-md <%= page.title =='landing' ? ' bg-gray-800 text-white' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium "
-                aria-current="page">Home</a>
-              <a href="/properties"
-                class="rounded-md <%= page.title =='indexPage' ? ' bg-gray-800 text-white' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 ">Properties</a>
-              <a href="/properties/new"
-                class="rounded-md <%= page.title =='newPropertyPage' ? ' bg-gray-800 text-white' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium  hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700  ">New
-                property</a>
-              <a href="/properties/recent"
-                class="rounded-md <%= page.title =='recentPropertyPage' ? ' bg-gray-800 text-white' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 ">Recent</a>
+            <!-- console.log("ptitle:", page.title)  -->
+            <!-- Current: "border-b-2 border-cyan-500 text-black", Default: "text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" -->
+            <a href="/properties"
+              class="<%= page.title =='indexPage' ? 'border-b-[2.5px] border-cyan-700 text-black' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium "
+              aria-current="page">Home</a>
+            <a href="/properties"
+              class="<%= page.title =='indexPage' ? ' border-b-[2.5px] border-cyan-700 text-black' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium  ">Properties</a>
+            <a href="/properties/new"
+              class="<%= page.title =='newPropertyPage' ? ' border-b-[2.5px] border-cyan-700 text-black' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium ">New
+              property</a>
+            <a href="/properties/recent"
+              class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-cyan-700 text-black' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium ">Recent</a>
           </div>
         </div>
       </div>
@@ -97,7 +97,8 @@
   <!-- Mobile menu -->
   <div class="sm:hidden hidden opacity-0" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
-      <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+      <a href="#"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
         aria-current="page">Home</a>
       <a href="/properties"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">Properties</a>

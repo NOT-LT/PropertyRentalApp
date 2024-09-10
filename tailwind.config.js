@@ -6,10 +6,19 @@ module.exports = {
     "./public/**/*.{html,ejs,js}",
   ],
   theme: {
-    extend: {},
-  },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
+    extend: {
+      animation: {
+        float: 'float 3.5s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+          '50%': { transform: 'translateY(-3px)' },
+        },
+      }
+    },
+    plugins: [
+      require('@tailwindcss/aspect-ratio'),
+    ],
+  }
 }
-
