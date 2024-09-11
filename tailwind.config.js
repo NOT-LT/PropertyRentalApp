@@ -8,14 +8,17 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        float: 'float 3.5s ease-in-out infinite',
+        float: 'float 3.2s ease-in-out infinite',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0) translateX(0)' },
-          '50%': { transform: 'translateY(-3px)' },
+          '50%': { transform: 'translateY(-4px)' },
         },
       }
+    },
+    boxShadow: {
+      'custom-cyan': '0 4px 6px #17C2EC',
     },
     plugins: [
       require('@tailwindcss/aspect-ratio'),
