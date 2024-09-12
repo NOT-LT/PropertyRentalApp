@@ -30,7 +30,7 @@
 
 
 
-          <button class="mt-6 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">Search</button>
+          <button class="mt-6 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">Discover</button>
         </div>
 
         <!-- Image Section with Floating Effect -->
@@ -48,39 +48,9 @@
           </div>
         </div>
       </div>
-      <div class="mt-8 mb-8 bg-white text-gray-800 rounded-full p-4 shadow-lg flex items-center space-x-3">
-        <div class="flex-1">
-          <input type="text" class="w-full border-gray-300 rounded-full p-2" placeholder="Search...">
-        </div>
-        <div class="">
-          <select class="w-full border-gray-300 rounded-full">
-            <option>Location</option>
-            <option>Bali, Indonesia</option>
-            <option>New York, USA</option>
-            <option>London, UK</option>
-          </select>
-        </div>
-        <div class="">
-          <select class="w-full border-gray-300 rounded-full">
-            <option>Property Type</option>
-            <option>Modern House</option>
-            <option>Apartment</option>
-            <option>Villa</option>
-          </select>
-        </div>
-        <div class="">
-          <select class="w-full border-gray-300 rounded-full">
-            <option>Average Price</option>
-            <option>$7500 - $10000</option>
-            <option>$5000 - $7500</option>
-            <option>$2500 - $5000</option>
-          </select>
-        </div>
-        <div>
-          <button class="bg-blue-500 text-white rounded-full px-6 py-2">Search</button>
-        </div>
-      </div>
 
+      <!-- Search Bar -->
+      <%- include('partials/searchBar') %>
     </section>
 
 
@@ -206,7 +176,8 @@
     </section>
 
     <!-- About Nestify Section 2 (A picture from the dashbaord) -->
-    <section class="squaredContainer py-16 bg-gradient-to-b from-[#f4faff] to-[#ffffff] 2xl:px-[19rem] xl:px-[7rem] lg:px-[5rem] mb-8">
+    <section
+      class="squaredContainer py-16 bg-gradient-to-b from-[#f4faff] to-[#ffffff] 2xl:px-[19rem] xl:px-[7rem] lg:px-[5rem] mb-8">
       <div class="text-center p-6">
         <div class="inline-block bg-[#232A31] text-white px-4 py-1 rounded-full text-sm mb-4">
           Everything you need
@@ -740,6 +711,34 @@
         left: 250,
         behavior: 'smooth'
       });
+    });
+
+    document.getElementById('search-button').addEventListener('click', async () => {
+
+      // try {
+      //   const response = await fetch('/sync-data', { method: 'POST' });
+      //   const result = await response.json();
+
+      //   if (result.success) {
+      //     console.log('Data sync successful:', result);
+      //   } else {
+      //     console.error('Data sync failed:', result.error);
+      //   }
+      // } catch (error) {
+      //   console.error('Error syncing data:', error);
+      // }
+
+      // const query = document.getElementById('search-input').value;
+
+      // try {
+      //   const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
+      //   const searchResults = await response.json();
+
+      //   // Display results
+      //   console.log(searchResults);
+      // } catch (error) {
+      //   console.error('Error fetching search results:', error);
+      // }
     });
 
   </script>

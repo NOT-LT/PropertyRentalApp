@@ -15,6 +15,8 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const maptilerClient = require('@maptiler/client');
 const Property = require('./models/property');
+const fs = require('fs/promises');
+const Typesense = require('typesense');
 
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 const propertiesRoute = require('./routes/properties')
@@ -49,6 +51,17 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
 }
+const typesenseClient = new Typesense.Client({
+  nodes: [
+    {
+      host: process.env.TYPESENSE_HOST,  // Typesense cloud host
+      port: process.env.TYPESENSE_PORT,  // Default is 443 for Typesense Cloud
+      protocol: 'https'
+    }
+  ],
+  apiKey: process.env.TYPESENSE_API_KEY,  // Store API key securely in env variables
+  connectionTimeoutSeconds: 2
+});
 app.use(expressSession(sessionConfig))
 
 app.use(passport.initialize());
@@ -73,7 +86,7 @@ app.use((req, res, next) => {
 
 app.get('/', asyncHandler(async (req, res) => {
   const properties = await Property.find({});
-  res.render('landing', {properties,page: {title: 'landing'}})
+  res.render('landing', { properties, page: { title: 'landing' } })
 }))
 app.get('/properties.geojson', async (req, res) => {
   try {
@@ -91,7 +104,85 @@ app.use('/', usersRoute);
 app.use('/properties/:id/inquiry', inquiriesRoute)
 app.use('/properties', propertiesRoute)
 
+// API endpoint to trigger MongoDB -> Typesense sync
+app.post('/sync-data', async (req, res) => {
+  try {
+    const result = await syncMongoWithTypesense();
+    res.status(200).send({ success: true, result });
+  } catch (error) {
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
 
+app.get('/search', async (req, res) => {
+  try {
+    const query = req.query.q; // Get query from request parameters
+    const propertyType = req.query.propertyTypeFilter.toLowerCase() || 'all types';
+    const location = req.query.locationFilter.toLowerCase() || 'all locations' ;
+    // const price = req.query.averagePriceFilter.toLowerCase() || 'all prices';
+    const listingType = req.query.listingTypeFilter.toLowerCase() || 'all';
+    console.log('Search query:', query);
+    if (query === '' || query === undefined || query === null || query.toLowerCase() == 'all') {
+      const properties = await Property.find({  });
+      const filteredProperties = properties.filter(property => {
+        console.log(property);
+        let match = true;
+        if (propertyType && propertyType !== property.propertyType && propertyType !== 'all types') {
+          console.log('Property Type:', propertyType, property.propertyType);
+          match = false;
+        }
+        if (location && location !== property.location && location !== 'all locations') {
+          match = false;
+        }
+        // if (price && price !== property.price && price !== 'all prices') {
+        //   match = false;
+        // }
+        if (listingType && listingType !== property.listingType && listingType !== 'all') {
+          match = false;
+        }
+        return match;
+      });
+      res.render('properties/searchResult', { properties:filteredProperties, searchQuery:query, page: { title: 'Search Results' } });
+      return;
+    }
+    const searchResults = await typesenseClient.collections('properties').documents().search({
+      q: query,
+      query_by: 'title,description,location,price,propertyType'
+    });
+    console.log("searchResult: ", searchResults)
+    const resultProperties = searchResults.hits.map(hit => hit.document);
+    const filteredProperties = resultProperties.filter(property => {
+      console.log(property);
+      let match = true;
+      if (propertyType && propertyType !== property.propertyType && propertyType !== 'all types') {
+        console.log('Property Type:', propertyType, property.propertyType);
+        match = false;
+      }
+      if (location && location !== property.location && location !== 'all locations') {
+        match = false;
+      }
+      // if (price && price !== property.price && price !== 'all prices') {
+      //   match = false;
+      // }
+      if (listingType && listingType !== property.listingType && listingType !== 'all') {
+        match = false;
+      }
+      return match;
+    });
+    const properties = [];
+    for (let i = 0; i < filteredProperties.length; i++) {
+      const property = filteredProperties[i];
+      console.log('Current Property:', property);
+      const propertyDoc = await Property.findOne({ title: property.title, postDate: property.postDate });
+      properties.push(propertyDoc);
+    }
+    console.log('Search results:', properties);
+    res.render('properties/searchResult', { properties, searchQuery:query, page: { title: 'Search Results' } });
+  } catch (error) {
+    console.error('Error performing search:', error);
+    res.status(500).json({ error: 'Error performing search' });
+  }
+});
 
 app.use('*', (req, res, next) => {
   console.log("app.js here")
@@ -106,6 +197,78 @@ app.use((err, req, res, next) => {
 
 
 
-app.listen(3000, () => {
-  console.log("Listening at port 3000");
+async function createCollection() {
+  try {
+    const collectionSchema = {
+      name: 'properties', // Name of the collection
+      fields: [
+        { name: 'title', type: 'string' },
+        { name: 'description', type: 'string' },
+        { name: 'location', type: 'string', facet: true },
+        { name: 'price', type: 'string', facet: true },
+        { name: 'bedrooms', type: 'string', facet: true },
+        { name: 'bathrooms', type: 'string', facet: true },
+        { name: 'postDate', type: 'int64' },
+        {name: 'propertyType', type: 'string', facet: true},
+        {name: 'listingType', type: 'string', facet: true}
+      ]
+    };
+
+    const collection = await typesenseClient.collections().create(collectionSchema);
+    console.log('Collection created:', collection);
+  } catch (error) {
+    console.error('Error creating collection:', error);
+  }
+}
+
+// Sync function to be triggered from the server
+async function syncMongoWithTypesense() {
+  try {
+    // Fetch documents from MongoDB
+    const properties = await Property.find({}).exec();
+
+    const transformedDocs = properties.map(property => {
+      const doc = property.toObject ? property.toObject() : property;
+
+      return {
+        title: doc.title, // Assuming title is a string and remains as such
+        description: doc.description, // Assuming description is a string and remains as such
+        location: doc.location, // Assuming location is a string and remains as such
+        price: doc.price, 
+        bedrooms: doc.bedrooms, 
+        bathrooms: doc.bathrooms, 
+        postDate: doc.postDate instanceof Date ? doc.postDate.getTime() : parseInt(doc.postDate, 10), // Convert Date to timestamp
+        propertyType: doc.propertyType,
+        listingType: doc.listingType 
+      };
+    });
+
+    // Convert MongoDB documents to JSONL format
+    const jsonlData = transformedDocs.map(property => JSON.stringify(property)).join('\n');
+
+    // Import data into Typesense
+    const result = await typesenseClient.collections(process.env.TYPESENSE_COLLECTION).documents().import(jsonlData,{ action: 'upsert' });
+
+    console.log('Import result:', result);
+  } catch (err) {
+    console.error('Error syncing MongoDB with Typesense:', err);
+  }
+}
+
+
+// CALL IF YOU DELETED THE COLLECTION
+// createCollection().then(() => {
+//   console.log('Collection created');
+//   syncMongoWithTypesense().then(() => {
+//     console.log('Data synced');
+//   });
+// });
+
+
+
+
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Listening at port ${PORT}`);
 })
