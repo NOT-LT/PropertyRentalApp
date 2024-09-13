@@ -1,6 +1,21 @@
 const express = require('express');
 const User = require('../models/user');
+const Property = require('../models/property');
 
+exports.getUserDashboard = async (req, res) => {
+  try {
+    const userId = req?.user?.id;
+    const properties = await Property.find({ author: userId });
+    const user = await User.findById(userId);
+    const views = await user.getViews();
+    const inquiries = await user.getInquiries();
+    console.log("inq:", inquiries);
+    res.render('dashboard', { page: { title: 'User Dashboard' },properties, views, inquiries});
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
 
 module.exports.registerUser = async (req, res, next) => {
   try {

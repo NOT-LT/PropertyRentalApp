@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Inquiry = require('./inquiry');
+const User = require('./user');
 const LocationFeature = require('./locationFeature');
 const { Schema } = mongoose; // Destructuring assignment to get Schema directly
 
@@ -66,6 +67,10 @@ const PropertySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'LocationFeature'
   },
+  views: {
+    type: Number,
+    default: 0
+  },
   BFID: String
 });
 
@@ -96,6 +101,13 @@ PropertySchema.post('findOneAndDelete', async function (doc) { // this will be h
     });
     await LocationFeature.deleteOne({
       _id: doc.geoJSON
+    })
+    await User.updateOne({
+      _id: doc.author
+    }, {
+      $pull: {
+        properties: doc._id
+      }
     })
   }
 })

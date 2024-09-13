@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   const inquiryOverlay = document.getElementById('inquiryOverlay');
   const inquiryStatusDisplay = document.getElementById('inquiryStatusDisplay');
-  inquiryForm.addEventListener('submit', (event) => {
+  inquiryForm?.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
-    const propertyId = inquiryForm.getAttribute("data-property-id");
+    const propertyId = inquiryForm?.getAttribute("data-property-id");
     console.log("inquiryMsgFullname: ", inquiryMsgFullname?.value);
     fetch(`/properties/${propertyId}/inquiry`, {
       method: 'POST',

@@ -5,6 +5,7 @@ const multer = require('multer')
 const LocationFeature = require('../models/locationFeature');
 const { storage, uploadFileToCloudinary } = require('../cloudinary'); // node automaitcally looks for index.js
 const Inquiry = require('../models/inquiry');
+const User = require('../models/user');
 // Database connection
 
 
@@ -169,13 +170,20 @@ const seedDB = async () => {
       contact: '+97338820989', // Add contact field
       propertyUsage: usage,
       geoJSON: LF,
+      views: faker.number.int({ min: 0, max: 250 }),
       BFID: faker.string.uuid(),
     });
+
+ 
 
     // Save the property to the database
     await property.save();
     LF.property = property;
     await LF.save();
+
+    const user = await User.findById(author);
+    user.properties.push(property);
+    await user.save();
   }
 };
 

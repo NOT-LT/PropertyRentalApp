@@ -4,7 +4,7 @@ const Property = require('../models/property');
 const { cloudinary } = require('../cloudinary');
 const maptilerClient = require('@maptiler/client');
 const LocationFeature = require('../models/locationFeature');
-
+const User = require('../models/user');
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
 module.exports.renderIndex = async (req, res) => {
@@ -16,7 +16,9 @@ module.exports.renderShow = async (req, res) => {
   const { id } = req.params;
   const property = await Property.findById(id);
   await property.populate('author');
+  await property.populate('inquiries');
   await property.populate('geoJSON');
+  property.views += 1;
   await property.save();
   // const geoLoc = maptilerClient.geocoding.forward(property?.location).then((response) => {
   // console.log(response.features[0].geometry.coordinates[0]);
@@ -28,6 +30,7 @@ module.exports.renderShow = async (req, res) => {
   if (!property) {
     throw new ExpressError('404', 'There is no property with this id')
   }
+
   res.render('properties/show', { property, page: { title: 'showPropertyPage' } })
 
   // }).catch((error) => {
@@ -76,6 +79,11 @@ module.exports.createProperty = async (req, res) => {
   property.geoJSON = LF;
   await property.populate('geoJSON');
   await property.save();
+  const user = await User.findById(req.user._id);
+  console.log("user: ", user);
+  user.properties.push(property);
+  user.populate('properties');
+  user.save();
   console.log("create page property:", property);
   req.flash('success', 'Successfully created a new proeprty!')
   res.redirect(`properties/${property._id}`)

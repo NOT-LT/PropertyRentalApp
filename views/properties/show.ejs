@@ -104,34 +104,46 @@
             <hr class="w-full bg-gray-200 h-px border-0 mt-5">
 
             <section
-              class="flex relative flex-col md:flex-row w-full my-3 items-center justify-between space-y-8 md:space-y-0 space-x-1 ">
+              class="flex relative flex-col md:flex-row w-full my-3 items-center justify-between space-y-8 md:space-y-0 space-x-2 ">
               <% if (property.description) { %>
-                <p class="text-sm text-gray-600 w-full md:w-8/12">
-                  <%= property.description %>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae quas, illo adipisci ut ab
-                    cupiditate itaque placeat obcaecati quod iusto? Sapiente ad libero perferendis voluptates numquam
-                    nemo aut cupiditate soluta! Fuga harum velit, unde blanditiis ex illum nostrum iusto facilis ut
-                    doloribus, reiciendis nemo? In dolores eos nemo corporis quod, velit sapiente incidunt enim atque,
-                    quae commodi possimus quos nam magnam aut doloremque placeat! Blanditiis voluptatum excepturi libero
-                    dignissimos. Nihil aspernatur perferendis labore cupiditate. Cumque error accusantium amet ipsa
-                    omnis laborum qui, dignissimos quibusdam. Quo error harum, tempore hic vel asperiores fuga molestiae
-                    repudiandae qui aliquid nisi ipsam amet ipsa eaque sint, cumque rem officia cupiditate expedita quos
-                    impedit deserunt quia magnam. Magni repellat magnam facilis ipsam vero, quasi veritatis molestiae
-                    unde ad dolorum dicta iusto. Cupiditate ea impedit quos, consequatur cum modi, illum nostrum harum
-                    quaerat sequi deserunt magni libero. Eaque magni cupiditate itaque sed aspernatur perspiciatis
-                    reprehenderit iste nulla deleniti aliquid veritatis, incidunt, natus dolorem ea sequi placeat autem
-                    possimus voluptatum? Iusto veniam sint, enim tempore quia nulla in mollitia rem ex. Ducimus,
-                    veritatis eos iste voluptates, non nesciunt enim saepe doloremque molestias sunt harum modi dolor?
-                    Dignissimos sint sit aliquam quas, excepturi nostrum illo. Aut saepe harum reprehenderit animi nemo
-                    veritatis error quia, totam laborum eligendi omnis autem molestiae in eius inventore quidem qui
-                    exercitationem. Rem dolor commodi officia quas enim laudantium quia doloribus mollitia tempora!
-                    Debitis doloribus similique dignissimos quibusdam facere neque quis excepturi ut architecto quod
-                    adipisci tempora corrupti, nam, asperiores eligendi cum ex. Dolorem placeat velit sed quidem eaque
-                    repellendus sunt eum magnam. Sit repellendus distinctio ipsa labore neque totam rem sequi eligendi?
-                    Necessitatibus blanditiis quisquam quis totam ea? Voluptatem quisquam odio distinctio suscipit
-                    dolorum, ducimus, reprehenderit, nobis at nisi necessitatibus fugit magni sunt in facilis.
-                    Praesentium laborum velit minima distinctio nobis vel iste.
-                </p>
+                <div class="w-full md:w-8/12 place-self-start">
+                  <p class="property-description text-sm text-gray-600 w-full">
+                    <%= property.description %>
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae quas, illo adipisci ut ab
+                      cupiditate itaque placeat obcaecati quod iusto? Sapiente ad libero perferendis voluptates numquam
+                      nemo aut cupiditate soluta! Fuga harum velit, unde blanditiis ex illum nostrum iusto facilis ut
+                      doloribus, reiciendis nemo? In dolores eos nemo corporis quod, velit sapiente incidunt enim atque,
+                      quae commodi possimus quos nam magnam aut doloremque placeat! Blanditiis voluptatum excepturi
+                      libero
+                      dignissimos. Nihil aspernatur perferendis labore cupiditate. Cumque error accusantium amet ipsa
+                      omnis laborum qui, dignissimos quibusdam. Quo error harum, tempore hic vel asperiores fuga
+                      molestiae
+                      repudiandae qui aliquid nisi ipsam amet ipsa eaque sint, cumque rem officia cupiditate expedita
+                      quos
+                      impedit deserunt quia magnam. Magni repellat magnam facilis ipsam vero, quasi veritatis molestiae
+                      unde ad dolorum dicta iusto. Cupiditate ea impedit quos, consequatur cum modi, illum nostrum harum
+                      quaerat sequi deserunt magni libero. Eaque magni cupiditate itaque sed aspernatur perspiciatis
+                      reprehenderit iste nulla deleniti aliquid veritatis, incidunt, natus dolorem ea sequi placeat
+                      autem
+                      possimus voluptatum? Iusto veniam sint, enim tempore quia nulla in mollitia rem ex. Ducimus,
+                      veritatis eos iste voluptates, non nesciunt enim saepe doloremque molestias sunt harum modi dolor?
+                      Dignissimos sint sit aliquam quas, excepturi nostrum illo. Aut saepe harum reprehenderit animi
+                      nemo
+                      veritatis error quia, totam laborum eligendi omnis autem molestiae in eius inventore quidem qui
+                      exercitationem. Rem dolor commodi officia quas enim laudantium quia doloribus mollitia tempora!
+                      Debitis doloribus similique dignissimos quibusdam facere neque quis excepturi ut architecto quod
+                      adipisci tempora corrupti, nam, asperiores eligendi cum ex. Dolorem placeat velit sed quidem eaque
+                      repellendus sunt eum magnam. Sit repellendus distinctio ipsa labore neque totam rem sequi
+                      eligendi?
+                      Necessitatibus blanditiis quisquam quis totam ea? Voluptatem quisquam odio distinctio suscipit
+                      dolorum, ducimus, reprehenderit, nobis at nisi necessitatibus fugit magni sunt in facilis.
+                      Praesentium laborum velit minima distinctio nobis vel iste.
+                  </p>
+                  <span class="text-sm  text-blue-800 cursor-pointer"
+                    onclick="this.previousElementSibling.classList.remove('property-description'); this.classList.add('hidden')">Show
+                    more ...</span>
+                </div>
+
                 <% } else { %>
                   <p class="text-sm text-gray-600 mb-4 mt-2">
                     No description available.
@@ -167,17 +179,64 @@
 
 
             <!-- Inquiry Form -->
-            <section class="w-full mt-8 p-4 bg-white rounded-lg shadow-md border">
-              <label for="inquiryForm" class="block text-lg font-semibold text-gray-700 mb-4">Have an inquiry? Contact
-                the
-                seller</label>
-              <% if (!currentUser) { %>
-                <%- include('../partials/guestInquiryForm') %>
-                  <% } else { %>
-                    <%- include('../partials/authedInquiryForm') %>
-                      <% } %>
-            </section>
+            <% if (property && !property.author.equals(currentUser?._id)) { %>
+              <section id="send-inquiry-section" class="w-full mt-8 p-4 bg-white rounded-lg shadow-md border">
+                <label for="inquiryForm" class="block text-lg font-semibold text-gray-700 mb-4">Have an inquiry? Contact
+                  the
+                  seller</label>
+                <% if (!currentUser) { %>
+                  <%- include('../partials/guestInquiryForm') %>
+                    <% } else { %>
+                      <%- include('../partials/authedInquiryForm') %>
+                        <% } %>
+              </section>
+              <% } else { %>
+                <section id="view-inquiries-section">
+                  <% for (inq of property.inquiries) { %>
+                    <div class="w-full mt-8 p-6 bg-white rounded-lg shadow-lg border border-gray-200 relative">
+                      <div class="flex justify-between items-center mb-4">
+                        <div class="flex gap-x-1 items-center">
+                          <h2 class="text-xl font-bold text-gray-800">
+                            <%= inq.title %>
+                          </h2>
+                          <form action="/properties/<%= property.id %>/inquiry/<%=inq._id%>?_method=DELETE"
+                            method="POST" class="max-w-[20px] max-h-[20px]">
+                            <button class="m-0 p-0">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 22 22"
+                                fill="none" class="flex-shrink-0">
+                                <path stroke="#991B1B"
+                                  d="M10 12L14 16M14 12L10 16M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6"
+                                  stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                              </svg>
+                            </button>
+                          </form>
+                        </div>
 
+                        <span class="text-sm text-gray-500">
+                          <%= new Date(inq.createdAt).toLocaleString('en-US') %>
+                        </span>
+                      </div>
+                      <div class="mb-4">
+                        <p class="text-gray-700"><span class="font-semibold">From: </span>
+                          <%= inq.fullName %>
+                        </p>
+                        <p class="text-gray-700"><span class="font-semibold">Phone: </span>
+                          <%= inq.phoneNumber %>
+                        </p>
+                        <p class="text-gray-700"><span class="font-semibold">Email: </span>
+                          <%= inq.email %>
+                        </p>
+                      </div>
+                      <p class="text-gray-600 property-description">
+                        <%= inq.body %>
+                      </p>
+                      <span class="text-sm  text-blue-800 cursor-pointer"
+                        onclick="this.previousElementSibling.classList.remove('property-description'); this.classList.add('hidden')">Show
+                        more ...</span>
+                    </div>
+                    <% } %>
+                      <% } %>
+                </section>
 
       </section>
     </div>
@@ -202,11 +261,23 @@
   </div>
 
   <script>
+    (() => {
+      const params = (new URL(window.location.href)).searchParams;
+      const sct = params.get('sct');
+      if (sct) {
+        const block = document.getElementById(sct);
+        if (block) {
+          setTimeout(() => {
+            block.scrollIntoView({ behavior: 'smooth'});
+          }, 25);
+        }
+      }
+    })();
+  </script>
+    <script>
     maptilersdk.config.apiKey = 'bz3D5d4NTiyJpnL73eIG';
     let lon = parseFloat(document.getElementById('map').getAttribute('lon'));
     let lan = parseFloat(document.getElementById('map').getAttribute('lan'))
-    console.log(lon);
-    console.log(lan);
     const map = new maptilersdk.Map({
       container: 'map', // container's id or the HTML element to render the map
       style: maptilersdk.MapStyle.streets,
@@ -222,4 +293,5 @@
       .setLngLat([lon, lan])
       .addTo(map);
   </script>
-  <script src="../js/showPage.js"></script>
+
+  <script src="../../js/showPage.js"></script>

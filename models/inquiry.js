@@ -22,6 +22,10 @@ const inquirySchema = new Schema({
   phoneNumber: {
     type: String,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 })
 
 const Inquiry = mongoose.model('Inquiry', inquirySchema)

@@ -28,10 +28,8 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
   console.log("Database connected");
 })
-// let dbClient = client.db(dbName);
-// const dbName = 'propertyRentalApp';
-const LocationFeature = require('./models/locationFeature');
 
+const LocationFeature = require('./models/locationFeature');
 
 const app = express();
 app.set('view engine', 'ejs');

@@ -24,3 +24,10 @@ module.exports.getInquiries = async (req, res) => {
   await property.populate('inquiries');
   res.send(property.inquiries)
 }
+
+module.exports.deleteInquiry = async (req, res) => {
+  const {id, inquiryId} = req.params;
+  await Property.findByIdAndUpdate(id, { $pull: { inquiries: inquiryId } });
+  await Inquiry.findByIdAndDelete(inquiryId);
+  return res.redirect(`/properties/${id}`);
+}
