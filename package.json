@@ -55,7 +55,8 @@
     "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^8.0.0"
+    "passport-local-mongoose": "^8.0.0",
+    "typesense": "^1.8.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",

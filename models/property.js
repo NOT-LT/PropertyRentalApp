@@ -47,7 +47,7 @@ const PropertySchema = new Schema({
   classification: String,
   postDate: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   listingType: {
     type: String,
