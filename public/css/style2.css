@@ -122,12 +122,12 @@ body {
 }
 
 .customNav {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ccccccb1;
   /* Light border for separation */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   /* Soft shadow for depth */
   z-index: 30;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.649);
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -175,9 +175,6 @@ body {
 
 
 
-.sliders-containers {
-  
-}
 
 /* .users-reviews-slider img {
   height: 75px;

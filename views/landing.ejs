@@ -18,7 +18,7 @@
 
     <!-- Hero Section -->
     <section
-      class="relative bg-gradient-to-b from-[#e9eff5] via-[#d4e2ed] to-[#f4faff] text-black pt-16 pb-8 2xl:px-[19rem] xl:px-[7rem] lg:px-[4.5rem] ">
+      class="relative bg-gradient-to-b from-[#e9eff5] via-[#d4e2ed] to-[#f4faff] text-black pt-16 pb-8 2xl:px-[19rem] xl:px-[7rem] lg:px-[4.5rem] px-[1.5rem]">
 
       <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center ">
         <div>
@@ -30,7 +30,31 @@
 
 
 
-          <button class="mt-6 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">Discover</button>
+          <div class="group relative flex justify-start items-center text-zinc-600 text-sm font-bold mt-6" onclick="window.location.href='/properties'">
+            <div
+              class="absolute opacity-0 group-hover:opacity-100 group-hover:-translate-y-[150%] -translate-y-[300%] duration-500 group-hover:delay-500 skew-y-[20deg] group-hover:skew-y-0 shadow-md">
+              
+              <div
+                class="shadow-md bg-slate-300 absolute top-0 translate-y-1/2 left-1/2 translate-x-full rotate-45 p-1">
+              </div>
+              <div
+                class="rounded-md bg-white group-hover:opacity-0 group-hover:scale-[115%] group-hover:delay-700 duration-500 w-full h-full absolute top-0 left-0">
+                <div
+                  class="border-b border-r border-white bg-white absolute bottom-0 translate-y-1/2 left-1/2 translate-x-full rotate-45 p-1">
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="shadow-md flex items-center group-hover:gap-2 bg-gradient-to-br from-slate-200 to-slate-300 p-3 rounded-full cursor-pointer duration-300">
+              <svg fill="none" viewBox="0 0 24 24" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg"
+                class="fill-zinc-600">
+                <path stroke-linejoin="round" stroke-linecap="round"
+                  d="M15.4306 7.70172C7.55045 7.99826 3.43929 15.232 2.17021 19.3956C2.07701 19.7014 2.31139 20 2.63107 20C2.82491 20 3.0008 19.8828 3.08334 19.7074C6.04179 13.4211 12.7066 12.3152 15.514 12.5639C15.7583 12.5856 15.9333 12.7956 15.9333 13.0409V15.1247C15.9333 15.5667 16.4648 15.7913 16.7818 15.4833L20.6976 11.6784C20.8723 11.5087 20.8993 11.2378 20.7615 11.037L16.8456 5.32965C16.5677 4.92457 15.9333 5.12126 15.9333 5.61253V7.19231C15.9333 7.46845 15.7065 7.69133 15.4306 7.70172Z">
+                </path>
+              </svg><span class="text-[0px] group-hover:text-sm duration-300">Discover </span>
+            </div>
+          </div>
         </div>
 
         <!-- Image Section with Floating Effect -->
@@ -39,24 +63,29 @@
             class="relative overflow-hidden rounded-3xl hover:scale-[1.02] hover:rotate-[-0.5deg] transition-transform duration-500"
             style="filter: drop-shadow(0 3px 25px #314B58);">
             <img
-              src="https://static.designboom.com/wp-content/uploads/2021/02/tropical-space-tam-dao-villa-vietnam-designboom-large-1.jpg"
+              src="https://m.ahstatic.com/is/image/accorhotels/aja_p_7021-62?qlt=82&wid=575&ts=1710775362483&dpr=on,2.625"
               alt="House" class="w-full h-auto object-cover">
             <div class="absolute top-4 left-4 bg-gray-800/70 text-white p-4 rounded-lg backdrop-blur-sm">
-              <span class="block text-lg font-bold">Black Modern House</span>
-              <span class="block text-sm">New York Street 1260</span>
+              <span class="block text-lg font-bold">Modern Villa ✨ </span>
+              <span class="block text-sm">📍 Manama, Bahrain</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Search Bar -->
-      <%- include('partials/searchBar') %>
+
     </section>
+
+    <!-- Search Bar -->
+    <div class="bg-gradient-to-b from-[#f4faff] to-[#f8fcff] 2xl:px-[19rem] xl:px-[7rem] lg:px-[4.5rem] ">
+      <%- include('partials/searchBar') %>
+
+    </div>
 
 
 
     <!-- About Nestify Section -->
-    <section class="py-16 bg-gradient-to-b from-[#f4faff] to-[#ffffff] 2xl:px-[19rem] xl:px-[7rem] lg:px-[5rem] mb-8">
+    <section class="py-16 bg-gradient-to-b from-[#f8fcff] to-[#ffffff] 2xl:px-[19rem] xl:px-[7rem] lg:px-[5rem]  mb-8">
       <div class="text-center p-6">
         <div class="inline-block bg-[#232A31] text-white px-4 py-1 rounded-full text-sm mb-4">
           Everything you need
@@ -78,7 +107,7 @@
 
     <!-- Why Nestify -->
     <section
-      class="relative bg-gradient-to-b from-[#121212]  to-[#101f28] animate-gradient3 text-black  py-14 2xl:px-[19rem] xl:px-[7rem] lg:px-[4.5rem] ">
+      class="relative bg-gradient-to-b from-[#121212]  to-[#101f28] animate-gradient3 text-black  py-14 2xl:px-[19rem] xl:px-[7rem] lg:px-[4.5rem] px-[1.25rem]">
 
       <div class="container mx-auto text-center">
         <div
@@ -198,7 +227,7 @@
 
 
     <!-- Latest Listings -->
-    <section class="bg-gradient-to-b bg-white pt-16 pb-8 2xl:px-[19rem] xl:px-[7rem] lg:px-[5rem] ">
+    <section class="bg-gradient-to-b bg-white pt-16 pb-8 2xl:px-[19rem] xl:px-[7rem] lg:px-[5rem] px-[1.5rem]">
       <h2 class="font-bold text-2xl mb-2">Latest Listed Properties</h2>
       <div class="relative mb-2 pt-12">
         <div id="arrowControllers" class="absolute right-6 top-0 z-10 gap-x-6">

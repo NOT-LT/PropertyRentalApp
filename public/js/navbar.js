@@ -8,14 +8,7 @@ burgerBtn?.addEventListener('click', () => {
   }, 10);
 });
 
-window.addEventListener('scroll', function () {
-  const navbar = document.getElementById('navbarMain');
-  if (window.scrollY > 60) {
-    navbar.classList.add('navbar-scrolled');
-  } else {
-    navbar.classList.remove('navbar-scrolled');
-  }
-});
+
 
 const profileDropdownMenu = document.getElementById('profile-dropdown-menu');
 const userMenuButton = document.getElementById('user-menu-button');
