@@ -117,7 +117,7 @@ app.post('/sync-data', async (req, res) => {
 app.get('/search', async (req, res) => {
   try {
     const query = req.query.q; // Get query from request parameters
-    const propertyType = req.query.propertyTypeFilter.toLowerCase() || 'all types';
+    const propertyType = req.query.propertyTypeFilter.toString().toLowerCase() || 'all types';
     const location = req.query.locationFilter.toLowerCase() || 'all locations' ;
     // const price = req.query.averagePriceFilter.toLowerCase() || 'all prices';
     const listingType = req.query.listingTypeFilter.toLowerCase() || 'all';
@@ -127,17 +127,17 @@ app.get('/search', async (req, res) => {
       const filteredProperties = properties.filter(property => {
         console.log(property);
         let match = true;
-        if (propertyType && propertyType !== property.propertyType && propertyType !== 'all types') {
+        if (propertyType && !(propertyType.includes(property.propertyType.toLowerCase())) && propertyType !== 'all types') {
           console.log('Property Type:', propertyType, property.propertyType);
           match = false;
         }
-        if (location && location !== property.location && location !== 'all locations') {
+        if (location && !(location.includes(property.location.toLowerCase())) && location !== 'all locations') {
           match = false;
         }
         // if (price && price !== property.price && price !== 'all prices') {
         //   match = false;
         // }
-        if (listingType && listingType !== property.listingType && listingType !== 'all') {
+        if (listingType && !(listingType.includes(property.listingType)) && listingType !== 'all') {
           match = false;
         }
         return match;
@@ -184,6 +184,9 @@ app.get('/search', async (req, res) => {
   }
 });
 
+
+
+
 app.use('*', (req, res, next) => {
   console.log("app.js here")
   throw new ExpressError(404, 'Not Found')
@@ -194,8 +197,6 @@ app.use((err, req, res, next) => {
   console.log(statusCode, message)
   res.status(statusCode).render('error', { statusCode, message, stack })
 })
-
-
 
 async function createCollection() {
   try {
