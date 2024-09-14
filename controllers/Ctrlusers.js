@@ -1,8 +1,10 @@
 const express = require('express');
 const User = require('../models/user');
 const Property = require('../models/property');
+const { cloudinary } = require('../cloudinary');
 
-exports.getUserDashboard = async (req, res) => {
+
+module.exports.getUserDashboard = async (req, res, next) => {
   try {
     const userId = req?.user?.id;
     const properties = await Property.find({ author: userId });
@@ -16,6 +18,62 @@ exports.getUserDashboard = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+module.exports.deleteUser = async (req, res, next) => {
+  if (!req?.user?.id) {
+    req.flash('error', 'You need to be logged in to delete your account');
+    return res.redirect('/login');
+  }
+
+  const user = await User.findById(req?.user?.id);
+  if (!user) {
+    req.flash('error', 'User not found');
+    return res.redirect('/properties');
+  }
+  if (user.profilePicture?.filename){
+    await cloudinary.uploader.destroy(user.profilePicture?.filename, (error, result) => {
+      if (error) {
+        next(error);
+      }
+    });
+  }
+  await user.deleteOne();
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.flash('success', 'We are sorry to see you leave');
+    return res.redirect('/properties');
+  });
+ 
+}
+
+module.exports.getUserSettings = async (req, res, next)=> {
+  const user = await User.findById(req?.user?.id);
+  res.render('userSettings', { user });   
+}
+
+module.exports.postUserSettings = async (req,res,next) => {
+  const user = await User.findById(req?.user?.id);
+  user.email = req.body.email;
+  user.fullName = req.body.fullName;
+  console.log('ctrlUsers - req file: ', req.file);
+  if (req.file){
+    // console.log('ctrlUsers - req files: ', req.files);
+    if (user?.profilePicture?.filename){
+      await cloudinary.uploader.destroy(user.profilePicture?.filename, (error, result) => {
+        if (error) {
+          next(error);
+        }
+      });
+    }
+    const profilePicture = { url: req.file?.path, filename: req.file?.filename }
+    user.profilePicture = profilePicture;
+  }
+  await user.save();
+  req.flash('success', 'info updated successfully')
+  return res.status(200).redirect('/settings');
+}
 
 module.exports.registerUser = async (req, res, next) => {
   try {

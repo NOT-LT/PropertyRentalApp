@@ -1,6 +1,12 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose;
 const passportLocalMongoose = require('passport-local-mongoose');
+const Property = require('./property');
+
+const imgSchema = new Schema({
+  url: String,
+  filename: String
+});
 
 const UserSchema = new Schema({
   email: {
@@ -21,7 +27,8 @@ const UserSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Property'
     }
-  ]
+  ],
+  profilePicture: imgSchema
 })
 
 UserSchema.methods.getViews = async function() {
@@ -36,12 +43,31 @@ UserSchema.methods.getInquiries = async function() {
   await this.populate('properties');
  inquiries = [];
  this.properties.forEach(property => {
-  console.log("user.js - p: " + property)
-  console.log("user.js - p inq: " + property.inquiries)
     inquiries.push(...property.inquiries)
  })
  return inquiries;
 }
+
+
+UserSchema.post('findOneAndDelete', async function (doc) {
+  if (doc) {
+    await Property.deleteMany({
+      _id: {
+        $in: doc.properties
+      }
+    })
+  }
+})
+
+UserSchema.post('deleteOne', { document: true, query: false }, async function (doc) {
+  if (doc) {
+    await Property.deleteMany({
+      _id: {
+        $in: doc.properties
+      }
+    });
+  }
+});
 
 UserSchema.plugin(passportLocalMongoose) // this automatically adds username and password
 

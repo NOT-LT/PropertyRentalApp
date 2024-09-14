@@ -13,9 +13,17 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: 'PropertyRentalApp',
-    allowedFormats: ['jpeg', 'png', 'jpg', 'gif']
+    allowedFormats: ['jpeg', 'png', 'jpg', 'gif', 'webp', 'svg']
   }
 });
+
+const storageProfilePicture = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'profilePictures',
+    allowedFormats: ['jpeg', 'png', 'jpg', 'gif', 'webp', 'svg']
+  }
+})
 
 // Function to upload a file to Cloudinary
 const uploadFileToCloudinary = async (filePath) => {
@@ -36,4 +44,4 @@ const uploadFileToCloudinary = async (filePath) => {
 
 
 
-module.exports = { cloudinary, storage, uploadFileToCloudinary }
+module.exports = { cloudinary, storage, storageProfilePicture, uploadFileToCloudinary }

@@ -1,10 +1,11 @@
 const Property = require('./models/property')
-const { propertyValidationSchema, inquiryValidationSchema } = require('./validationSchemas')
+const { propertyValidationSchema, inquiryValidationSchema, updateUserValidationSchema } = require('./validationSchemas')
 const ExpressError = require('./utils/ExpressError');
 const asyncHandler = require('./utils/asyncHandler');
+const User = require('./models/user');
 
 module.exports.validateProperty = (req, res, next) => {
-  console.log(req.body);
+  console.log(req.files);
   const { error } = propertyValidationSchema.validate(req.body);
   if (error) {
     const msg = error.details.map(el => el.message).join(',')
@@ -12,6 +13,16 @@ module.exports.validateProperty = (req, res, next) => {
   }
   next()
 }
+
+module.exports.validateUpdateUserInfo = (req,res,next)=> {
+  console.log(req.body);
+  const {error} = updateUserValidationSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(',')
+    throw new ExpressError(400, msg)
+  }
+  next()
+} 
 
 module.exports.validateInquiry = (req, res, next) => {
   const { error } = inquiryValidationSchema.validate(req.body);
@@ -50,3 +61,32 @@ module.exports.isAuthor = asyncHandler(async (req, res, next) => {
   }
   next();
 })
+
+
+module.exports.matchPassword = asyncHandler(async (req, res, next) => {
+  const { password = '' } = req.body;
+  const user = await User.findById(req.user._id);
+  
+  if (!user) {
+    req.flash('error', 'User not found');
+    return res.redirect('/settings#deleteAccount');
+  }
+  
+  user.authenticate(password, (err, user, passwordError) => {
+    if (err) {
+      console.error(err);
+      req.flash('error', 'An error occurred');
+      return res.redirect('/settings#deleteAccount');
+    }
+    
+    if (passwordError) {
+      req.flash('error', 'Incorrect password');
+      return res.redirect('/settings#deleteAccount');
+    }
+    
+    // Password is correct, proceed to next middleware or function
+    return next();
+  });
+})
+
+//   user.changePassword(req.body.oldpassword, req.body.newpassword, function(err) ...

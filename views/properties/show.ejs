@@ -156,8 +156,8 @@
                         lan="<%= property?.geoJSON?.geometry?.coordinates[1]%>"></div>
                       <div
                         class=" shadow-md bg-slate-50 flex flex-row space-x-3 items-center justify-center sticky top-0 space-y-2 border-black border rounded-md px-5 py-7 w-full">
-                        <img class="w-[6rem] h-[6rem] rounded-full md:mr-2"
-                          src="https://picsum.photos/seed/author/1280/720" alt="Author's Image">
+                        <img class="w-24 h-24 rounded-full object-cover md:mr-2"
+                          src="<%= property?.author?.profilePicture?.url %>" alt="Author's Image">
                         <div class="flex flex-col md:justify-center items-center">
                           <span class="text-gray-700 text-lg font-semibold md:text-center mb-3">
                             <%= property.author.fullName %>

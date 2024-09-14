@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Inquiry = require('./inquiry');
 const User = require('./user');
 const LocationFeature = require('./locationFeature');
+const { cloudinary } = require('../cloudinary');
 const { Schema } = mongoose; // Destructuring assignment to get Schema directly
 
 
@@ -111,5 +112,31 @@ PropertySchema.post('findOneAndDelete', async function (doc) { // this will be h
     })
   }
 })
+
+PropertySchema.pre('deleteMany', async function (next) {
+  const properties = await this.model.find(this.getFilter());
+  const propertyIds = properties.map(property => property._id);
+  await Inquiry.deleteMany({ _id: { $in: propertyIds } });
+  await LocationFeature.deleteMany({ _id: { $in: propertyIds } });
+  Array.from(properties).forEach(async property => {
+    const images = property?.images;
+    for (let img of images) {
+      await cloudinary.uploader.destroy(img?.filename, (error, result) => {
+        if (error) {
+          next(error);
+        }
+      });
+    }
+  });
+  // await User.updateMany({
+  //   properties: { $in: propertyIds }
+  // }, {
+  //   $pull: {
+  //     properties: { $in: propertyIds }
+  //   }
+  // })
+  next();
+});
+
 const Property = mongoose.model('Property', PropertySchema);
 module.exports = Property;

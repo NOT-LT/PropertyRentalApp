@@ -37,3 +37,11 @@ module.exports.inquiryValidationSchema = Joi.object({
     phoneNumber: Joi.string().optional(),
   }).required()
 });
+
+module.exports.updateUserValidationSchema = Joi.object({
+  username: Joi.string().required(),
+  email: Joi.string().email().required(),
+  fullName: Joi.string().min(1).required(),
+  phoneNumber: Joi.string(),
+  profilePicture: Joi.string().optional(),
+}).required();

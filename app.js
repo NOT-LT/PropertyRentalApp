@@ -186,7 +186,6 @@ app.get('/search', async (req, res) => {
 
 
 app.use('*', (req, res, next) => {
-  console.log("app.js here")
   throw new ExpressError(404, 'Not Found')
 })
 app.use((err, req, res, next) => {
