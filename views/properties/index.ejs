@@ -1,7 +1,9 @@
 <%- layout('layout/boilerplate') %>
   <div class="px-4 md:px-6 lg:px-2">
-    <div id="map" class="overflow-hidden w-full rounded-lg"></div>
-    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+    <div style="z-index: 9999;">
+      <%- include('../partials/searchBar') %>
+    </div>
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" style="z-index: 2;">
       <% for (let p of properties) { %>
         <section class="rounded-lg w-full max-w-full bg-white">
 
