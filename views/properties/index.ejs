@@ -3,6 +3,7 @@
     <div style="z-index: 9999;">
       <%- include('../partials/searchBar') %>
     </div>
+    <div id="map" class="overflow-hidden w-full rounded-lg"></div>
     <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" style="z-index: 2;">
       <% for (let p of properties) { %>
         <section class="rounded-lg w-full max-w-full bg-white">
@@ -173,7 +174,7 @@
         type: 'geojson',
         // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
         // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        data: "http://localhost:3000/properties.geojson",
+        data: `http://${window.location.hostname}:3000/properties.geojson`,
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)

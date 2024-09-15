@@ -2018,6 +2018,11 @@ video {
   padding-bottom: 6px;
 }
 
+.px-\[1rem\] {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .pb-0 {
   padding-bottom: 0px;
 }
@@ -2699,22 +2704,12 @@ video {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
-  .sm\:flex-nowrap {
-    flex-wrap: nowrap;
-  }
-
   .sm\:items-stretch {
     align-items: stretch;
   }
 
   .sm\:justify-start {
     justify-content: flex-start;
-  }
-
-  .sm\:space-x-4 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 0;
-    margin-right: calc(1rem * var(--tw-space-x-reverse));
-    margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
   .sm\:rounded-lg {
