@@ -99,6 +99,10 @@ body {
   max-width: 85rem;
 }
 
+.max-size2 {
+  max-width: 110rem;
+}
+
 .aspect-ratio-container {
   width: 100%;
   padding-bottom: 66.67%;
