@@ -76,7 +76,7 @@
                 </form>
               </div>
             </div>
-            <% }%>
+            <% } %>
         </div>
 
         <div class="text-green-800 text-lg font-semibold mb-2">
@@ -109,39 +109,13 @@
                 <div class="w-full md:w-8/12 place-self-start">
                   <p class="property-description text-sm text-gray-600 w-full">
                     <%= property.description %>
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae quas, illo adipisci ut ab
-                      cupiditate itaque placeat obcaecati quod iusto? Sapiente ad libero perferendis voluptates numquam
-                      nemo aut cupiditate soluta! Fuga harum velit, unde blanditiis ex illum nostrum iusto facilis ut
-                      doloribus, reiciendis nemo? In dolores eos nemo corporis quod, velit sapiente incidunt enim atque,
-                      quae commodi possimus quos nam magnam aut doloremque placeat! Blanditiis voluptatum excepturi
-                      libero
-                      dignissimos. Nihil aspernatur perferendis labore cupiditate. Cumque error accusantium amet ipsa
-                      omnis laborum qui, dignissimos quibusdam. Quo error harum, tempore hic vel asperiores fuga
-                      molestiae
-                      repudiandae qui aliquid nisi ipsam amet ipsa eaque sint, cumque rem officia cupiditate expedita
-                      quos
-                      impedit deserunt quia magnam. Magni repellat magnam facilis ipsam vero, quasi veritatis molestiae
-                      unde ad dolorum dicta iusto. Cupiditate ea impedit quos, consequatur cum modi, illum nostrum harum
-                      quaerat sequi deserunt magni libero. Eaque magni cupiditate itaque sed aspernatur perspiciatis
-                      reprehenderit iste nulla deleniti aliquid veritatis, incidunt, natus dolorem ea sequi placeat
-                      autem
-                      possimus voluptatum? Iusto veniam sint, enim tempore quia nulla in mollitia rem ex. Ducimus,
-                      veritatis eos iste voluptates, non nesciunt enim saepe doloremque molestias sunt harum modi dolor?
-                      Dignissimos sint sit aliquam quas, excepturi nostrum illo. Aut saepe harum reprehenderit animi
-                      nemo
-                      veritatis error quia, totam laborum eligendi omnis autem molestiae in eius inventore quidem qui
-                      exercitationem. Rem dolor commodi officia quas enim laudantium quia doloribus mollitia tempora!
-                      Debitis doloribus similique dignissimos quibusdam facere neque quis excepturi ut architecto quod
-                      adipisci tempora corrupti, nam, asperiores eligendi cum ex. Dolorem placeat velit sed quidem eaque
-                      repellendus sunt eum magnam. Sit repellendus distinctio ipsa labore neque totam rem sequi
-                      eligendi?
-                      Necessitatibus blanditiis quisquam quis totam ea? Voluptatem quisquam odio distinctio suscipit
-                      dolorum, ducimus, reprehenderit, nobis at nisi necessitatibus fugit magni sunt in facilis.
-                      Praesentium laborum velit minima distinctio nobis vel iste.
+                     
                   </p>
-                  <span class="text-sm  text-blue-800 cursor-pointer"
-                    onclick="this.previousElementSibling.classList.remove('property-description'); this.classList.add('hidden')">Show
-                    more ...</span>
+                    <% if (property.description.length > 200) { %>
+                    <span class="text-sm text-blue-800 cursor-pointer"
+                      onclick="this.previousElementSibling.classList.remove('property-description'); this.classList.add('hidden')">Show
+                      more ...</span>
+                    <% } %>
                 </div>
 
                 <% } else { %>
@@ -151,7 +125,7 @@
                   <% } %>
 
                     <div class="flex flex-col items-center md:h-full space-y-3 justify-between ">
-                      <div id="map" style="width:250px; height:250px;" class="rounded-full"
+                      <div id="map" style="width:350px; height:200px;" class="rounded-md"
                         lon="<%= property?.geoJSON?.geometry?.coordinates[0]%>"
                         lan="<%= property?.geoJSON?.geometry?.coordinates[1]%>"></div>
                       <div
@@ -173,6 +147,7 @@
                         </div>
 
                       </div>
+                      <span class="text-sm text-opacity-80 text-start">Posted at <%= new Date(property.postDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }) %></span>
                     </div>
 
             </section>
@@ -282,7 +257,7 @@
       container: 'map', // container's id or the HTML element to render the map
       style: maptilersdk.MapStyle.streets,
       center: [lon, lan], // starting position [lng, lat]
-      zoom: 11, // starting zoom
+      zoom: 13, // starting zoom
     });
     maptilersdk.setRTLTextPlugin(
       'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',

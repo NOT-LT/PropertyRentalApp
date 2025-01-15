@@ -20,13 +20,14 @@
   </head>
 
   <body class=" flex flex-col min-h-screen min-w-full">
+    <% console.log(page.title)%>
     <% if (page.title !=='login' && page.title !=='register' ) { %>
       <%- include('../partials/navbar') -%>
         <% } %>
           <%- include('../partials/flashAlert') -%>
 
             <div
-              class="flex-1 flex justify-center bg-white <%= page.title === 'showPage' ? 'py-0 lg:py-4' : 'py-4' %>"> 
+              class="flex-1 flex justify-center bg-white <%= page.title === 'showPropertyPage' ? 'py-0 lg:py-4' : 'py-4' %>"> 
         <div class=" mx-auto w-full max-size lg:px-10">
               <%- body %>
             </div>

@@ -25,6 +25,8 @@ module.exports.propertyValidationSchema = Joi.object({
     contact: Joi.string().optional(),
     propertyUsage: Joi.string().optional(),
     BFID: Joi.string().optional(),
+    latitude: Joi.string().allow('').optional(),
+    longitude: Joi.string().allow('').optional()
   }).required()
 });
 

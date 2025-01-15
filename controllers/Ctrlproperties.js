@@ -43,7 +43,8 @@ module.exports.renderShow = async (req, res) => {
 
 module.exports.renderEdit = async (req, res) => {
   const { id } = req.params;
-  const property = await Property.findById(id);
+  const property = await Property.findById(id).populate('geoJSON');
+  console.log("edit page property:", property.geoJSON.geometry);
   if (!property) {
     throw new ExpressError('404', 'There is no property with this id')
   }
@@ -62,17 +63,35 @@ module.exports.createProperty = async (req, res) => {
     },
     property: property?._id
   });
-  try {
-    const locationResponse = await maptilerClient.geocoding.forward(property.location)
-    console.log("location Response: ", locationResponse);
+  if (!req?.body?.property?.longitude || !req?.body?.property?.latitude || req?.body?.property?.longitude == '' || req?.body?.property?.latitude == '') {
+
+    try {
+      let plocation = req?.body?.property?.location;
+      if (!(plocation.includes('Bahrain'))) {
+        plocation += ', Bahrain';
+      }
+      const locationResponse = await maptilerClient.geocoding.forward(plocation)
+      console.log("location Response: ", locationResponse);
+      LF = new LocationFeature({
+        type: 'Feature',
+        geometry: locationResponse?.features[0]?.geometry,
+        property: property?._id
+      });
+      console.log("geometry location feature :", locationResponse.features[0].geometry)
+    } catch (error) {
+      console.log("couldn't forward geocode the location: ", error);
+    }
+  } else {
+    let latitude = parseFloat(req?.body?.property?.latitude);
+    let longitude = parseFloat(req?.body?.property?.longitude);
     LF = new LocationFeature({
       type: 'Feature',
-      geometry: locationResponse?.features[0]?.geometry,
+      geometry: {
+        type: 'Point',
+        coordinates: [longitude, latitude]
+      },
       property: property?._id
     });
-    console.log("geometry location feature :", locationResponse.features[0].geometry)
-  } catch (error) {
-    console.log("couldn't forward geocode the location: ", error);
   }
 
   await LF.save();
@@ -126,16 +145,38 @@ module.exports.updateProperty = async (req, res) => {
     },
     property: property?._id
   });
-  try {
-    const locationResponse = await maptilerClient.geocoding.forward(property.location)
+  console.log("property", property);
+  console.log("property langitude: ", property.longitude);
+  if (!req?.body?.property?.longitude || !req?.body?.property?.latitude || req?.body?.property?.longitude == '' || req?.body?.property?.latitude == '') {
+    console.log("hererererere0:");
+
+    try {
+      let plocation = req?.body?.property?.location;
+      if (!(plocation.includes('Bahrain'))) {
+        plocation += ', Bahrain';
+      }
+      const locationResponse = await maptilerClient.geocoding.forward(plocation)
+      LF = new LocationFeature({
+        type: 'Feature',
+        geometry: locationResponse?.features[0]?.geometry,
+        property: property?._id
+      });
+      console.log("geometry location feature :", locationResponse.features[0].geometry)
+    } catch (error) {
+      console.log("couldn't forward geocode the location: ", error);
+    }
+  } else {
+    console.log("hererererere:");
+    let latitude = parseFloat(req?.body?.property?.latitude);
+    let longitude = parseFloat(req?.body?.property?.longitude);
     LF = new LocationFeature({
       type: 'Feature',
-      geometry: locationResponse?.features[0]?.geometry,
+      geometry: {
+        type: 'Point',
+        coordinates: [longitude, latitude]
+      },
       property: property?._id
     });
-    console.log("geometry location feature :", locationResponse.features[0].geometry)
-  } catch (error) {
-    console.log("couldn't forward geocode the location: ", error);
   }
   await LF.save();
   property.geoJSON = LF;

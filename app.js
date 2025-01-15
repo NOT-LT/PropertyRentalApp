@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride('_method'));
 const sessionConfig = {
-  secret: 'changeMeLater',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -54,7 +54,7 @@ const typesenseClient = new Typesense.Client({
     {
       host: process.env.TYPESENSE_HOST,  // Typesense cloud host
       port: process.env.TYPESENSE_PORT,  // Default is 443 for Typesense Cloud
-      protocol: 'https'
+      protocol: process.env.TYPESENSE_PROTOCOL
     }
   ],
   apiKey: process.env.TYPESENSE_API_KEY,  // Store API key securely in env variables
