@@ -4,8 +4,16 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const Property = require('./property');
 
 const imgSchema = new Schema({
-  url: String,
-  filename: String
+  url: {
+    type: String,
+    required: false,
+    default: 'https://res.cloudinary.com/ds9e2dvrv/image/upload/v1736102014/PropertyRentalApp/nhry0p2v1f9mmyfvjthf.webp'
+  },
+  filename: {
+    type: String,
+    required: false,
+    default: 'PropertyRentalApp/nhry0p2v1f9mmyfvjthf'
+  }
 });
 
 const UserSchema = new Schema({

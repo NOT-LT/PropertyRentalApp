@@ -78,7 +78,8 @@ module.exports.postUserSettings = async (req,res,next) => {
 module.exports.registerUser = async (req, res, next) => {
   try {
     const { username, email, password, fullName, phoneNumber } = req.body;
-    const user = new User({ username, email, password, fullName, phoneNumber });
+
+    const user = new User({ username, email, password, fullName, phoneNumber, profilePicture: { url: 'https://res.cloudinary.com/ds9e2dvrv/image/upload/v1736102014/PropertyRentalApp/nhry0p2v1f9mmyfvjthf.webp', filename: 'PropertyRentalApp/nhry0p2v1f9mmyfvjthf' } });
     const registeredUser = await User.register(user, password);
     req.login(registeredUser, (err) => {
       if (err) next(err);
