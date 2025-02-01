@@ -21,27 +21,32 @@
           </svg>
         </button>
       </div>
-      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+      <div class="flex flex-1 items-baseline justify-center sm:items-stretch sm:justify-start">
         <div class="hidden sm:mx-3 sm:block">
           <div class="flex space-x-4">
-            <!-- console.log("ptitle:", page.title)  -->
-            <!-- Current: "border-b-2 border-cyan-500 text-black", Default: "text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" -->
             <a href="/"
-              class="<%= page.title =='landing' ? 'border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium "
+              class="<%= page.title =='landing' ? 'border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium"
               aria-current="page">Home</a>
             <a href="/properties"
-              class="<%= page.title =='indexPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium  ">Properties</a>
-            <a href="/properties/new"
-              class="<%= page.title =='newPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium ">New
-              property</a>
+              class="<%= page.title =='indexPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium">Properties</a>
             <a href="/properties/recent"
-              class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-3 py-2 text-sm font-medium ">Recent</a>
+              class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium ">Recent</a>
+            <a href="/properties/new" class="text-sm self-center">
+              <div
+                class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] transition-all duration-150 text-white px-2 py-[2px] rounded-full">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                  </path>
+                </svg>
+                <span>Add Property</span>
+              </div>
+            </a>
           </div>
         </div>
       </div>
       <% if (currentUser) { %>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:mx-3 sm:pr-0">
-          
+
 
           <!-- Profile dropdown -->
           <div class="relative ml-3">
@@ -52,9 +57,9 @@
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
                 <img class="h-10 w-10 rounded-full object-cover"
-                  src="<%= currentUser?.profilePicture ? currentUser?.profilePicture?.url : '../../../../img/profile-picture.png' %>" 
+                  src="<%= currentUser?.profilePicture ? currentUser?.profilePicture?.url : '../../../../img/profile-picture.png' %>"
                   alt="profile-img"> <!-- ensure getting out of any sub folder -->
-                  
+
               </button>
             </div>
 
@@ -97,11 +102,21 @@
       <a href="/properties"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">Properties</a>
       <a href="/properties/new"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">New
-        property</a>
-      <a href="/properties/new"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">Recent</a>
+
+      <a href="/properties/new"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
+        <div
+          class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] transition-all duration-150 text-white px-2 py-[2px] rounded-full">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          <span>Add Property</span>
+        </div>
+      </a>
     </div>
+    </a>
+  </div>
   </div>
 </nav>
 

@@ -8,8 +8,8 @@ const Inquiry = require('../models/inquiry');
 const User = require('../models/user');
 // Database connection
 
-
-mongoose.connect('mongodb://localhost:27017/propertyRentalApp');
+const dbUrl =  process.env.DB_URI || 'mongodb://localhost:27017/propertyRentalApp';
+mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

@@ -16,7 +16,7 @@
       <div class='text-lg'>
         <%= message %>
       </div>
-
+      <% if(process.env.NODE_ENV !== 'production') { %>
       <div class='mt-8 w-full'>
         <div id='stackToggle' class='flex items-center cursor-pointer transition-transform duration-300'>
           <span id='arrow' class='mr-2 text-xl transition-transform duration-300'>
@@ -24,12 +24,16 @@
           </span>
           <span class='text-xl font-semibold'>Stack Trace</span>
         </div>
-        <div id='stackTrace' class='overflow-hidden transition-all duration-300 max-h-0 opacity-0'>
-          <div class='mt-4 text-sm text-gray-600'>
-            <%= stack %>
+        
+          <div id='stackTrace' class='overflow-hidden transition-all duration-300 max-h-0 opacity-0'>
+            <div class='mt-4 text-sm text-gray-600'>
+              <%= stack %>
+            </div>
           </div>
-        </div>
+        
+        
       </div>
+      <% } %>
     </div>
   </div>
 

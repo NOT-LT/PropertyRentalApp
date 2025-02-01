@@ -137,6 +137,7 @@ PropertySchema.pre('deleteMany', async function (next) {
   // })
   next();
 });
+PropertySchema.index({ title: 'text', propertyType:'text',description: 'text',price:'text',geoJSON:'text' });
 
 const Property = mongoose.model('Property', PropertySchema);
 module.exports = Property;

@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const path = require('path');
 const expressSession = require('express-session');
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
@@ -16,13 +17,14 @@ const User = require('./models/user');
 const maptilerClient = require('@maptiler/client');
 const Property = require('./models/property');
 const fs = require('fs/promises');
-const Typesense = require('typesense');
-
-maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
+// const Typesense = require('typesense');
+const helmet = require('helmet');
+const dbUrl =  process.env.DB_URI || 'mongodb://localhost:27017/propertyRentalApp';
+maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY || 'mongodb://localhost:27017/propertyRentalApp';
 const propertiesRoute = require('./routes/properties')
 const inquiriesRoute = require('./routes/inquiry')
 const usersRoute = require('./routes/users')
-mongoose.connect('mongodb://localhost:27017/propertyRentalApp');
+mongoose.connect(dbUrl);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -39,7 +41,23 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride('_method'));
+app.use(helmet({
+  contentSecurityPolicy: false
+}));
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+      secret: process.env.SESSION_SECRET
+  }
+});
+
+store.on("error", function(e) {
+  console.log("Session Store Error", e)
+})
 const sessionConfig = {
+  store,
+  name: 'session',
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
@@ -49,17 +67,18 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
 }
-const typesenseClient = new Typesense.Client({
-  nodes: [
-    {
-      host: process.env.TYPESENSE_HOST,  // Typesense cloud host
-      port: process.env.TYPESENSE_PORT,  // Default is 443 for Typesense Cloud
-      protocol: process.env.TYPESENSE_PROTOCOL
-    }
-  ],
-  apiKey: process.env.TYPESENSE_API_KEY,  // Store API key securely in env variables
-  connectionTimeoutSeconds: 2
-});
+
+// const typesenseClient = new Typesense.Client({
+//   nodes: [
+//     {
+//       host: process.env.TYPESENSE_HOST,  // Typesense cloud host
+//       port: process.env.TYPESENSE_PORT,  // Default is 443 for Typesense Cloud
+//       protocol: process.env.TYPESENSE_PROTOCOL
+//     }
+//   ],
+//   apiKey: process.env.TYPESENSE_API_KEY,  // Store API key securely in env variables
+//   connectionTimeoutSeconds: 2
+// });
 app.use(expressSession(sessionConfig))
 
 app.use(passport.initialize());
@@ -143,37 +162,37 @@ app.get('/search', async (req, res) => {
       res.render('properties/searchResult', { properties:filteredProperties, searchQuery:query, page: { title: 'Search Results' } });
       return;
     }
-    const searchResults = await typesenseClient.collections('properties').documents().search({
-      q: query,
-      query_by: 'title,description,location,price,propertyType'
-    });
-    console.log("searchResult: ", searchResults)
-    const resultProperties = searchResults.hits.map(hit => hit.document);
-    const filteredProperties = resultProperties.filter(property => {
-      console.log(property);
-      let match = true;
-      if (propertyType && propertyType !== property.propertyType && propertyType !== 'all types') {
-        console.log('Property Type:', propertyType, property.propertyType);
-        match = false;
-      }
-      if (location && location !== property.location && location !== 'all locations') {
-        match = false;
-      }
-      // if (price && price !== property.price && price !== 'all prices') {
-      //   match = false;
-      // }
-      if (listingType && listingType !== property.listingType && listingType !== 'all') {
-        match = false;
-      }
-      return match;
-    });
-    const properties = [];
-    for (let i = 0; i < filteredProperties.length; i++) {
-      const property = filteredProperties[i];
-      console.log('Current Property:', property);
-      const propertyDoc = await Property.findOne({ title: property.title, postDate: property.postDate });
-      properties.push(propertyDoc);
-    }
+    // const searchResults = await typesenseClient.collections('properties').documents().search({
+    //   q: query,
+    //   query_by: 'title,description,location,price,propertyType'
+    // });
+    // console.log("searchResult: ", searchResults)
+    // const resultProperties = searchResults.hits.map(hit => hit.document);
+    // const filteredProperties = resultProperties.filter(property => {
+    //   console.log(property);
+    //   let match = true;
+    //   if (propertyType && propertyType !== property.propertyType && propertyType !== 'all types') {
+    //     console.log('Property Type:', propertyType, property.propertyType);
+    //     match = false;
+    //   }
+    //   if (location && location !== property.location && location !== 'all locations') {
+    //     match = false;
+    //   }
+    //   // if (price && price !== property.price && price !== 'all prices') {
+    //   //   match = false;
+    //   // }
+    //   if (listingType && listingType !== property.listingType && listingType !== 'all') {
+    //     match = false;
+    //   }
+    //   return match;
+    // });
+    // const properties = [];
+    // for (let i = 0; i < filteredProperties.length; i++) {
+    //   const property = filteredProperties[i];
+    //   const propertyDoc = await Property.findOne({ title: property.title, postDate: property.postDate });
+    //   properties.push(propertyDoc);
+    // }
+    const properties = await Property.find({ $text: { $search: query } }).sort({ score: { $meta: 'textScore' } });
     console.log('Search results:', properties);
     res.render('properties/searchResult', { properties, searchQuery:query, page: { title: 'Search Results' } });
   } catch (error) {
@@ -195,63 +214,63 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render('error', { statusCode, message, stack })
 })
 
-async function createCollection() {
-  try {
-    const collectionSchema = {
-      name: 'properties', // Name of the collection
-      fields: [
-        { name: 'title', type: 'string' },
-        { name: 'description', type: 'string' },
-        { name: 'location', type: 'string', facet: true },
-        { name: 'price', type: 'string', facet: true },
-        { name: 'bedrooms', type: 'string', facet: true },
-        { name: 'bathrooms', type: 'string', facet: true },
-        { name: 'postDate', type: 'int64' },
-        {name: 'propertyType', type: 'string', facet: true},
-        {name: 'listingType', type: 'string', facet: true}
-      ]
-    };
+// async function createCollection() {
+//   try {
+//     const collectionSchema = {
+//       name: 'properties', // Name of the collection
+//       fields: [
+//         { name: 'title', type: 'string' },
+//         { name: 'description', type: 'string' },
+//         { name: 'location', type: 'string', facet: true },
+//         { name: 'price', type: 'string', facet: true },
+//         { name: 'bedrooms', type: 'string', facet: true },
+//         { name: 'bathrooms', type: 'string', facet: true },
+//         { name: 'postDate', type: 'int64' },
+//         {name: 'propertyType', type: 'string', facet: true},
+//         {name: 'listingType', type: 'string', facet: true}
+//       ]
+//     };
 
-    const collection = await typesenseClient.collections().create(collectionSchema);
-    console.log('Collection created:', collection);
-  } catch (error) {
-    console.error('Error creating collection:', error);
-  }
-}
+//     const collection = await typesenseClient.collections().create(collectionSchema);
+//     console.log('Collection created:', collection);
+//   } catch (error) {
+//     console.error('Error creating collection:', error);
+//   }
+// }
 
 // Sync function to be triggered from the server
-async function syncMongoWithTypesense() {
-  try {
-    // Fetch documents from MongoDB
-    const properties = await Property.find({}).exec();
+// async function syncMongoWithTypesense() {
+//   try {
+//     // Fetch documents from MongoDB
+//     const properties = await Property.find({}).exec();
 
-    const transformedDocs = properties.map(property => {
-      const doc = property.toObject ? property.toObject() : property;
+//     const transformedDocs = properties.map(property => {
+//       const doc = property.toObject ? property.toObject() : property;
 
-      return {
-        title: doc.title, // Assuming title is a string and remains as such
-        description: doc.description, // Assuming description is a string and remains as such
-        location: doc.location, // Assuming location is a string and remains as such
-        price: doc.price, 
-        bedrooms: doc.bedrooms, 
-        bathrooms: doc.bathrooms, 
-        postDate: doc.postDate instanceof Date ? doc.postDate.getTime() : parseInt(doc.postDate, 10), // Convert Date to timestamp
-        propertyType: doc.propertyType,
-        listingType: doc.listingType 
-      };
-    });
+//       return {
+//         title: doc.title, // Assuming title is a string and remains as such
+//         description: doc.description, // Assuming description is a string and remains as such
+//         location: doc.location, // Assuming location is a string and remains as such
+//         price: doc.price, 
+//         bedrooms: doc.bedrooms, 
+//         bathrooms: doc.bathrooms, 
+//         postDate: doc.postDate instanceof Date ? doc.postDate.getTime() : parseInt(doc.postDate, 10), // Convert Date to timestamp
+//         propertyType: doc.propertyType,
+//         listingType: doc.listingType 
+//       };
+//     });
 
-    // Convert MongoDB documents to JSONL format
-    const jsonlData = transformedDocs.map(property => JSON.stringify(property)).join('\n');
+//     // Convert MongoDB documents to JSONL format
+//     const jsonlData = transformedDocs.map(property => JSON.stringify(property)).join('\n');
 
-    // Import data into Typesense
-    const result = await typesenseClient.collections(process.env.TYPESENSE_COLLECTION).documents().import(jsonlData,{ action: 'upsert' });
+//     // Import data into Typesense
+//     const result = await typesenseClient.collections(process.env.TYPESENSE_COLLECTION).documents().import(jsonlData,{ action: 'upsert' });
 
-    console.log('Import result:', result);
-  } catch (err) {
-    console.error('Error syncing MongoDB with Typesense:', err);
-  }
-}
+//     console.log('Import result:', result);
+//   } catch (err) {
+//     console.error('Error syncing MongoDB with Typesense:', err);
+//   }
+// }
 
 
 // CALL IF YOU DELETED THE COLLECTION

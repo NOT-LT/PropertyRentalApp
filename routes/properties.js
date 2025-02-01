@@ -42,6 +42,11 @@ router.get('/new', isLoggedIn, (req, res) => {
   res.render('properties/new', {page: { title: 'newPropertyPage' }});
 })
 
+router.get('/recent', asyncHandler(async (req, res) => {
+  const properties = await Property.find({}).sort({ createdAt: -1 }).limit(10);
+  res.render('properties/index', { properties, page: { title: 'recentPropertiesPage' } });
+}));
+
 router.route('/:id')
   .get(asyncHandler(renderShow))
   .put(isLoggedIn, isAuthor, upload.array('property[images]'), validateProperty, asyncHandler(updateProperty)) // add validateProperty
