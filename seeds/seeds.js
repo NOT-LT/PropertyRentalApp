@@ -8,7 +8,7 @@ const Inquiry = require('../models/inquiry');
 const User = require('../models/user');
 // Database connection
 
-const dbUrl =  process.env.DB_URI || 'mongodb://localhost:27017/propertyRentalApp';
+const dbUrl =  process.env.DB_URL|| 'mongodb://localhost:27017/propertyRentalApp';
 mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
