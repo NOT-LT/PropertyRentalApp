@@ -147,7 +147,7 @@
     maptilersdk.config.apiKey = 'bz3D5d4NTiyJpnL73eIG';
     var map = new maptilersdk.Map({
       container: 'map',
-      zoom: 10,
+      zoom: 9,
       center: [50.55, 26.05987],
       style: 'https://api.maptiler.com/maps/hybrid/style.json?key=bz3D5d4NTiyJpnL73eIG'
     });
@@ -172,8 +172,6 @@
       });
       map.addSource('property', {
         type: 'geojson',
-        // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-        // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
         data: `http://${window.location.hostname}:3000/properties.geojson`,
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on

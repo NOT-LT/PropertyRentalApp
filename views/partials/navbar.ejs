@@ -23,27 +23,88 @@
       </div>
       <div class="flex flex-1 items-baseline justify-center sm:items-stretch sm:justify-start">
         <div class="hidden sm:mx-3 sm:block">
-          <div class="flex space-x-4">
+          <div class="flex space-x-4 items-center">
+            <!-- Home Link -->
             <a href="/"
               class="<%= page.title =='landing' ? 'border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium"
               aria-current="page">Home</a>
-            <a href="/properties"
-              class="<%= page.title =='indexPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium">Properties</a>
+      
+            <!-- Properties Dropdown -->
+            <div class="relative" onclick="window.location.href='/properties'">
+              <button id="dropdownHoverButton"
+                class="text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="button">
+                Properties
+                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m1 1 4 4 4-4" />
+                </svg>
+              </button>
+      
+              <!-- Dropdown Menu -->
+              <div id="dropdownHover"
+                class="z-10 hidden absolute bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Villas</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Apartments</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Camps</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Industrial Properties</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+      
+            <!-- Recent Link -->
             <a href="/properties/recent"
-              class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium ">Recent</a>
-            <a href="/properties/new" class="text-sm self-center">
+              class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium">Recent</a>
+      
+            <!-- Add Property Link -->
+            <% if(currentUser) { %>
+            <a href="/properties/new" class="text-sm font-medium">
               <div
                 class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] transition-all duration-150 text-white px-2 py-[2px] rounded-full">
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
-                  </path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
                 <span>Add Property</span>
               </div>
             </a>
+            <% } %>
           </div>
         </div>
       </div>
+      
+      <!-- Script to handle hover -->
+      <script>
+        const dropdownButton = document.getElementById('dropdownHoverButton');
+        const dropdownMenu = document.getElementById('dropdownHover');
+      
+        dropdownButton.addEventListener('mouseenter', () => {
+          dropdownMenu.classList.remove('hidden');
+        });
+      
+        dropdownButton.addEventListener('mouseleave', () => {
+          dropdownMenu.classList.add('hidden');
+        });
+      
+        dropdownMenu.addEventListener('mouseenter', () => {
+          dropdownMenu.classList.remove('hidden');
+        });
+      
+        dropdownMenu.addEventListener('mouseleave', () => {
+          dropdownMenu.classList.add('hidden');
+        });
+      </script>
+      
+     
       <% if (currentUser) { %>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:mx-3 sm:pr-0">
 
@@ -99,8 +160,10 @@
       <a href="/"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
         aria-current="page">Home</a>
+
       <a href="/properties"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">Properties</a>
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
+      </a>
       <a href="/properties/new"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">Recent</a>
 

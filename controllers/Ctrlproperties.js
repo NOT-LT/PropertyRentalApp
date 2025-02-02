@@ -8,7 +8,8 @@ const User = require('../models/user');
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
 module.exports.renderIndex = async (req, res) => {
-  const properties = await Property.find({});
+  const propertyType = req.query.propertyType;
+  const properties = await Property.find({propertyType: propertyType || { $exists: true } });
   res.render('properties/index', { properties, page: { title: 'indexPage' } })
 };
 
