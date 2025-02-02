@@ -11,7 +11,6 @@ module.exports.getUserDashboard = async (req, res, next) => {
     const user = await User.findById(userId);
     const views = await user.getViews();
     const inquiries = await user.getInquiries();
-    console.log("inq:", inquiries);
     res.render('dashboard', { page: { title: 'User Dashboard' },properties, views, inquiries});
   } catch (err) {
     console.error(err);
@@ -57,7 +56,6 @@ module.exports.postUserSettings = async (req,res,next) => {
   const user = await User.findById(req?.user?.id);
   user.email = req.body.email;
   user.fullName = req.body.fullName;
-  console.log('ctrlUsers - req file: ', req.file);
   if (req.file){
     // console.log('ctrlUsers - req files: ', req.files);
     if (user?.profilePicture?.filename){

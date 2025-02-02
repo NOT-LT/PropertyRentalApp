@@ -146,7 +146,6 @@ app.get('/', asyncHandler(async (req, res) => {
 app.get('/properties.geojson', async (req, res) => {
   try {
     const features = await LocationFeature.find({});
-    console.log(features);
     res.json({
       type: "FeatureCollection",
       features: features
@@ -227,10 +226,8 @@ app.get('/search', async (req, res) => {
     if (query === '' || query === undefined || query === null || query.toLowerCase() == 'all') {
       const properties = await Property.find({  });
       const filteredProperties = properties.filter(property => {
-        console.log(property);
         let match = true;
         if (propertyType && !(propertyType.includes(property.propertyType.toLowerCase())) && propertyType !== 'all types') {
-          console.log('Property Type:', propertyType, property.propertyType);
           match = false;
         }
         if (location && !(location.includes(property.location.toLowerCase())) && location !== 'all locations') {
@@ -278,7 +275,6 @@ app.get('/search', async (req, res) => {
     //   properties.push(propertyDoc);
     // }
     const properties = await Property.find({ $text: { $search: query } }).sort({ score: { $meta: 'textScore' } });
-    console.log('Search results:', properties);
     res.render('properties/searchResult', { properties, searchQuery:query, page: { title: 'Search Results' } });
   } catch (error) {
     console.error('Error performing search:', error);

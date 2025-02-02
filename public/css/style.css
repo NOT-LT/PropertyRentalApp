@@ -2065,6 +2065,21 @@ video {
   padding-bottom: 6px;
 }
 
+.px-\[15px\] {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.px-\[30px\] {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.px-\[12px\] {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
 .pb-0 {
   padding-bottom: 0px;
 }

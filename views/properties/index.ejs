@@ -282,7 +282,6 @@
       });
 
       map.on('mouseenter', 'unclustered-point', async function (e) {
-        console.log("mm")
         var coordinates = e?.features[0]?.geometry?.coordinates?.slice();
         // console.log(e);
         const response = await fetch(`http://localhost:3000/properties/coordinates/${e.lngLat.lng}/${e.lngLat.lat}`);

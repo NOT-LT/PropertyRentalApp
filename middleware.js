@@ -5,7 +5,6 @@ const asyncHandler = require('./utils/asyncHandler');
 const User = require('./models/user');
 
 module.exports.validateProperty = (req, res, next) => {
-  console.log(req.files);
   const { error } = propertyValidationSchema.validate(req.body);
   if (error) {
     const msg = error.details.map(el => el.message).join(',')
@@ -15,7 +14,6 @@ module.exports.validateProperty = (req, res, next) => {
 }
 
 module.exports.validateUpdateUserInfo = (req,res,next)=> {
-  console.log(req.body);
   const {error} = updateUserValidationSchema.validate(req.body);
   if (error) {
     const msg = error.details.map(el => el.message).join(',')

@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   inquiryForm?.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
     const propertyId = inquiryForm?.getAttribute("data-property-id");
-    console.log("inquiryMsgFullname: ", inquiryMsgFullname?.value);
     fetch(`/properties/${propertyId}/inquiry`, {
       method: 'POST',
       headers: {

@@ -73,13 +73,40 @@ document.getElementById('uploadInput').addEventListener('change', function (e) {
   for (let i = 0; i < files.length; i++) {
     if (files[i]) {
       const reader = new FileReader();
-      reader.readAsDataURL(files[i]);
+      // Store reference to the current file
+      const currentFile = files[i];
+      
+      reader.readAsDataURL(currentFile);
       reader.onload = function (e) {
-        addImage(e.target.result);
+        // Pass both the result and the actual file reference
+        addImage(e.target.result, currentFile);
       };
     }
   }
 });
+
+function addImage(src, file) {
+  const imageContainer = document.querySelector('.flex.flex-row.overflow-x-auto.relative.mt-2');
+  if (imageContainer) {
+    const newImage = document.createElement('div');
+    newImage.classList.add('relative', 'w-28', 'h-28', 'mr-2', 'flex-shrink-0');
+    
+    // Use the actual file object's name instead of input's files array
+    newImage.innerHTML = `
+      <img src="${src}" alt="Property Image" 
+           data-img-name="${file.name}" 
+           class="w-full h-full object-cover rounded-md">
+      <button type="button" class="absolute top-1 bg-opacity-85 right-1 bg-red-500 text-white rounded-full p-1"
+        onclick="removeImage(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    `;
+    imageContainer.appendChild(newImage);
+  }
+}
 
 function removeImage(button) {
   // Add the image to the deleted images
@@ -103,22 +130,22 @@ function removeImage(button) {
   uploadInput.files = dataTransfer.files;
 }
 
-function addImage(src) {
-  const uploadInput = document.getElementById('uploadInput')
-  const imageContainer = document.querySelector('.flex.flex-row.overflow-x-auto.relative.mt-2');
-  if (imageContainer) {
-    const newImage = document.createElement('div');
-    newImage.classList.add('relative', 'w-28', 'h-28', 'mr-2', 'flex-shrink-0');
-    newImage.innerHTML = `
-              <img src="${src}" alt="Property Image" data-img-name="${uploadInput.files[uploadInput.files.length - 1].name}" class="w-full h-full object-cover rounded-md">
-          <button type="button" class="absolute top-1 bg-opacity-85 right-1 bg-red-500 text-white rounded-full p-1"
-            onclick="removeImage(this)">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-            `;
-    imageContainer.appendChild(newImage);
-  }
-}
+// function addImage(src) {
+//   const uploadInput = document.getElementById('uploadInput')
+//   const imageContainer = document.querySelector('.flex.flex-row.overflow-x-auto.relative.mt-2');
+//   if (imageContainer) {
+//     const newImage = document.createElement('div');
+//     newImage.classList.add('relative', 'w-28', 'h-28', 'mr-2', 'flex-shrink-0');
+//     newImage.innerHTML = `
+//               <img src="${src}" alt="Property Image" data-img-name="${uploadInput.files[uploadInput.files.length - 1].name}" class="w-full h-full object-cover rounded-md">
+//           <button type="button" class="absolute top-1 bg-opacity-85 right-1 bg-red-500 text-white rounded-full p-1"
+//             onclick="removeImage(this)">
+//             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+//               stroke="currentColor">
+//               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+//             </svg>
+//           </button>
+//             `;
+//     imageContainer.appendChild(newImage);
+//   }
+// }

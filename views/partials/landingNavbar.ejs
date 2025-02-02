@@ -66,6 +66,13 @@
               </div>
             </div>
 
+            <a href="/properties?listingType=rent"
+            class="text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium"
+            aria-current="page">For Rent</a>
+            <a href="/properties?listingType=sale"
+            class="text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium"
+            aria-current="page">For Sale</a>
+
             <!-- Recent Link -->
             <a href="/properties/recent"
               class="<%= page.title =='recentPropertyPage' ? 'text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium">Recent</a>
@@ -74,7 +81,7 @@
             <% if(currentUser) { %>
               <a href="/properties/new" class="text-sm font-medium">
                 <div
-                  class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] transition-all duration-150 text-white px-2 py-[5px] rounded-full">
+                  class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] transition-all duration-150 text-white px-[12px] py-[5px] rounded-full">
                   <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -200,6 +207,10 @@
           </ul>
         </div>
       </div>
+
+      <a href="/properties?listingType=sale" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900">For Sale</a>
+      <a href="/properties?listingType=rent" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900">For Rent</a>
+      
 
       <!-- Recent Link -->
       <a href="/properties/recent"
