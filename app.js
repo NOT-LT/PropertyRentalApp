@@ -19,9 +19,11 @@ const Property = require('./models/property');
 const fs = require('fs/promises');
 // const Typesense = require('typesense');
 const helmet = require('helmet');
-const dbUrl =  process.env.DB_URL || 'mongodb://localhost:27017/propertyRentalApp';
+const dbUrl =  'mongodb://localhost:27017/propertyRentalApp' ||  process.env.DB_URL;
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 const propertiesRoute = require('./routes/properties')
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const inquiriesRoute = require('./routes/inquiry')
 const usersRoute = require('./routes/users')
 mongoose.connect(dbUrl);
@@ -30,7 +32,6 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
   console.log("Database connected");
 })
-
 const LocationFeature = require('./models/locationFeature');
 
 const app = express();
@@ -85,6 +86,43 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
+
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+passport.use(new GoogleStrategy(
+  {
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: `${process.env.BASE_URL}/auth/google/callback`
+  },
+  async function(accessToken, refreshToken, profile, cb) {
+    try {
+      let user = await User.findOne({ googleId: profile.id });
+
+      if (!user) {
+        user = new User({
+          googleId: profile.id,
+          username: profile.displayName.replace(/\s+/g, '').toLowerCase(), // Generate a username
+          email: profile.emails?.[0]?.value || 'example@gmail.com', // Ensure email exists
+          fullName: profile.displayName,
+          phoneNumber: null, // No phone number from Google
+          password: null, // No password since it's OAuth
+          profilePicture: {
+            url: profile.photos?.[0]?.value || 'https://res.cloudinary.com/ds9e2dvrv/image/upload/v1736102014/PropertyRentalApp/nhry0p2v1f9mmyfvjthf.webp',
+            filename: profile.photos?.[0]?.value ? null : 'PropertyRentalApp/nhry0p2v1f9mmyfvjthf'
+          }
+        });
+
+        await user.save();
+      }
+
+      return cb(null, user);
+    } catch (err) {
+      return cb(err, null);
+    }
+  }
+));
+
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -117,19 +155,66 @@ app.get('/properties.geojson', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function (req, res) {
+    if (!req.user.phoneNumber || !req.user.email) {
+      return res.redirect('/complete-profile'); // Redirect to complete profile form
+    }
+    res.redirect('/properties');
+  }
+);
+
+app.get('/complete-profile', (req, res) => {
+  res.render('completeProfile', { page: { title: 'Complete Profile Information' } });
+});
+
+app.post('/complete-profile', async (req, res, next) => {
+  try {
+    const { phoneNumber, username, fullName } = req.body;
+    
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Update user details
+    user.phoneNumber = phoneNumber;
+    user.username = username;
+    user.fullName = fullName;
+    await user.save();
+
+    // Re-authenticate the user to update session data
+    req.login(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect('/properties'); // User remains authenticated
+    });
+    
+  } catch (err) {
+    res.status(500).send("An error occurred.");
+  }
+});
+
+
+
 app.use('/', usersRoute);
 app.use('/properties/:id/inquiry', inquiriesRoute)
 app.use('/properties', propertiesRoute)
 
 // API endpoint to trigger MongoDB -> Typesense sync
-app.post('/sync-data', async (req, res) => {
-  try {
-    const result = await syncMongoWithTypesense();
-    res.status(200).send({ success: true, result });
-  } catch (error) {
-    res.status(500).send({ success: false, error: error.message });
-  }
-});
+// app.post('/sync-data', async (req, res) => {
+//   try {
+//     const result = await syncMongoWithTypesense();
+//     res.status(200).send({ success: true, result });
+//   } catch (error) {
+//     res.status(500).send({ success: false, error: error.message });
+//   }
+// });
 
 app.get('/search', async (req, res) => {
   try {

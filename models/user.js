@@ -19,12 +19,16 @@ const imgSchema = new Schema({
 const UserSchema = new Schema({
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true
+  },
+  googleId: {
+    type: String,
+    required: false
   },
   phoneNumber: {
     type: String,
-    required: true
+    required: false
   },
   fullName : {
     type: String,

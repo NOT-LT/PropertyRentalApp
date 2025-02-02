@@ -36,7 +36,7 @@ module.exports.validateInquiry = (req, res, next) => {
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    req.session.redirectToUrl = req.originalUrl; // add this line
+    req.session.redirectToUrl = req.originalUrl;
     req.flash('error', 'Please sign in first');
     return res.redirect('/login')
   }
