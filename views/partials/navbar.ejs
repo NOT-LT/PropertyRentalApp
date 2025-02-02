@@ -1,7 +1,7 @@
 <nav class=" dark:bg-gray-800 text-gray-900  customNav shadow-md sticky top-0 backdrop-blur-sm bg-opacity-0 z-[999]"
   id="navbarMain">
   <div class="mx-auto max-size px-2 sm:px-6 lg:px-8">
-    <div class="relative flex h-16 items-center justify-between" id="navParent2">
+    <div class="relative flex min-h-16 items-center justify-between" id="navParent2">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
         <button type="button" id="burger-btn"
@@ -28,7 +28,7 @@
             <a href="/"
               class="<%= page.title =='landing' ? 'border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium"
               aria-current="page">Home</a>
-      
+
             <!-- Properties Dropdown -->
             <div class="relative" onclick="window.location.href='/properties'">
               <button id="dropdownHoverButton"
@@ -41,70 +41,75 @@
                     d="m1 1 4 4 4-4" />
                 </svg>
               </button>
-      
+
               <!-- Dropdown Menu -->
               <div id="dropdownHover"
                 class="z-10 hidden absolute bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Villas</a>
+                    <a href="/properties?propertyType=villa"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Villas</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Apartments</a>
+                    <a href="/properties?propertyType=apartment"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Apartments</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Camps</a>
+                    <a href="/properties?propertyType=studio"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Studios</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Industrial Properties</a>
+                    <a href="/properties?propertyType=camp"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Camps</a>
                   </li>
                 </ul>
               </div>
             </div>
-      
+
             <!-- Recent Link -->
             <a href="/properties/recent"
               class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium">Recent</a>
-      
+
             <!-- Add Property Link -->
             <% if(currentUser) { %>
-            <a href="/properties/new" class="text-sm font-medium">
-              <div
-                class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] transition-all duration-150 text-white px-2 py-[2px] rounded-full">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                <span>Add Property</span>
-              </div>
-            </a>
-            <% } %>
+              <a href="/properties/new" class="text-sm font-medium">
+                <div
+                  class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] transition-all duration-150 text-white px-2 py-[2px] rounded-full">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  <span>Add Property</span>
+                </div>
+              </a>
+              <% } %>
           </div>
         </div>
       </div>
-      
+
       <!-- Script to handle hover -->
       <script>
         const dropdownButton = document.getElementById('dropdownHoverButton');
         const dropdownMenu = document.getElementById('dropdownHover');
-      
+
         dropdownButton.addEventListener('mouseenter', () => {
           dropdownMenu.classList.remove('hidden');
         });
-      
+
         dropdownButton.addEventListener('mouseleave', () => {
           dropdownMenu.classList.add('hidden');
         });
-      
+
         dropdownMenu.addEventListener('mouseenter', () => {
           dropdownMenu.classList.remove('hidden');
         });
-      
+
         dropdownMenu.addEventListener('mouseleave', () => {
           dropdownMenu.classList.add('hidden');
         });
       </script>
-      
-     
+
+
       <% if (currentUser) { %>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:mx-3 sm:pr-0">
 
@@ -156,30 +161,83 @@
 
   <!-- Mobile menu -->
   <div class="sm:hidden hidden opacity-0" id="mobile-menu">
-    <div class="space-y-1 px-2 pb-3 pt-2">
+    <div class="space-y-2 px-2 pb-3 pt-2">
+      <!-- Home Link -->
       <a href="/"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-        aria-current="page">Home</a>
+        class="<%= page.title =='landing' ? 'border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> block px-3 py-2 rounded-md text-base font-medium">Home</a>
 
-      <a href="/properties"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
-      </a>
-      <a href="/properties/new"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">Recent</a>
-
-      <a href="/properties/new"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
-        <div
-          class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] transition-all duration-150 text-white px-2 py-[2px] rounded-full">
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+      <!-- Properties Dropdown -->
+      <div>
+        <button type="button" onclick="toggleMobileDropdown()"
+          class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-between">
+          Properties
+          <svg class="w-2.5 h-2.5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
           </svg>
-          <span>Add Property</span>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="mobile-dropdown" class="hidden pl-4">
+          <ul class="space-y-2">
+            <li>
+              <a href="/properties?propertyType=villa"
+                class="block px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">Villas</a>
+            </li>
+            <li>
+              <a href="/properties?propertyType=apartment"
+                class="block px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">Apartments</a>
+            </li>
+            <li>
+              <a href="/properties?propertyType=studio"
+                class="block px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">Studios</a>
+            </li>
+            <li>
+              <a href="/properties?propertyType=camp"
+                class="block px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">Camps</a>
+            </li>
+          </ul>
         </div>
-      </a>
+      </div>
+
+      <!-- Recent Link -->
+      <a href="/properties/recent"
+        class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> block px-3 py-2 rounded-md text-base font-medium">Recent</a>
+
+      <!-- Add Property Link -->
+      <% if(currentUser) { %>
+        <a href="/properties/new" class="block">
+          <div class="flex items-center space-x-1 bg-[#0D1727] hover:bg-[#0d1727ce] text-white px-3 py-2 rounded-md">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span>Add Property</span>
+          </div>
+        </a>
+        <% } %>
+
+
     </div>
-    </a>
   </div>
+
+  <script>
+    // Mobile dropdown toggle
+    function toggleMobileDropdown() {
+      const dropdown = document.getElementById('mobile-dropdown');
+      dropdown.classList.toggle('hidden');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+      const dropdown = document.getElementById('mobile-dropdown');
+      const button = document.querySelector('#mobile-menu button');
+
+      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+  </script>
   </div>
 </nav>
 

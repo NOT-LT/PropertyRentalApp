@@ -48,7 +48,7 @@ body {
 
 #mobile-menu.show {
   opacity: 1;
-  max-height: 200px;
+  max-height: 450px;
 }
 
 #mobile-menu.hidden {
