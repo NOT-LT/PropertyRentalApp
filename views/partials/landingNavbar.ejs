@@ -26,7 +26,7 @@
           <div class="flex space-x-4 items-center">
             <!-- Home Link -->
             <a href="/"
-              class="<%= page.title =='landing' ? 'border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium"
+              class="<%= page.title =='landing' ? ' text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium"
               aria-current="page">Home</a>
 
             <!-- Properties Dropdown -->
@@ -68,7 +68,7 @@
 
             <!-- Recent Link -->
             <a href="/properties/recent"
-              class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium">Recent</a>
+              class="<%= page.title =='recentPropertyPage' ? 'text-black' : 'text-gray-900 bg-transparent' %> px-[10px] py-[6px] text-sm font-medium">Recent</a>
 
             <!-- Add Property Link -->
             <% if(currentUser) { %>
@@ -164,7 +164,7 @@
     <div class="space-y-2 px-2 pb-3 pt-2">
       <!-- Home Link -->
       <a href="/"
-        class="<%= page.title =='landing' ? 'border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> block px-3 py-2 rounded-md text-base font-medium">Home</a>
+        class="<%= page.title =='landing' ? 'text-black' : 'text-gray-900 bg-transparent' %> block px-3 py-2 rounded-md text-base font-medium">Home</a>
 
       <!-- Properties Dropdown -->
       <div>
@@ -203,7 +203,7 @@
 
       <!-- Recent Link -->
       <a href="/properties/recent"
-        class="<%= page.title =='recentPropertyPage' ? ' border-b-[2.5px] border-[#0D1727] text-black' : 'text-gray-900 bg-transparent' %> block px-3 py-2 rounded-md text-base font-medium">Recent</a>
+        class="<%= page.title =='recentPropertyPage' ? '' : 'text-gray-900 bg-transparent' %> block px-3 py-2 rounded-md text-base font-medium">Recent</a>
 
       <!-- Add Property Link -->
       <% if(currentUser) { %>
